@@ -1,0 +1,93 @@
+﻿@model CareLink360.Application.DTOs.CreatePaymentDto
+
+@{
+    ViewData["Title"] = "Create Payment";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>Record Payment</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Create">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger"></div>
+
+                <div class="mb-3">
+
+                    <label asp-for="ClientId"></label>
+
+                    <input asp-for="ClientId"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="ContractId"></label>
+
+                    <input asp-for="ContractId"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="Amount"></label>
+
+                    <input asp-for="Amount"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="PaymentMethod"></label>
+
+                    <select asp-for="PaymentMethod"
+                            class="form-select">
+
+                        <option>Cash</option>
+
+                        <option>Transfer</option>
+
+                        <option>Card</option>
+
+                    </select>
+
+                </div>
+
+                <button class="btn btn-success">
+
+                    Save Payment
+
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

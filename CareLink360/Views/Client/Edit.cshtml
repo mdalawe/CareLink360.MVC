@@ -1,0 +1,72 @@
+﻿@model CareLink360.Application.DTOs.CreateClientDto
+
+@{
+    ViewData["Title"] = "Edit Client";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+
+            <h3>Edit Client</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Edit">
+
+                <div class="mb-3">
+
+                    <label asp-for="FullName"></label>
+
+                    <input asp-for="FullName"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="PhoneNumber"></label>
+
+                    <input asp-for="PhoneNumber"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="City"></label>
+
+                    <input asp-for="City"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="Address"></label>
+
+<textarea asp-for="Address"
+          class="form-control"></textarea>
+
+                </div>
+
+                <button class="btn btn-primary">
+                    Update
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

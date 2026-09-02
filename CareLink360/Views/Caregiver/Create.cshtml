@@ -1,0 +1,309 @@
+﻿@model CareLink360.Application.DTOs.CreateCaregiverDto
+
+@{
+    ViewData["Title"] = "Create Caregiver";
+}
+
+<div class="container mt-4 mb-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3 class="mb-0">
+                Register New Caregiver
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Create"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger">
+                </div>
+
+
+                <h5 class="mb-3">
+                    Personal Information
+                </h5>
+
+                <div class="row">
+
+                    <!-- FIRST NAME -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="FirstName"
+                               class="form-label">
+                            First Name
+                        </label>
+
+                        <input asp-for="FirstName"
+                               class="form-control"
+                               placeholder="Enter first name" />
+
+                        <span asp-validation-for="FirstName"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- LAST NAME -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="LastName"
+                               class="form-label">
+                            Last Name
+                        </label>
+
+                        <input asp-for="LastName"
+                               class="form-control"
+                               placeholder="Enter last name" />
+
+                        <span asp-validation-for="LastName"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="Email"
+                               class="form-label">
+                            Email Address
+                        </label>
+
+                        <input asp-for="Email"
+                               type="email"
+                               class="form-control"
+                               placeholder="caregiver@example.com" />
+
+                        <span asp-validation-for="Email"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="Password"
+                               class="form-label">
+                            Password
+                        </label>
+
+                        <input asp-for="Password"
+                               type="password"
+                               class="form-control"
+                               placeholder="Create password" />
+
+                        <span asp-validation-for="Password"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- PHONE -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="PhoneNumber"
+                               class="form-label">
+                            Phone Number
+                        </label>
+
+                        <input asp-for="PhoneNumber"
+                               class="form-control"
+                               placeholder="08012345678" />
+
+                        <span asp-validation-for="PhoneNumber"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- DATE OF BIRTH -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="DateOfBirth"
+                               class="form-label">
+                            Date of Birth
+                        </label>
+
+                        <input asp-for="DateOfBirth"
+                               type="date"
+                               class="form-control" />
+
+                        <span asp-validation-for="DateOfBirth"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- GENDER -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="Gender"
+                               class="form-label">
+                            Gender
+                        </label>
+
+                        <select asp-for="Gender"
+                                class="form-select">
+
+                            <option value="">
+                                Select Gender
+                            </option>
+
+                            <option value="Male">
+                                Male
+                            </option>
+
+                            <option value="Female">
+                                Female
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="Gender"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- CITY -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="City"
+                               class="form-label">
+                            City
+                        </label>
+
+                        <input asp-for="City"
+                               class="form-control"
+                               placeholder="Enter city" />
+
+                        <span asp-validation-for="City"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- ADDRESS -->
+                    <div class="col-12 mb-3">
+
+                        <label asp-for="Address"
+                               class="form-label">
+                            Address
+                        </label>
+
+                        <input asp-for="Address"
+                               class="form-control"
+                               placeholder="Enter home address" />
+
+                        <span asp-validation-for="Address"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <hr />
+
+
+                <h5 class="mb-3">
+                    Professional Information
+                </h5>
+
+
+                <div class="row">
+
+                    <!-- EXPERIENCE -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="YearsOfExperience"
+                               class="form-label">
+                            Years of Experience
+                        </label>
+
+                        <input asp-for="YearsOfExperience"
+                               type="number"
+                               min="0"
+                               class="form-control"
+                               placeholder="e.g. 5" />
+
+                        <span asp-validation-for="YearsOfExperience"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- SKILLS -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="Skills"
+                               class="form-label">
+                            Skills
+                        </label>
+
+                        <input asp-for="Skills"
+                               class="form-control"
+                               placeholder="Nursing, Elderly Care..." />
+
+                        <span asp-validation-for="Skills"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mt-4">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        Create Caregiver
+
+                    </button>
+
+
+                    <a asp-action="Index"
+                       class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+        <partial name="_ValidationScriptsPartial" />
+
+}

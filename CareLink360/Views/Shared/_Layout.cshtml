@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - CareLink360</title>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/home.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/CareLink360.styles.css"
+          asp-append-version="true" />
+</head>
+
+<body>
+
+    @{
+        var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+        var action = ViewContext.RouteData.Values["action"]?.ToString();
+
+        bool isHomePage =
+        controller == "Home" &&
+        action == "Index";
+
+        bool isAuthPage =
+        controller == "Auth" &&
+        (action == "Login" || action == "Register");
+    }
+
+    <header>
+
+        <nav class="navbar navbar-expand-lg bg-white shadow-sm">
+
+            <div class="container-fluid px-4">
+
+                <!-- LOGO -->
+                <a class="navbar-brand fw-bold fs-2"
+                   asp-controller="Home"
+                   asp-action="Index">
+                    CareLink360
+                </a>
+
+
+                @if (isHomePage)
+                {
+                    <!-- NAVIGATION ONLY ON HOME PAGE -->
+
+                    <div class="collapse navbar-collapse">
+
+                        <ul class="navbar-nav mx-auto">
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Home"
+                                   asp-action="Index">
+                                    Home
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Caregiver"
+                                   asp-action="Index">
+                                    Caregivers
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Client"
+                                   asp-action="Index">
+                                    Clients
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="JobRequest"
+                                   asp-action="Index">
+                                    Jobs
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Payment"
+                                   asp-action="Index">
+                                    Payments
+                                </a>
+                            </li>
+
+                        </ul>
+
+
+                        <!-- LOGIN / REGISTER -->
+
+                        <div class="d-flex">
+
+                            <a asp-controller="Auth"
+                               asp-action="Login"
+                               class="btn btn-outline-primary me-2">
+                                Login
+                            </a>
+
+                            <a asp-controller="Auth"
+                               asp-action="Register"
+                               class="btn btn-warning">
+                                Register
+                            </a>
+
+                        </div>
+
+                    </div>
+                }
+
+                else if (isAuthPage)
+                {
+                    <!-- LOGIN / REGISTER PAGE -->
+                    <!-- ONLY CARELINK360 IS SHOWN -->
+
+                    <div class="ms-auto">
+                        <span class="text-muted small">
+                            Healthcare Management
+                        </span>
+                    </div>
+                }
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        @RenderBody()
+
+    </main>
+
+
+    <footer class="footer text-center py-4">
+
+        <p class="mb-0">
+            © 2026 CareLink360. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/site.js"
+            asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

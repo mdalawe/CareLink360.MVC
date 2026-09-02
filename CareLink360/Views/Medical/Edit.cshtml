@@ -1,0 +1,60 @@
+﻿@model CareLink360.Application.DTOs.UpdateMedicalClearanceDto
+
+@{
+    ViewData["Title"] = "Update Medical Clearance";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+
+            <h3>Medical Clearance</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Edit">
+
+                <input asp-for="MedicalRecordId"
+                       type="hidden" />
+
+                <div class="mb-3">
+
+                    <label asp-for="ClearanceStatus"></label>
+
+                    <select asp-for="ClearanceStatus"
+                            class="form-select">
+
+                        <option>Pending</option>
+
+                        <option>Approved</option>
+
+                        <option>Rejected</option>
+
+                    </select>
+
+                </div>
+
+                <button class="btn btn-primary">
+
+                    Update
+
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

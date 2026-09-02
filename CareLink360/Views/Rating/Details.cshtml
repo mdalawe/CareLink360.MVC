@@ -1,0 +1,80 @@
+﻿@model CareLink360.Domain.Entities.Rating
+
+@{
+    ViewData["Title"] = "Rating Details";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-info text-white">
+
+            <h3>Rating Details</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table">
+
+                <tr>
+
+                    <th>Caregiver</th>
+
+                    <td>@Model.CaregiverId</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Client</th>
+
+                    <td>@Model.ClientId</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Score</th>
+
+                    <td>
+
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            if (i <= Model.Score)
+                            {
+                                <span class="text-warning fs-4">★</span>
+                            }
+                            else
+                            {
+                                <span class="text-secondary fs-4">☆</span>
+                            }
+                        }
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Comment</th>
+
+                    <td>@Model.Comment</td>
+
+                </tr>
+
+            </table>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

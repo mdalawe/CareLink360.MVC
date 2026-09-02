@@ -1,0 +1,82 @@
+﻿@model CareLink360.Domain.Entities.Payment
+
+@{
+    ViewData["Title"] = "Payment Details";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-info text-white">
+
+            <h3>Payment Details</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table">
+
+                <tr>
+
+                    <th>Client ID</th>
+
+                    <td>@Model.ClientId</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Contract ID</th>
+
+                    <td>@Model.ContractId</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Amount</th>
+
+                    <td>@Model.Amount.ToString("C")</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Status</th>
+
+                    <td>@Model.Status</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Method</th>
+
+                    <td>@Model.PaymentMethod</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Date</th>
+
+                    <td>@Model.PaymentDate.ToShortDateString()</td>
+
+                </tr>
+
+            </table>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

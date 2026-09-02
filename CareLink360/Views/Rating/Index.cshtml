@@ -1,0 +1,90 @@
+﻿@model IEnumerable<CareLink360.Domain.Entities.Rating>
+
+@{
+    ViewData["Title"] = "Ratings";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between mb-3">
+
+        <h2>Caregiver Ratings</h2>
+
+        <a asp-action="Create" class="btn btn-primary">
+            Add Rating
+        </a>
+
+    </div>
+
+    <table class="table table-bordered table-hover shadow">
+
+        <thead class="table-dark">
+
+            <tr>
+
+                <th>Caregiver</th>
+
+                <th>Client</th>
+
+                <th>Score</th>
+
+                <th>Comment</th>
+
+                <th width="180">Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.CaregiverId</td>
+
+                    <td>@item.ClientId</td>
+
+                    <td>
+
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            if (i <= item.Score)
+                            {
+                                <span class="text-warning fs-5">★</span>
+                            }
+                            else
+                            {
+                                <span class="text-secondary fs-5">☆</span>
+                            }
+                        }
+
+                    </td>
+
+                    <td>@item.Comment</td>
+
+                    <td>
+
+                        <a asp-action="Details"
+                           asp-route-id="@item.Id"
+                           class="btn btn-info btn-sm">
+                            Details
+                        </a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@item.Id"
+                           class="btn btn-danger btn-sm">
+                            Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

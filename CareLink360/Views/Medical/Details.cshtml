@@ -1,0 +1,74 @@
+﻿@model CareLink360.Domain.Entities.MedicalRecord
+
+@{
+    ViewData["Title"] = "Medical Record";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-info text-white">
+
+            <h3>Medical Record Details</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table">
+
+                <tr>
+
+                    <th>Caregiver ID</th>
+
+                    <td>@Model.CaregiverId</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Blood Group</th>
+
+                    <td>@Model.BloodGroup</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Vaccination</th>
+
+                    <td>@Model.VaccinationStatus</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Clearance</th>
+
+                    <td>@Model.ClearanceStatus</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Last Checkup</th>
+
+                    <td>@Model.LastCheckupDate.ToShortDateString()</td>
+
+                </tr>
+
+            </table>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

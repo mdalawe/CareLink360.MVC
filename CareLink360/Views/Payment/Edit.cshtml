@@ -1,0 +1,69 @@
+﻿@model CareLink360.Web.Models.PaymentViewModel
+
+@{
+    ViewData["Title"] = "Edit Payment";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+
+            <h3>Edit Payment</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Edit">
+
+                <input asp-for="Id"
+                       type="hidden" />
+
+                <div class="mb-3">
+
+                    <label asp-for="Status"></label>
+
+                    <select asp-for="Status"
+                            class="form-select">
+
+                        <option>Pending</option>
+
+                        <option>Paid</option>
+
+                        <option>Failed</option>
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="Amount"></label>
+
+                    <input asp-for="Amount"
+                           class="form-control" />
+
+                </div>
+
+                <button class="btn btn-primary">
+
+                    Update
+
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

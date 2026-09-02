@@ -1,0 +1,86 @@
+﻿@model CareLink360.Application.DTOs.CreateJobRequestDto
+
+@{
+    ViewData["Title"] = "Create Job Request";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>Create Job Request</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Create">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger"></div>
+
+                <div class="mb-3">
+
+                    <label asp-for="ClientId"></label>
+
+                    <input asp-for="ClientId"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="JobTypeId"></label>
+
+                    <input asp-for="JobTypeId"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="Location"></label>
+
+                    <input asp-for="Location"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="Describption"></label>
+
+<textarea asp-for="Describption"
+          rows="5"
+          class="form-control"></textarea>
+
+                </div>
+
+                <button class="btn btn-success">
+
+                    Save
+
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

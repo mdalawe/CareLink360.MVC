@@ -1,0 +1,14 @@
+C:\Users\user\source\repos\CareLink360\CareLink360.Domain\bin\Debug\net8.0\CareLink360.Domain.deps.json
+C:\Users\user\source\repos\CareLink360\CareLink360.Domain\bin\Debug\net8.0\CareLink360.Domain.runtimeconfig.json
+C:\Users\user\source\repos\CareLink360\CareLink360.Domain\bin\Debug\net8.0\CareLink360.Domain.dll
+C:\Users\user\source\repos\CareLink360\CareLink360.Domain\bin\Debug\net8.0\CareLink360.Domain.pdb
+C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\CareLink360.Domain.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\CareLink360.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\CareLink360.Domain.AssemblyInfoInputs.cache
+C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\CareLink360.Domain.AssemblyInfo.cs
+C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\CareLink360.Domain.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\CareLink360.Domain.dll
+C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\refint\CareLink360.Domain.dll
+C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\CareLink360.Domain.pdb
+C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\CareLink360.Domain.genruntimeconfig.cache
+C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\ref\CareLink360.Domain.dll

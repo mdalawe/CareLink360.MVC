@@ -1,0 +1,189 @@
+﻿@model CareLink360.Application.DTOs.UpdateCaregiverDto
+
+@{
+    ViewData["Title"] = "Edit Caregiver";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+            <h3 class="mb-0">
+                Edit Caregiver
+            </h3>
+
+            @if (ViewBag.CaregiverName != null)
+            {
+                <small>
+                    @ViewBag.CaregiverName
+                </small>
+            }
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Edit"
+                  asp-route-id="@ViewBag.CaregiverId"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger">
+                </div>
+
+                <div class="row">
+
+                    <!-- Phone -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="PhoneNumber"
+                               class="form-label">
+                            Phone Number
+                        </label>
+
+                        <input asp-for="PhoneNumber"
+                               class="form-control"
+                               placeholder="08012345678" />
+
+                        <span asp-validation-for="PhoneNumber"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <!-- City -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="City"
+                               class="form-label">
+                            City
+                        </label>
+
+                        <input asp-for="City"
+                               class="form-control"
+                               placeholder="Enter city" />
+
+                        <span asp-validation-for="City"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <!-- Address -->
+                    <div class="col-md-12 mb-3">
+
+                        <label asp-for="Address"
+                               class="form-label">
+                            Address
+                        </label>
+
+                        <textarea asp-for="Address"
+                                  class="form-control"
+                                  rows="3"
+                                  placeholder="Enter address">
+                        </textarea>
+
+                        <span asp-validation-for="Address"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <!-- Experience -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="YearsOfExperience"
+                               class="form-label">
+                            Years of Experience
+                        </label>
+
+                        <input asp-for="YearsOfExperience"
+                               type="number"
+                               min="0"
+                               class="form-control" />
+
+                        <span asp-validation-for="YearsOfExperience"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <!-- Availability -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="IsAvaliable"
+                               class="form-label">
+                            Availability
+                        </label>
+
+                        <select asp-for="IsAvaliable"
+                                class="form-select">
+
+                            <option value="true">
+                                Available
+                            </option>
+
+                            <option value="false">
+                                Not Available
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="col-md-12 mb-3">
+
+                        <label asp-for="Skills"
+                               class="form-label">
+                            Skills
+                        </label>
+
+                        <textarea asp-for="Skills"
+                                  class="form-control"
+                                  rows="4"
+                                  placeholder="e.g. Elderly care, Child care, First aid">
+                        </textarea>
+
+                        <span asp-validation-for="Skills"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="mt-3">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-save"></i>
+                        Save Changes
+
+                    </button>
+
+                    <a asp-action="Index"
+                       class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

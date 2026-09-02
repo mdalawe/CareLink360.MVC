@@ -1,0 +1,76 @@
+﻿@model CareLink360.Application.DTOs.UpdateJobRequestDto
+
+@{
+    ViewData["Title"] = "Edit Job Request";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+
+            <h3>Edit Job Request</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Edit">
+
+                <div class="mb-3">
+
+                    <label asp-for="Location"></label>
+
+                    <input asp-for="Location"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="Describption"></label>
+
+<textarea asp-for="Describption"
+          rows="5"
+          class="form-control"></textarea>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="Status"></label>
+
+                    <select asp-for="Status"
+                            class="form-select">
+
+                        <option>Pending</option>
+
+                        <option>Approved</option>
+
+                        <option>Completed</option>
+
+                    </select>
+
+                </div>
+
+                <button class="btn btn-primary">
+
+                    Update
+
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

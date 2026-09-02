@@ -1,0 +1,98 @@
+﻿@model CareLink360.Web.Models.JobRequestViewModel
+
+@{
+    ViewData["Title"] = "Delete Job Request";
+}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-danger text-white">
+            <h3>Delete Job Request</h3>
+        </div>
+
+        <div class="card-body">
+
+            <div class="alert alert-warning">
+
+                <h5>Are you sure?</h5>
+
+                <p>
+                    You are about to delete this job request.
+                    This action cannot be undone.
+                </p>
+
+            </div>
+
+            <dl class="row">
+
+                <dt class="col-sm-3">
+                    Client
+                </dt>
+
+                <dd class="col-sm-9">
+                    @Model.ClientName
+                </dd>
+
+
+                <dt class="col-sm-3">
+                    Job Type
+                </dt>
+
+                <dd class="col-sm-9">
+                    @Model.JobType
+                </dd>
+
+
+                <dt class="col-sm-3">
+                    Location
+                </dt>
+
+                <dd class="col-sm-9">
+                    @Model.Location
+                </dd>
+
+
+                <dt class="col-sm-3">
+                    Preferred Date
+                </dt>
+
+                <dd class="col-sm-9">
+                    @Model.PreferredDate.ToString("dd MMM yyyy")
+                </dd>
+
+
+                <dt class="col-sm-3">
+                    Status
+                </dt>
+
+                <dd class="col-sm-9">
+                    @Model.Status
+                </dd>
+
+            </dl>
+
+            <form asp-action="Delete"
+                  method="post">
+
+                <input type="hidden"
+                       asp-for="Id" />
+
+                <button type="submit"
+                        class="btn btn-danger">
+                    Yes, Delete
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

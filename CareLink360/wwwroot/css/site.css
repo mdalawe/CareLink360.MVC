@@ -1,0 +1,138 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0; /* Ensures nothing shifts off-screen */
+    padding: 0;
+}
+
+.hero {
+    display: flex;
+    min-height: 90vh;
+    width: 100%;
+    align-items: stretch; /* Forces both halves to perfectly match height */
+    overflow: hidden;
+}
+
+.hero-left {
+    flex: 1; /* Takes exactly 50% width */
+    background: linear-gradient(135deg, #083d7a, #0f4f9b);
+    color: white;
+    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-right {
+    flex: 1; /* Takes exactly 50% width */
+    position: relative; /* Keeps the image context locked */
+    height: 100%;
+    overflow: hidden;
+}
+
+.hero-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    /* ?? ANTI-BLUR ENGINE: Prevents stretching distortions */
+    object-fit: cover;
+    object-position: center;
+    /* Forces high-end browser rendering engines to optimize image pixels */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+/* --- Rest of your CSS remains unchanged below --- */
+.hero-tag {
+    color: #f5b400;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.hero h1 {
+    font-size: 4.5rem;
+    font-weight: 800;
+    margin: 20px 0;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    max-width: 600px;
+}
+
+.hero-buttons {
+    margin-top: 30px;
+}
+
+.btn-login {
+    background: #f5b400;
+    color: black;
+    padding: 14px 32px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-right: 15px;
+}
+
+.btn-register {
+    border: 2px solid white;
+    color: white;
+    padding: 14px 32px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.stats {
+    display: flex;
+    gap: 50px;
+    margin-top: 60px;
+}
+
+.stat-item h3 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.platform-section {
+    background: #f8f9fa;
+    padding: 100px 60px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+    .section-title span {
+        color: #f5b400;
+        font-weight: bold;
+    }
+
+    .section-title h2 {
+        color: #083d7a;
+        font-size: 3rem;
+    }
+
+.platform-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.platform-card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.08);
+    transition: .3s;
+}
+
+    .platform-card:hover {
+        transform: translateY(-8px);
+    }
+
+.footer {
+    background: #083d7a;
+    color: white;
+}

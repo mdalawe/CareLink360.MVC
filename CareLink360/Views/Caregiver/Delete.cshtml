@@ -1,0 +1,38 @@
+﻿@model CareLink360.Application.DTOs.CaregiverResponseDto
+
+@{
+    ViewData["Title"] = "Delete Caregiver";
+}
+
+<div class="container mt-4">
+
+<div class="alert alert-danger">
+
+<h3>Delete Caregiver</h3>
+
+<p>
+
+Are you sure you want to delete
+
+<strong>@Model.FirstName @Model.LastName</strong>?
+
+</p>
+
+<form asp-action="Delete">
+
+<input type="hidden" asp-for="Id"/>
+
+<button class="btn btn-danger">
+Delete
+</button>
+
+<a asp-action="Index"
+class="btn btn-secondary">
+Cancel
+</a>
+
+</form>
+
+</div>
+
+</div>

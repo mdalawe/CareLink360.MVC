@@ -11,6 +11,7 @@ C:\Users\user\source\repos\CareLink360\CareLink360.Application\obj\Debug\net8.0\
 C:\Users\user\source\repos\CareLink360\CareLink360.Application\obj\Debug\net8.0\CareLink360.Application.AssemblyInfoInputs.cache
 C:\Users\user\source\repos\CareLink360\CareLink360.Application\obj\Debug\net8.0\CareLink360.Application.AssemblyInfo.cs
 C:\Users\user\source\repos\CareLink360\CareLink360.Application\obj\Debug\net8.0\CareLink360.Application.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\CareLink360\CareLink360.Application\obj\Debug\net8.0\CareLink360.Application.sourcelink.json
 C:\Users\user\source\repos\CareLink360\CareLink360.Application\obj\Debug\net8.0\CareLink.DE433084.Up2Date
 C:\Users\user\source\repos\CareLink360\CareLink360.Application\obj\Debug\net8.0\CareLink360.Application.dll
 C:\Users\user\source\repos\CareLink360\CareLink360.Application\obj\Debug\net8.0\refint\CareLink360.Application.dll

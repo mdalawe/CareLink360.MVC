@@ -1,0 +1,626 @@
+﻿@*
+    CareLink360 Admin Layout
+*@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        @ViewData["Title"] - CareLink360
+    </title>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 250px;
+            background: #102a43;
+            color: white;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .brand {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            padding: 0 22px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #19b37d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .brand-subtitle {
+            font-size: 11px;
+            color: #9fb3c8;
+        }
+
+        /* MENU */
+
+        .menu-title {
+            padding: 25px 22px 10px;
+            color: #829ab1;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .menu {
+            list-style: none;
+            padding: 0 12px;
+            margin: 0;
+        }
+
+            .menu li {
+                margin-bottom: 5px;
+            }
+
+            .menu a {
+                display: flex;
+                align-items: center;
+                gap: 13px;
+                padding: 12px 14px;
+                color: #d9e2ec;
+                text-decoration: none;
+                border-radius: 8px;
+                font-size: 14px;
+            }
+
+                .menu a:hover {
+                    background: rgba(255,255,255,0.08);
+                    color: white;
+                }
+
+                .menu a.active {
+                    background: #19b37d;
+                    color: white;
+                }
+
+            .menu i {
+                width: 20px;
+                text-align: center;
+            }
+
+        /* MAIN */
+
+        .main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        /* TOPBAR */
+
+        .topbar {
+            height: 75px;
+            background: white;
+            border-bottom: 1px solid #e5e9ef;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+
+        .page-title {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #19b37d;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .admin-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .admin-role {
+            display: block;
+            font-size: 11px;
+            color: #829ab1;
+        }
+
+        /* CONTENT */
+
+        .content {
+            padding: 30px;
+        }
+
+        /* BACK BUTTON */
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: white;
+            border: 1px solid #d9e2ec;
+            border-radius: 7px;
+            text-decoration: none;
+            color: #334e68;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+            .back-button:hover {
+                background: #f0f4f8;
+                color: #102a43;
+            }
+
+        /* FOOTER */
+
+        .footer {
+            background: white;
+            border-top: 1px solid #e5e9ef;
+            padding: 20px 30px;
+            color: #829ab1;
+            font-size: 13px;
+        }
+
+
+        /* =========================================
+                   CONTENT CARD + TABLE
+                ========================================= */
+
+        .dashboard-card {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #eeeeee;
+            padding: 25px;
+        }
+
+            .dashboard-card h5 {
+                font-size: 17px;
+                font-weight: 600;
+                margin-bottom: 5px;
+            }
+
+            .dashboard-card p.subtitle {
+                color: #829ab1;
+                font-size: 13px;
+                margin-bottom: 20px;
+            }
+
+        .dashboard-table {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #eeeeee;
+            overflow: hidden;
+        }
+
+            .dashboard-table table {
+                margin: 0;
+            }
+
+            .dashboard-table th {
+                background: #f8fafb;
+                color: #59636e;
+                font-size: 13px;
+                font-weight: 600;
+                padding: 15px;
+            }
+
+            .dashboard-table td {
+                padding: 15px;
+                font-size: 13px;
+                vertical-align: middle;
+            }
+
+        /* STATUS BADGES */
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-Active {
+            background: #e7f7ed;
+            color: #218739;
+        }
+
+        .status-Pending {
+            background: #fff4d6;
+            color: #a87900;
+        }
+
+        .status-Completed {
+            background: #e3ecfc;
+            color: #2255c4;
+        }
+
+        .status-Cancelled {
+            background: #fde8e8;
+            color: #c0392b;
+        }
+
+        /* PERSON CELL */
+
+        .person-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .person-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #e9f8f6;
+            color: #0b8f87;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .person-name {
+            font-weight: 600;
+            font-size: 13px;
+            color: #263238;
+        }
+
+        .person-sub {
+            font-size: 11.5px;
+            color: #8a9299;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #8a9299;
+        }
+
+            .empty-state i {
+                font-size: 40px;
+                display: block;
+                margin-bottom: 12px;
+                opacity: 0.4;
+            }
+
+        /* MOBILE */
+
+        @@media (max-width: 768px) {
+
+            .sidebar {
+                width: 210px;
+            }
+
+            .main {
+                margin-left: 210px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .topbar {
+                padding: 0 20px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+
+            <div>
+                <div class="brand-name">
+                    CareLink360
+                </div>
+
+                <div class="brand-subtitle">
+                    Healthcare Management
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="menu-title">
+            Main Menu
+        </div>
+
+        <ul class="menu">
+
+            <li>
+                <a asp-controller="AdminDashboard"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "AdminDashboard" ? "active" : "")">
+
+                    <i class="fa-solid fa-gauge"></i>
+
+                    Dashboard
+
+                </a>
+            </li>
+
+            <li>
+                <a asp-controller="Caregiver"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Caregiver" ? "active" : "")">
+
+                    <i class="fa-solid fa-user-nurse"></i>
+
+                    Caregivers
+
+                </a>
+            </li>
+
+            <li>
+                <a asp-controller="Client"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Client" ? "active" : "")">
+
+                    <i class="fa-solid fa-users"></i>
+
+                    Clients
+
+                </a>
+            </li>
+
+            <li>
+                <a asp-controller="JobRequest"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "JobRequest" ? "active" : "")">
+
+                    <i class="fa-solid fa-briefcase"></i>
+
+                    Job Requests
+
+                </a>
+            </li>
+
+            <li>
+                <a asp-controller="Contract"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Contract" ? "active" : "")">
+
+                    <i class="fa-solid fa-file-contract"></i>
+
+                    Contracts
+
+                </a>
+            </li>
+
+            <li>
+                <a asp-controller="Payment"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Payment" ? "active" : "")">
+
+                    <i class="fa-solid fa-credit-card"></i>
+
+                    Payments
+
+                </a>
+            </li>
+
+        </ul>
+
+
+        <div class="menu-title">
+            Healthcare
+        </div>
+
+        <ul class="menu">
+
+            <li>
+                <a asp-controller="Medical"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Medical" ? "active" : "")">
+
+                    <i class="fa-solid fa-notes-medical"></i>
+
+                    Medical Records
+
+                </a>
+            </li>
+
+            <li>
+                <a asp-controller="NinVerification"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "NinVerification" ? "active" : "")">
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                    NIN Verification
+
+                </a>
+            </li>
+
+            <li>
+                <a asp-controller="Rating"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Rating" ? "active" : "")">
+
+                    <i class="fa-solid fa-star"></i>
+
+                    Ratings
+
+                </a>
+            </li>
+
+        </ul>
+
+
+        <div class="menu-title">
+            System
+        </div>
+
+        <ul class="menu">
+
+            <li>
+                <a asp-controller="Home"
+                   asp-action="Index">
+
+                    <i class="fa-solid fa-globe"></i>
+
+                    Website
+
+                </a>
+            </li>
+
+            <li>
+                <a asp-controller="Auth"
+                   asp-action="Logout">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    Logout
+
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <h1 class="page-title">
+                @ViewData["Title"]
+            </h1>
+
+            <div class="admin-user">
+
+                <div class="avatar">
+                    A
+                </div>
+
+                <div>
+
+                    <div class="admin-name">
+                        Administrator
+                    </div>
+
+                    <span class="admin-role">
+                        System Admin
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- PAGE CONTENT -->
+
+        <main class="content">
+
+            <a href="javascript:history.back()"
+               class="back-button">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back
+
+            </a>
+
+            @RenderBody()
+
+        </main>
+
+
+        <!-- FOOTER -->
+
+        <footer class="footer">
+
+            © 2026 CareLink360. All Rights Reserved.
+
+        </footer>
+
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>

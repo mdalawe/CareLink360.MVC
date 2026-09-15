@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CareLink360.Domain.Entities
+﻿namespace CareLink360.Domain.Entities
 {
     public class JobRequest
     {
@@ -18,6 +12,10 @@ namespace CareLink360.Domain.Entities
 
         public string Status { get; set; } = "Pending";
         // Pending, Accepted, Rejected, Cancelled
+
+        public string Location { get; set; } = string.Empty;
+
+        public string Description { get; set; } = string.Empty;
 
         public DateTime RequestedAt { get; set; } = DateTime.UtcNow;
     }

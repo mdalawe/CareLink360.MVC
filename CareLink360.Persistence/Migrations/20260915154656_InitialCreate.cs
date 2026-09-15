@@ -56,23 +56,6 @@ namespace CareLink360.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Contracts",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CaregiverId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    JobRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Contracts", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "JobRequests",
                 columns: table => new
                 {
@@ -81,6 +64,8 @@ namespace CareLink360.Persistence.Migrations
                     CaregiverId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     JobTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RequestedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -134,21 +119,6 @@ namespace CareLink360.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_NinVerifications", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Payments",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ContractId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payments", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -313,6 +283,9 @@ namespace CareLink360.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HomeAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -328,6 +301,67 @@ namespace CareLink360.Persistence.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Contracts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CaregiverId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JobRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contracts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Contracts_Caregivers_CaregiverId",
+                        column: x => x.CaregiverId,
+                        principalTable: "Caregivers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Contracts_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Contracts_JobRequests_JobRequestId",
+                        column: x => x.JobRequestId,
+                        principalTable: "JobRequests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ContractId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PaymentMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payments_Contracts_ContractId",
+                        column: x => x.ContractId,
+                        principalTable: "Contracts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -378,6 +412,26 @@ namespace CareLink360.Persistence.Migrations
                 name: "IX_Clients_UserId",
                 table: "Clients",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contracts_CaregiverId",
+                table: "Contracts",
+                column: "CaregiverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contracts_ClientId",
+                table: "Contracts",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contracts_JobRequestId",
+                table: "Contracts",
+                column: "JobRequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_ContractId",
+                table: "Payments",
+                column: "ContractId");
         }
 
         /// <inheritdoc />
@@ -399,18 +453,6 @@ namespace CareLink360.Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Caregivers");
-
-            migrationBuilder.DropTable(
-                name: "Clients");
-
-            migrationBuilder.DropTable(
-                name: "Contracts");
-
-            migrationBuilder.DropTable(
-                name: "JobRequests");
-
-            migrationBuilder.DropTable(
                 name: "JobTypes");
 
             migrationBuilder.DropTable(
@@ -427,6 +469,18 @@ namespace CareLink360.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Contracts");
+
+            migrationBuilder.DropTable(
+                name: "Caregivers");
+
+            migrationBuilder.DropTable(
+                name: "Clients");
+
+            migrationBuilder.DropTable(
+                name: "JobRequests");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

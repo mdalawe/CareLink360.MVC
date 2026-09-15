@@ -3,29 +3,100 @@ using CareLink360.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-[ApiController]
-[Route("api/job-requests")]
-public class JobRequestController(IJobRequestService service) : ControllerBase
+namespace CareLink360.Web.Controllers
 {
     [Authorize]
-    [HttpPost]
-    public async Task<IActionResult> Create(CreateJobRequestDto dto)
+    public class JobRequestController : Controller
     {
-        return Ok(await service.CreateAsync(dto));
-    }
+        private readonly IJobRequestService _service;
 
-    [Authorize]
-    [HttpPut("status")]
-    public async Task<IActionResult> UpdateStatus(UpdateJobRequestDto dto)
-    {
-        await service.UpdateStatusAsync(dto);
-        return Ok("Updated");
-    }
+        public JobRequestController(IJobRequestService service)
+        {
+            _service = service;
+        }
 
-    [Authorize(Roles = "Admin")]
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
-    {
-        return Ok(await service.GetAllAsync());
+
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var requests = await _service.GetAllAsync();
+
+            return View(requests);
+        }
+
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            var model = new CreateJobRequestDto();
+
+            return View(model);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CreateJobRequestDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(dto);
+            }
+
+            try
+            {
+                await _service.CreateAsync(dto);
+
+                TempData["Success"] = "Job request sent!";
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+
+                return View(dto);
+            }
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Accept(Guid id)
+        {
+            try
+            {
+                await _service.AcceptAsync(id);
+
+                TempData["Success"] = "Job request accepted — contract created!";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Reject(Guid id)
+        {
+            try
+            {
+                await _service.RejectAsync(id);
+
+                TempData["Success"] = "Job request rejected.";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

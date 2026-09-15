@@ -240,6 +240,9 @@ namespace CareLink360.Persistence.Migrations
                     b.Property<Guid>("ClientId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -253,7 +256,20 @@ namespace CareLink360.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("TotalAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CaregiverId");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("JobRequestId");
 
                     b.ToTable("Contracts");
                 });
@@ -270,8 +286,16 @@ namespace CareLink360.Persistence.Migrations
                     b.Property<Guid>("ClientId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("JobTypeId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RequestedAt")
                         .HasColumnType("datetime2");
@@ -399,6 +423,8 @@ namespace CareLink360.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ContractId");
 
                     b.ToTable("Payments");
                 });
@@ -580,6 +606,42 @@ namespace CareLink360.Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("CareLink360.Domain.Entities.Contract", b =>
+                {
+                    b.HasOne("CareLink360.Domain.Entities.Caregiver", "Caregiver")
+                        .WithMany()
+                        .HasForeignKey("CaregiverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CareLink360.Domain.Entities.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CareLink360.Domain.Entities.JobRequest", "JobRequest")
+                        .WithMany()
+                        .HasForeignKey("JobRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Caregiver");
+
+                    b.Navigation("Client");
+
+                    b.Navigation("JobRequest");
+                });
+
+            modelBuilder.Entity("CareLink360.Domain.Entities.Payment", b =>
+                {
+                    b.HasOne("CareLink360.Domain.Entities.Contract", null)
+                        .WithMany("Payments")
+                        .HasForeignKey("ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -629,6 +691,11 @@ namespace CareLink360.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CareLink360.Domain.Entities.Contract", b =>
+                {
+                    b.Navigation("Payments");
                 });
 #pragma warning restore 612, 618
         }

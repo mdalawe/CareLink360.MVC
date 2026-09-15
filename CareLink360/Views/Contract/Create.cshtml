@@ -1,176 +1,54 @@
-﻿@model CareLink360.Web.Models.JobRequestViewModel
-
+﻿@model CareLink360.Application.DTOs.CreateContractDto
 @{
-    ViewData["Title"] = "Edit Job Request";
+    ViewData["Title"] = "Create Contract";
 }
 
-<div class="container mt-5">
-
-    <div class="row justify-content-center">
-
-        <div class="col-md-8">
-
-            <div class="card shadow">
-
-                <div class="card-header bg-warning">
-                    <h3 class="mb-0">Edit Job Request</h3>
-                </div>
-
-                <div class="card-body">
-
-                    <form asp-action="Edit"
-                          method="post">
-
-                        <input type="hidden"
-                               asp-for="Id" />
-
-                        <input type="hidden"
-                               asp-for="ClientId" />
-
-                        <input type="hidden"
-                               asp-for="JobTypeId" />
-
-                        <div asp-validation-summary="ModelOnly"
-                             class="text-danger mb-3">
-                        </div>
-
-
-                        <div class="mb-3">
-
-                            <label asp-for="ClientName"
-                                   class="form-label">
-                                Client
-                            </label>
-
-                            <input asp-for="ClientName"
-                                   class="form-control"
-                                   readonly />
-
-                        </div>
-
-
-                        <div class="mb-3">
-
-                            <label asp-for="JobType"
-                                   class="form-label">
-                                Job Type
-                            </label>
-
-                            <input asp-for="JobType"
-                                   class="form-control"
-                                   readonly />
-
-                        </div>
-
-
-                        <div class="mb-3">
-
-                            <label asp-for="Location"
-                                   class="form-label">
-                                Location
-                            </label>
-
-                            <input asp-for="Location"
-                                   class="form-control" />
-
-                            <span asp-validation-for="Location"
-                                  class="text-danger">
-                            </span>
-
-                        </div>
-
-
-                        <div class="mb-3">
-
-                            <label asp-for="Description"
-                                   class="form-label">
-                                Description
-                            </label>
-
-                            <textarea asp-for="Description"
-                                      rows="5"
-                                      class="form-control"></textarea>
-
-                            <span asp-validation-for="Description"
-                                  class="text-danger">
-                            </span>
-
-                        </div>
-
-
-                        <div class="mb-3">
-
-                            <label asp-for="PreferredDate"
-                                   class="form-label">
-                                Preferred Date
-                            </label>
-
-                            <input asp-for="PreferredDate"
-                                   type="date"
-                                   class="form-control" />
-
-                        </div>
-
-
-                        <div class="mb-3">
-
-                            <label asp-for="Status"
-                                   class="form-label">
-                                Status
-                            </label>
-
-                            <select asp-for="Status"
-                                    class="form-select">
-
-                                <option value="Pending">
-                                    Pending
-                                </option>
-
-                                <option value="Approved">
-                                    Approved
-                                </option>
-
-                                <option value="Completed">
-                                    Completed
-                                </option>
-
-                                <option value="Rejected">
-                                    Rejected
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-                        <div class="mt-4">
-
-                            <button type="submit"
-                                    class="btn btn-primary">
-                                Update Job Request
-                            </button>
-
-                            <a asp-action="Index"
-                               class="btn btn-secondary">
-                                Cancel
-                            </a>
-
-                        </div>
-
-                    </form>
-
-                </div>
-
-            </div>
-
+<div class="edit-client-wrapper">
+    <div class="card edit-client-card">
+        <div class="edit-client-header">
+            <h3><i class="bi bi-file-earmark-plus me-2"></i>Create Contract</h3>
+            <p>Link a client, caregiver, and job request together</p>
         </div>
+        <div class="edit-client-body">
 
+            @if (!ViewData.ModelState.IsValid)
+            {
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                                    <li>@error.ErrorMessage</li>
+                        }
+                        </ul>
+                    </div>
+            }
+
+            <form asp-action="Create" method="post">
+
+                <div class="form-floating mb-3">
+                    <input asp-for="ClientId" class="form-control" placeholder="Client Id" />
+                    <label asp-for="ClientId"><i class="bi bi-person me-1"></i>Client Id</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="CaregiverId" class="form-control" placeholder="Caregiver Id" />
+                    <label asp-for="CaregiverId"><i class="bi bi-person-badge me-1"></i>Caregiver Id</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="JobRequestId" class="form-control" placeholder="Job Request Id" />
+                    <label asp-for="JobRequestId"><i class="bi bi-briefcase me-1"></i>Job Request Id</label>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-gradient flex-grow-1">
+                        <i class="bi bi-check2-circle me-1"></i> Create Contract
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-cancel">
+                        <i class="bi bi-x-circle me-1"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-
 </div>
-
-@section Scripts {
-
-    <partial name="_ValidationScriptsPartial" />
-
-}

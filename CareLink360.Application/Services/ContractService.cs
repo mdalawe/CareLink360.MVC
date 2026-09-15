@@ -1,6 +1,7 @@
 ﻿using CareLink360.Application.DTOs;
 using CareLink360.Application.Interfaces;
 using CareLink360.Domain.Entities;
+using CareLink360.Domain.Enums;
 
 public class ContractService(IContractRepository repository) : IContractService
 {
@@ -16,6 +17,12 @@ public class ContractService(IContractRepository repository) : IContractService
         return await repository.CreateAsync(contract);
     }
 
+
+    public async Task<Contract?> GetByIdAsync(Guid id)
+    {
+        return await repository.GetByIdAsync(id);
+    }
+
     public async Task UpdateStatusAsync(UpdateContractStatusDto dto)
     {
         var contract = await repository.GetByIdAsync(dto.ContractId);
@@ -25,11 +32,14 @@ public class ContractService(IContractRepository repository) : IContractService
 
         contract.Status = dto.Status;
 
-        if (dto.Status == "Completed" || dto.Status == "Cancelled")
+        if (dto.Status == ContractStatus.Successful || dto.Status == ContractStatus.Cancelled)
+        {
             contract.EndDate = DateTime.UtcNow;
+        }
 
         await repository.UpdateAsync(contract);
     }
+
 
     public async Task<List<Contract>> GetAllAsync()
     {

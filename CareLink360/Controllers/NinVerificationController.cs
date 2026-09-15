@@ -4,7 +4,7 @@ using CareLink360.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CaregiverCoperatingSystem.Api.Controllers
+namespace CareLink360.Api.Controllers
 {
     [ApiController]
     [Route("api/nin")]

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CareLink360.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3d290c1c045a6475ab59806ec2923c6fa760eda9")]
 [assembly: System.Reflection.AssemblyProductAttribute("CareLink360.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CareLink360.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

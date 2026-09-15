@@ -1,102 +1,72 @@
-﻿@model IEnumerable<CareLink360.Domain.Entities.Contract>
-
+﻿@model List<CareLink360.Domain.Entities.Contract>
 @{
     ViewData["Title"] = "Contracts";
+    Layout = "_AdminLayout";
 }
 
-<div class="container mt-4">
+<div class="dashboard-card mb-3">
+    <h5>Contracts</h5>
+    <p class="subtitle mb-0">Active and past care arrangements</p>
+</div>
 
-    <div class="d-flex justify-content-between mb-3">
-
-        <h2>Contracts</h2>
-
-        <a asp-action="Create"
-           class="btn btn-primary">
-            Create Contract
-        </a>
-
-    </div>
-
-    <table class="table table-bordered table-hover shadow">
-
-        <thead class="table-dark">
-
-            <tr>
-
-                <th>Client ID</th>
-
-                <th>Caregiver ID</th>
-
-                <th>Status</th>
-
-                <th>Start Date</th>
-
-                <th>End Date</th>
-
-                <th width="220">Action</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody>
-
-            @foreach (var item in Model)
-            {
+<div class="dashboard-table">
+    @if (Model == null || !Model.Any())
+    {
+        <div class="empty-state">
+            <i class="fa-solid fa-inbox"></i>
+            No contracts yet.
+        </div>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
                 <tr>
-
-                    <td>@item.ClientId</td>
-
-                    <td>@item.CaregiverId</td>
-
-                    <td>
-
-                        @if (item.Status == "Active")
-                        {
-                            <span class="badge bg-success">
-                                Active
-                            </span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-warning">
-                                @item.Status
-                            </span>
-                        }
-
-                    </td>
-
-                    <td>@item.StartDate.ToShortDateString()</td>
-
-                    <td>@item.EndDate.ToShortDateString()</td>
-
-                    <td>
-
-                        <a asp-action="Details"
-                           asp-route-id="@item.Id"
-                           class="btn btn-info btn-sm">
-                            Details
-                        </a>
-
-                        <a asp-action="Edit"
-                           asp-route-id="@item.Id"
-                           class="btn btn-warning btn-sm">
-                            Edit
-                        </a>
-
-                        <a asp-action="Delete"
-                           asp-route-id="@item.Id"
-                           class="btn btn-danger btn-sm">
-                            Delete
-                        </a>
-
-                    </td>
-
+                    <th>Client</th>
+                    <th>Caregiver</th>
+                    <th>Status</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th class="text-end">Action</th>
                 </tr>
-            }
-
-        </tbody>
-
-    </table>
-
+            </thead>
+            <tbody>
+                @foreach (var contract in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="person-cell">
+                                <div class="person-avatar">@contract.Client.FirstName.Substring(0, 1)@contract.Client.LastName.Substring(0, 1)</div>
+                                <div>
+                                    <div class="person-name">@contract.Client.FirstName @contract.Client.LastName</div>
+                                    <div class="person-sub">@contract.Client.City</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="person-cell">
+                                <div class="person-avatar">@contract.Caregiver.FirstName.Substring(0, 1)@contract.Caregiver.LastName.Substring(0, 1)</div>
+                                <div>
+                                    <div class="person-name">@contract.Caregiver.FirstName @contract.Caregiver.LastName</div>
+                                    <div class="person-sub">@contract.Caregiver.Skills</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="status-badge status-@contract.Status">@contract.Status</span>
+                        </td>
+                        <td>@contract.StartDate.ToString("MMM dd, yyyy")</td>
+                        <td>
+                            @(contract.EndDate == default ? "—" : contract.EndDate.ToString("MMM dd, yyyy"))
+                        </td>
+                        <td class="text-end">
+                            <a asp-action="Details" asp-route-id="@contract.Id" class="btn btn-sm btn-carelink">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 </div>

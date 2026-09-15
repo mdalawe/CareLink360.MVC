@@ -60,7 +60,6 @@ namespace CareLink360.Web.Controllers
 
             try
             {
-                
                 await _clientService.CreateAsync(dto);
 
                 TempData["Success"] =
@@ -70,7 +69,73 @@ namespace CareLink360.Web.Controllers
             }
             catch (Exception ex)
             {
-               
+                var errorMessage = ex.Message;
+
+                if (ex.InnerException != null)
+                {
+                    errorMessage +=
+                        " | " + ex.InnerException.Message;
+                }
+
+                ModelState.AddModelError(
+                    string.Empty,
+                    errorMessage
+                );
+
+                return View(dto);
+            }
+        }
+
+
+        // ==========================================
+        // GET: /Client/Edit/{id}
+        // SHOW EDIT CLIENT FORM
+        // ==========================================
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var client = await _clientService.GetByIdAsync(id);
+
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            var dto = new CreateClientDto
+            {
+                FirstName = client.FirstName,
+                LastName = client.LastName,
+                PhoneNumber = client.PhoneNumber,
+                City = client.City,
+                Address = client.HomeAddress
+            };
+
+            return View(dto);
+        }
+
+
+ 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, CreateClientDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(dto);
+            }
+
+            try
+            {
+                await _clientService.UpdateAsync(id, dto);
+
+                TempData["Success"] =
+                    "Client updated successfully!";
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
                 var errorMessage = ex.Message;
 
                 if (ex.InnerException != null)

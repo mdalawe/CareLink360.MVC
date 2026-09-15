@@ -1,6 +1,7 @@
 ﻿using CareLink360.Application.DTOs;
 using CareLink360.Application.Interfaces;
 using CareLink360.Context;
+using CareLink360.Domain.Enums; // 1. Added this using statement to access ContractStatus
 using Microsoft.EntityFrameworkCore;
 
 public class AdminDashboardService(ApplicationDbContext context) : IAdminDashboardService
@@ -15,7 +16,7 @@ public class AdminDashboardService(ApplicationDbContext context) : IAdminDashboa
             .CountAsync(x => x.Status == "Pending");
 
         var activeContracts = await context.Contracts
-            .CountAsync(x => x.Status == "Active");
+            .CountAsync(x => x.Status == ContractStatus.Successful);
 
         var completedPayments = await context.Payments
             .CountAsync(x => x.Status == "Paid");

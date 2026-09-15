@@ -128,6 +128,7 @@ C:\Users\user\source\repos\CareLink360\CareLink360\obj\Debug\net8.0\CareLink360.
 C:\Users\user\source\repos\CareLink360\CareLink360\obj\Debug\net8.0\CareLink360.Web.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\user\source\repos\CareLink360\CareLink360\obj\Debug\net8.0\CareLink360.Web.RazorAssemblyInfo.cache
 C:\Users\user\source\repos\CareLink360\CareLink360\obj\Debug\net8.0\CareLink360.Web.RazorAssemblyInfo.cs
+C:\Users\user\source\repos\CareLink360\CareLink360\obj\Debug\net8.0\CareLink360.Web.sourcelink.json
 C:\Users\user\source\repos\CareLink360\CareLink360\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\user\source\repos\CareLink360\CareLink360\obj\Debug\net8.0\scopedcss\bundle\CareLink360.Web.styles.css
 C:\Users\user\source\repos\CareLink360\CareLink360\obj\Debug\net8.0\scopedcss\projectbundle\CareLink360.Web.bundle.scp.css

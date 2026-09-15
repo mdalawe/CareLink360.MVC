@@ -4,13 +4,13 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\CareLink360.Web.x91gpwliy2.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-i4xI6CCUeYuFEXpCvN4nxgbCKKdWKY69QrG1qyqVajs="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1429"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022i4xI6CCUeYuFEXpCvN4nxgbCKKdWKY69QrG1qyqVajs=\u0022"},{"Name":"Last-Modified","Value":"Sun, 23 Aug 2026 16:07:29 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1429"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022i4xI6CCUeYuFEXpCvN4nxgbCKKdWKY69QrG1qyqVajs=\u0022"},{"Name":"Last-Modified","Value":"Mon, 14 Sep 2026 12:48:51 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/CareLink360.Web/CareLink360.Web.x91gpwliy2.bundle.scp.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\CareLink360.Web.x91gpwliy2.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"x91gpwliy2"},{"Name":"integrity","Value":"sha256-i4xI6CCUeYuFEXpCvN4nxgbCKKdWKY69QrG1qyqVajs="},{"Name":"label","Value":"_content/CareLink360.Web/CareLink360.Web.bundle.scp.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1429"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022i4xI6CCUeYuFEXpCvN4nxgbCKKdWKY69QrG1qyqVajs=\u0022"},{"Name":"Last-Modified","Value":"Sun, 23 Aug 2026 16:07:29 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1429"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022i4xI6CCUeYuFEXpCvN4nxgbCKKdWKY69QrG1qyqVajs=\u0022"},{"Name":"Last-Modified","Value":"Mon, 14 Sep 2026 12:48:51 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/CareLink360.Web/css/site.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>

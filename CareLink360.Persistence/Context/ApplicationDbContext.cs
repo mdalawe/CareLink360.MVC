@@ -59,6 +59,16 @@ namespace CareLink360.Context
                 .WithMany()
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Contract>()
+               .Property(c => c.Status)
+               .HasConversion<string>();
+
+            modelBuilder.Entity<Contract>()
+                .Property(c => c.TotalAmount)
+                .HasPrecision(18, 2);
+
+
         }
     }
 }

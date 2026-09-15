@@ -1,47 +1,5 @@
 [
   {
-    "ContainingType": "JobRequestController",
-    "Method": "Create",
-    "RelativePath": "api/job-requests",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dto",
-        "Type": "CareLink360.Application.DTOs.CreateJobRequestDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "JobRequestController",
-    "Method": "GetAll",
-    "RelativePath": "api/job-requests",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "JobRequestController",
-    "Method": "UpdateStatus",
-    "RelativePath": "api/job-requests/status",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dto",
-        "Type": "CareLink360.Application.DTOs.UpdateJobRequestDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "MedicalController",
     "Method": "Create",
     "RelativePath": "api/medical",
@@ -90,7 +48,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CaregiverCoperatingSystem.Api.Controllers.NinVerificationController",
+    "ContainingType": "CareLink360.Api.Controllers.NinVerificationController",
     "Method": "Review",
     "RelativePath": "api/nin/review",
     "HttpMethod": "POST",
@@ -106,7 +64,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CaregiverCoperatingSystem.Api.Controllers.NinVerificationController",
+    "ContainingType": "CareLink360.Api.Controllers.NinVerificationController",
     "Method": "Submit",
     "RelativePath": "api/nin/submit",
     "HttpMethod": "POST",

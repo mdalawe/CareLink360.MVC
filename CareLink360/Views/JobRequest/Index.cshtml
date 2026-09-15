@@ -1,144 +1,75 @@
-﻿@model IEnumerable<CareLink360.Web.Models.JobRequestViewModel>
-
+﻿@model List<CareLink360.Domain.Entities.JobRequest>
 @{
     ViewData["Title"] = "Job Requests";
+    Layout = "_AdminLayout";
 }
 
-<div class="container mt-4">
-
-    <div class="d-flex justify-content-between align-items-center mb-4">
-
+<div class="dashboard-card mb-3">
+    <div class="d-flex justify-content-between align-items-start">
         <div>
-            <h2>Job Requests</h2>
-            <p class="text-muted">
-                Manage caregiver job requests
-            </p>
+            <h5>Job Requests</h5>
+            <p class="subtitle mb-0">Requests sent between clients and caregivers</p>
         </div>
-
-        <a asp-action="Create"
-           class="btn btn-primary">
-            + New Job Request
+        <a asp-action="Create" class="btn btn-carelink">
+            <i class="fa-solid fa-plus me-1"></i> New Request
         </a>
-
     </div>
+</div>
 
-    @if (Model != null && Model.Any())
+<div class="dashboard-table">
+    @if (Model == null || !Model.Any())
     {
-        <div class="table-responsive">
-
-            <table class="table table-striped table-bordered shadow-sm">
-
-                <thead class="table-dark">
-
-                    <tr>
-                        <th>Client</th>
-                        <th>Job Type</th>
-                        <th>Location</th>
-                        <th>Preferred Date</th>
-                        <th>Status</th>
-                        <th width="250">Action</th>
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-
-                            <td>
-                                @item.ClientName
-                            </td>
-
-                            <td>
-                                @item.JobType
-                            </td>
-
-                            <td>
-                                @item.Location
-                            </td>
-
-                            <td>
-                                @item.PreferredDate.ToString("dd MMM yyyy")
-                            </td>
-
-                            <td>
-
-                                @if (item.Status == "Pending")
-                                {
-                                    <span class="badge bg-warning text-dark">
-                                        Pending
-                                    </span>
-                                }
-                                else if (item.Status == "Approved")
-                                {
-                                    <span class="badge bg-success">
-                                        Approved
-                                    </span>
-                                }
-                                else if (item.Status == "Rejected")
-                                {
-                                    <span class="badge bg-danger">
-                                        Rejected
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-secondary">
-                                        @item.Status
-                                    </span>
-                                }
-
-                            </td>
-
-                            <td>
-
-                                <a asp-action="Details"
-                                   asp-route-id="@item.Id"
-                                   class="btn btn-info btn-sm">
-                                    Details
-                                </a>
-
-                                <a asp-action="Edit"
-                                   asp-route-id="@item.Id"
-                                   class="btn btn-warning btn-sm">
-                                    Edit
-                                </a>
-
-                                <a asp-action="Delete"
-                                   asp-route-id="@item.Id"
-                                   class="btn btn-danger btn-sm">
-                                    Delete
-                                </a>
-
-                            </td>
-
-                        </tr>
-                    }
-
-                </tbody>
-
-            </table>
-
+        <div class="empty-state">
+            <i class="fa-solid fa-inbox"></i>
+            No job requests yet.
         </div>
     }
     else
     {
-        <div class="alert alert-info text-center">
-
-            <h5>No Job Requests Found</h5>
-
-            <p>
-                There are currently no job requests.
-            </p>
-
-            <a asp-action="Create"
-               class="btn btn-primary">
-                Create First Job Request
-            </a>
-
-        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Client</th>
+                    <th>Caregiver</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Requested</th>
+                    <th class="text-end">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var request in Model)
+                {
+                    <tr>
+                        <td><span class="id-chip">@request.ClientId.ToString().Substring(0, 8)</span></td>
+                        <td><span class="id-chip">@request.CaregiverId.ToString().Substring(0, 8)</span></td>
+                        <td>@request.Location</td>
+                        <td>
+                            <span class="status-badge status-@request.Status">@request.Status</span>
+                        </td>
+                        <td>@request.RequestedAt.ToString("MMM dd, yyyy")</td>
+                        <td class="text-end">
+                            @if (request.Status == "Pending")
+                            {
+                                <form asp-action="Accept" asp-route-id="@request.Id" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-success">
+                                        <i class="fa-solid fa-check"></i> Accept
+                                    </button>
+                                </form>
+                                <form asp-action="Reject" asp-route-id="@request.Id" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <i class="fa-solid fa-xmark"></i> Reject
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <span class="person-sub">No actions</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
-
 </div>

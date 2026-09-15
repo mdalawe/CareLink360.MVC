@@ -11,18 +11,19 @@ public class ClientService : IClientService
     private readonly ApplicationDbContext _context;
     private readonly PasswordHasher<ApplicationUser> _passwordHasher;
 
-    public ClientService(IClientRepository repository,
+    public ClientService(
+        IClientRepository repository,
         ApplicationDbContext context)
     {
         _repository = repository;
         _context = context;
-
-        _passwordHasher = new PasswordHasher<ApplicationUser>();
+        _passwordHasher =
+            new PasswordHasher<ApplicationUser>();
     }
+
 
     public async Task<Client> CreateAsync(CreateClientDto dto)
     {
-
         var emailExists = await _context.Users
             .AnyAsync(x => x.Email == dto.Email);
 
@@ -38,23 +39,16 @@ public class ClientService : IClientService
 
         try
         {
-
             var user = new ApplicationUser
             {
                 Id = Guid.NewGuid(),
-
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
-
                 Email = dto.Email,
                 UserName = dto.Email,
-
                 PhoneNumber = dto.PhoneNumber,
-
                 Role = "Client",
-
                 IsActive = true,
-
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -68,36 +62,20 @@ public class ClientService : IClientService
 
             await _context.SaveChangesAsync();
 
-
-            // =========================================
-            // CREATE CLIENT
-            // =========================================
-
             var client = new Client
             {
                 Id = Guid.NewGuid(),
-
-                // IMPORTANT:
-                // This is the REAL User ID
                 UserId = user.Id,
-
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
-
                 FullName =
                     $"{dto.FirstName} {dto.LastName}",
-
                 Gender = dto.Gender,
-
                 HomeAddress = dto.Address,
-
                 PhoneNumber = dto.PhoneNumber,
-
                 City = dto.City,
-
                 IsNinVerified = false
             };
-
 
             var result =
                 await _repository.CreateAsync(client);
@@ -109,7 +87,6 @@ public class ClientService : IClientService
         catch
         {
             await transaction.RollbackAsync();
-
             throw;
         }
     }
@@ -121,10 +98,40 @@ public class ClientService : IClientService
     }
 
 
+
     public async Task<Client?> GetByIdAsync(Guid id)
     {
         return await _repository.GetByIdAsync(id);
     }
+
+
+
+
+    public async Task<bool> UpdateAsync(
+        Guid id,
+        CreateClientDto dto)
+    {
+        var client = await _context.Clients
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+        if (client == null)
+        {
+            return false;
+        }
+
+        client.FirstName = dto.FirstName;
+        client.LastName = dto.LastName;
+        client.FullName =
+            $"{dto.FirstName} {dto.LastName}";
+        client.PhoneNumber = dto.PhoneNumber;
+        client.City = dto.City;
+        client.HomeAddress = dto.Address;
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
 
 
     public async Task<bool> DeleteAsync(Guid id)

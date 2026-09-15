@@ -7,6 +7,7 @@ C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\CareL
 C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\CareLink360.Domain.AssemblyInfoInputs.cache
 C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\CareLink360.Domain.AssemblyInfo.cs
 C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\CareLink360.Domain.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\CareLink360.Domain.sourcelink.json
 C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\CareLink360.Domain.dll
 C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\refint\CareLink360.Domain.dll
 C:\Users\user\source\repos\CareLink360\CareLink360.Domain\obj\Debug\net8.0\CareLink360.Domain.pdb

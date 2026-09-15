@@ -9,6 +9,7 @@ C:\Users\user\source\repos\CareLink360\CareLink360.Persistence\obj\Debug\net8.0\
 C:\Users\user\source\repos\CareLink360\CareLink360.Persistence\obj\Debug\net8.0\CareLink360.Persistence.AssemblyInfoInputs.cache
 C:\Users\user\source\repos\CareLink360\CareLink360.Persistence\obj\Debug\net8.0\CareLink360.Persistence.AssemblyInfo.cs
 C:\Users\user\source\repos\CareLink360\CareLink360.Persistence\obj\Debug\net8.0\CareLink360.Persistence.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\CareLink360\CareLink360.Persistence\obj\Debug\net8.0\CareLink360.Persistence.sourcelink.json
 C:\Users\user\source\repos\CareLink360\CareLink360.Persistence\obj\Debug\net8.0\CareLink.F23D8A2C.Up2Date
 C:\Users\user\source\repos\CareLink360\CareLink360.Persistence\obj\Debug\net8.0\CareLink360.Persistence.dll
 C:\Users\user\source\repos\CareLink360\CareLink360.Persistence\obj\Debug\net8.0\refint\CareLink360.Persistence.dll

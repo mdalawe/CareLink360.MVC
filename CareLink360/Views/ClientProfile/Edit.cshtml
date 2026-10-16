@@ -1,0 +1,252 @@
+﻿@model CareLink360.Web.Models.ClientProfileViewModel
+
+@{
+    ViewData["Title"] = "Edit Profile";
+    Layout = "_ClientLayout";
+}
+
+<style>
+    .edit-profile-page {
+        max-width: 850px;
+        margin: 0 auto;
+        padding: 10px 0 35px;
+    }
+
+    .edit-profile-header {
+        background: linear-gradient(120deg, #e6f7f4, #f7fcfb);
+        border: 1px solid #d9efeb;
+        border-radius: 20px;
+        padding: 28px;
+        margin-bottom: 22px;
+    }
+
+        .edit-profile-header .eyebrow {
+            color: #138779;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 750;
+            letter-spacing: 1.4px;
+            margin-bottom: 8px;
+        }
+
+        .edit-profile-header h2 {
+            color: #173b43;
+            font-size: 26px;
+            font-weight: 750;
+            margin-bottom: 8px;
+        }
+
+        .edit-profile-header p {
+            color: #71858a;
+            font-size: 14px;
+            margin: 0;
+        }
+
+    .edit-profile-card {
+        background: white;
+        border: 1px solid #e8eeee;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 8px 28px rgba(27, 64, 71, .06);
+    }
+
+        .edit-profile-card h3 {
+            color: #244a51;
+            font-size: 17px;
+            font-weight: 750;
+            margin-bottom: 7px;
+        }
+
+    .edit-intro {
+        color: #829397;
+        font-size: 13px;
+        margin-bottom: 26px;
+    }
+
+    .edit-field {
+        margin-bottom: 21px;
+    }
+
+        .edit-field label {
+            color: #344f54;
+            font-size: 13px;
+            font-weight: 650;
+            margin-bottom: 9px;
+        }
+
+        .edit-field .form-control {
+            min-height: 47px;
+            border: 1px solid #dfe9e7;
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 14px;
+            background: #fbfdfd;
+        }
+
+            .edit-field .form-control:focus {
+                border-color: #139688;
+                box-shadow: 0 0 0 3px rgba(19, 150, 136, .11);
+                background: white;
+            }
+
+            .edit-field .form-control[readonly] {
+                background: #f0f4f4;
+                color: #829397;
+            }
+
+    .edit-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        border-top: 1px solid #edf1f1;
+        padding-top: 23px;
+        margin-top: 8px;
+    }
+
+    .save-profile-btn {
+        border: none;
+        background: #118779;
+        color: white;
+        border-radius: 10px;
+        padding: 12px 20px;
+        font-size: 13px;
+        font-weight: 750;
+    }
+
+        .save-profile-btn:hover {
+            background: #0d6f65;
+        }
+
+    .cancel-profile-btn {
+        border: 1px solid #dfe9e7;
+        background: white;
+        color: #496267;
+        text-decoration: none;
+        border-radius: 10px;
+        padding: 12px 20px;
+        font-size: 13px;
+        font-weight: 650;
+    }
+
+        .cancel-profile-btn:hover {
+            background: #f5f9f8;
+            color: #244a51;
+        }
+
+    @@media (max-width: 600px) {
+        .edit-profile-header,
+        .edit-profile-card {
+            padding: 21px 17px;
+        }
+
+            .edit-profile-header h2 {
+                font-size: 23px;
+            }
+
+        .edit-actions > * {
+            flex: 1 1 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="edit-profile-page">
+
+    <section class="edit-profile-header">
+        <div class="eyebrow">
+            <i class="fa-solid fa-user-pen me-1"></i>
+            Account Settings
+        </div>
+
+        <h2>Edit Your Profile</h2>
+
+        <p>Make changes to your personal and contact information below.</p>
+    </section>
+
+    <section class="edit-profile-card">
+        <h3>
+            <i class="fa-regular fa-address-card me-2"></i>
+            Personal Information
+        </h3>
+
+        <p class="edit-intro">
+            Update your details and save when you're finished.
+        </p>
+
+        <form asp-controller="ClientProfile"
+              asp-action="Edit"
+              method="post">
+
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly"
+                 class="alert alert-danger"
+                 role="alert"></div>
+
+            <div class="edit-field">
+                <label asp-for="FullName">Full Name</label>
+                <input asp-for="FullName"
+                       class="form-control"
+                       placeholder="Enter your full name" />
+                <span asp-validation-for="FullName"
+                      class="text-danger small"></span>
+            </div>
+
+            <div class="edit-field">
+                <label asp-for="Email">Email Address</label>
+                <input asp-for="Email"
+                       class="form-control"
+                       readonly />
+                <small class="text-muted">
+                    Your login email cannot be changed here.
+                </small>
+            </div>
+
+            <div class="edit-field">
+                <label asp-for="PhoneNumber">Phone Number</label>
+                <input asp-for="PhoneNumber"
+                       class="form-control"
+                       placeholder="Enter your phone number" />
+                <span asp-validation-for="PhoneNumber"
+                      class="text-danger small"></span>
+            </div>
+
+            <div class="edit-field">
+                <label asp-for="HomeAddress">Home Address</label>
+                <input asp-for="HomeAddress"
+                       class="form-control"
+                       placeholder="Enter your home address" />
+                <span asp-validation-for="HomeAddress"
+                      class="text-danger small"></span>
+            </div>
+
+            <div class="edit-field">
+                <label asp-for="City">City</label>
+                <input asp-for="City"
+                       class="form-control"
+                       placeholder="Enter your city" />
+                <span asp-validation-for="City"
+                      class="text-danger small"></span>
+            </div>
+
+            <div class="edit-actions">
+                <button type="submit" class="save-profile-btn">
+                    <i class="fa-solid fa-floppy-disk me-2"></i>
+                    Save Changes
+                </button>
+
+                <a asp-controller="ClientProfile"
+                   asp-action="Index"
+                   class="cancel-profile-btn">
+                    <i class="fa-solid fa-xmark me-2"></i>
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+    </section>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

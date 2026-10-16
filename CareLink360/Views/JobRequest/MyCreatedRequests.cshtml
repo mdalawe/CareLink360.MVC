@@ -1,0 +1,95 @@
+﻿@model IEnumerable<CareLink360.Domain.Entities.JobRequest>
+
+@{
+    ViewData["Title"] = "My Care Requests";
+    Layout = "_ClientLayout";
+}
+
+<div class="dashboard-card mb-4">
+    <h5>
+        <i class="fa-solid fa-clipboard-list me-2"></i>
+        My Care Requests
+    </h5>
+
+    <p class="subtitle mb-0">
+        Track the caregiver requests you have submitted.
+    </p>
+</div>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="dashboard-card">
+        <div class="empty-state">
+            <i class="fa-solid fa-clipboard-list"></i>
+            <h5>No care requests yet</h5>
+            <p>You haven't submitted any care requests.</p>
+
+            <a asp-controller="Caregiver"
+               asp-action="Browse"
+               class="btn btn-success">
+                <i class="fa-solid fa-user-nurse me-2"></i>
+                Find a Caregiver
+            </a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="dashboard-table">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Caregiver</th>
+                    <th>Job Type</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Requested</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var request in Model)
+                {
+                    <tr>
+                        <td>
+                            @if (request.Caregiver != null)
+                            {
+                                <div class="person-cell">
+                                    <div class="person-avatar">
+                                        @request.Caregiver.FirstName.Substring(0, 1)
+                                    </div>
+
+                                    <div>
+                                        <div class="person-name">
+                                            @request.Caregiver.FirstName
+                                            @request.Caregiver.LastName
+                                        </div>
+                                        <div class="person-sub">Caregiver</div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="text-muted">Caregiver unavailable</span>
+                            }
+                        </td>
+
+                        <td>
+                            @(request.JobType?.Name ?? "Not specified")
+                        </td>
+
+                        <td>@request.Location</td>
+
+                        <td>
+                            <span class="badge bg-secondary">
+                                @request.Status
+                            </span>
+                        </td>
+
+                        <td>@request.RequestedAt.ToString("dd MMM yyyy")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

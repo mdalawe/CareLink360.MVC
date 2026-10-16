@@ -12,6 +12,8 @@ namespace CareLink360.Domain.Interface
 
         Task<Client?> GetByIdAsync(Guid id);
 
+        Task<Client?> GetByUserIdAsync(Guid userId);
+
         Task<bool> DeleteAsync(Guid id);
     }
 }

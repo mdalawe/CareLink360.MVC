@@ -1,69 +1,111 @@
-﻿using CareLink360.Application.DTOs;
+﻿
+using CareLink360.Application.DTOs;
 using CareLink360.Application.Interfaces;
+using CareLink360.Context;
 using CareLink360.Domain.Entities;
+using CareLink360.Domain.Interface;
+using Microsoft.EntityFrameworkCore;
 
-public class JobRequestService(
-    IJobRequestRepository repository,
-    IContractService contractService
-) : IJobRequestService
+namespace CareLink360.Application.Services
 {
-    public async Task<JobRequest> CreateAsync(CreateJobRequestDto dto)
+    public class JobRequestService : IJobRequestService
     {
-        var request = new JobRequest
+        private readonly IJobRequestRepository _repository;
+        private readonly IContractService _contractService;
+        private readonly ApplicationDbContext _context;
+
+        public JobRequestService(
+            IJobRequestRepository repository,
+            IContractService contractService,
+            ApplicationDbContext context)
         {
-            ClientId = dto.ClientId,
-            CaregiverId = dto.CaregiverId,
-            JobTypeId = dto.JobTypeId,
-            Location = dto.Location,
-            Description = dto.Description
-        };
+            _repository = repository;
+            _contractService = contractService;
+            _context = context;
+        }
 
-        return await repository.CreateAsync(request);
-    }
-
-
-    public async Task<JobRequest?> GetByIdAsync(Guid id)
-    {
-        return await repository.GetByIdAsync(id);
-    }
-
-
-    public async Task<List<JobRequest>> GetAllAsync()
-    {
-        return await repository.GetAllAsync();
-    }
-
-
-    public async Task AcceptAsync(Guid id)
-    {
-        var request = await repository.GetByIdAsync(id);
-
-        if (request == null)
-            throw new Exception("Job request not found");
-
-        request.Status = "Accepted";
-
-        await repository.UpdateAsync(request);
-
-        // Auto-create the Contract now that the caregiver accepted
-        await contractService.CreateAsync(new CreateContractDto
+        public async Task<JobRequest> CreateAsync(
+            CreateJobRequestDto dto)
         {
-            ClientId = request.ClientId,
-            CaregiverId = request.CaregiverId,
-            JobRequestId = request.Id
-        });
-    }
+            var caregiver = await _context.Caregivers
+                .FirstOrDefaultAsync(c => c.Id == dto.CaregiverId);
 
+            if (caregiver == null ||
+                !caregiver.IsApprovedByAdmin ||
+                !caregiver.IsAvaliable)
+            {
+                throw new Exception(
+                    "This caregiver is not currently available for requests.");
+            }
 
-    public async Task RejectAsync(Guid id)
-    {
-        var request = await repository.GetByIdAsync(id);
+            var request = new JobRequest
+            {
+                ClientId = dto.ClientId,
+                CaregiverId = dto.CaregiverId,
+                JobTypeId = dto.JobTypeId,
+                Location = dto.Location,
+                Description = dto.Description
+            };
 
-        if (request == null)
-            throw new Exception("Job request not found");
+            return await _repository.CreateAsync(request);
+        }
 
-        request.Status = "Rejected";
+        public async Task<JobRequest?> GetByIdAsync(Guid id)
+        {
+            return await _repository.GetByIdAsync(id);
+        }
 
-        await repository.UpdateAsync(request);
+        public async Task<List<JobRequest>> GetAllAsync()
+        {
+            return await _repository.GetAllAsync();
+        }
+
+        public async Task AcceptAsync(Guid id)
+        {
+            var request = await _repository.GetByIdAsync(id);
+
+            if (request == null)
+                throw new Exception("Job request not found.");
+
+            var caregiver = await _context.Caregivers
+                .FirstOrDefaultAsync(c => c.Id == request.CaregiverId);
+
+            if (caregiver == null)
+                throw new Exception("Caregiver not found.");
+
+            if (!caregiver.IsApprovedByAdmin)
+                throw new Exception("This caregiver has not been approved.");
+
+            if (!caregiver.IsAvaliable)
+                throw new Exception(
+                    "This caregiver is no longer available.");
+
+            request.Status = "Accepted";
+
+            await _repository.UpdateAsync(request);
+
+            await _contractService.CreateAsync(new CreateContractDto
+            {
+                ClientId = request.ClientId,
+                CaregiverId = request.CaregiverId,
+                JobRequestId = request.Id
+            });
+
+            caregiver.IsAvaliable = false;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RejectAsync(Guid id)
+        {
+            var request = await _repository.GetByIdAsync(id);
+
+            if (request == null)
+                throw new Exception("Job request not found.");
+
+            request.Status = "Rejected";
+
+            await _repository.UpdateAsync(request);
+        }
     }
 }

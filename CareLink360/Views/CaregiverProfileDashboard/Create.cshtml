@@ -1,0 +1,86 @@
+﻿@model CareLink360.Web.ViewModels.Caregiver.CreateCaregiverProfileViewModel
+
+@{
+    ViewData["Title"] = "Create Caregiver Profile";
+}
+
+<h2>Create Caregiver Profile</h2>
+
+<form asp-action="Create" method="post">
+
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div>
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="PhoneNumber"></label>
+        <input asp-for="PhoneNumber" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="DateOfBirth"></label>
+        <input asp-for="DateOfBirth" type="date" />
+        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Gender"></label>
+
+        <select asp-for="Gender">
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Address"></label>
+        <input asp-for="Address" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div>
+           <input asp-for="City" />
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="YearsOfExperience"></label>
+        <input asp-for="YearsOfExperience" type="number" />
+        <span asp-validation-for="YearsOfExperience" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Skills"></label>
+        <textarea asp-for="Skills"></textarea>
+        <span asp-validation-for="Skills" class="text-danger"></span>
+    </div>
+
+    <br />
+
+    <button type="submit">
+        Create Profile
+    </button>
+
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

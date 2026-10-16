@@ -1,11 +1,13 @@
-﻿using CareLink360.Application.Interfaces;
+﻿using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using CareLink360.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace CareLink360.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Caregiver")]
     public class CaregiverDashboardController : Controller
     {
         private readonly ICaregiverService _caregiverService;
@@ -16,11 +18,11 @@ namespace CareLink360.Web.Controllers
             _caregiverService = caregiverService;
         }
 
-        // GET: /CaregiverDashboard
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            // Get the logged-in user's ID
-            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userIdString =
+                User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (string.IsNullOrEmpty(userIdString))
             {
@@ -32,16 +34,16 @@ namespace CareLink360.Web.Controllers
                 return RedirectToAction("Login", "Auth");
             }
 
-            // Find caregiver using the logged-in user's ID
-            var caregiver = await _caregiverService.GetByUserIdAsync(userId);
+            var caregiver =
+                await _caregiverService.GetByUserIdAsync(userId);
 
-            // Caregiver profile does not exist
             if (caregiver == null)
             {
-                return View("NotFound");
+                return RedirectToAction(
+                    "Create",
+                    "CaregiverProfile");
             }
 
-            // Send caregiver profile to dashboard
             return View(caregiver);
         }
     }

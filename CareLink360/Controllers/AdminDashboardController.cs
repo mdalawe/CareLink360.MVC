@@ -30,13 +30,7 @@ namespace CareLink360.Web.Controllers
 
                 TotalContracts = await _context.Contracts.CountAsync(),
 
-                TotalMedicalRecords = await _context.MedicalRecords.CountAsync(),
-
                 TotalRatings = await _context.Ratings.CountAsync(),
-
-                PendingNinVerifications =
-                    await _context.NinVerifications
-                        .CountAsync(x => x.Status == "Pending"),
 
                 ActiveCaregivers =
                     await _context.Caregivers

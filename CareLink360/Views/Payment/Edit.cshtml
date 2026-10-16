@@ -1,69 +1,40 @@
-﻿@model CareLink360.Web.Models.PaymentViewModel
-
+﻿@model CareLink360.Application.DTOs.UpdatePaymentStatusDto
 @{
-    ViewData["Title"] = "Edit Payment";
+    ViewData["Title"] = "Update Payment Status";
+    Layout = "_AdminLayout";
 }
 
-<div class="container mt-4">
+<div class="dashboard-card" style="max-width: 520px;">
+    <h5>Update Payment Status</h5>
 
-    <div class="card shadow">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
 
-        <div class="card-header bg-warning">
+    <form asp-action="UpdateStatus" method="post">
 
-            <h3>Edit Payment</h3>
+        <input type="hidden" asp-for="PaymentId" />
 
+        <div class="mb-3">
+            <label asp-for="Status" class="form-label"></label>
+            <select asp-for="Status" class="form-select">
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+                <option value="Failed">Failed</option>
+            </select>
         </div>
 
-        <div class="card-body">
-
-            <form asp-action="Edit">
-
-                <input asp-for="Id"
-                       type="hidden" />
-
-                <div class="mb-3">
-
-                    <label asp-for="Status"></label>
-
-                    <select asp-for="Status"
-                            class="form-select">
-
-                        <option>Pending</option>
-
-                        <option>Paid</option>
-
-                        <option>Failed</option>
-
-                    </select>
-
-                </div>
-
-                <div class="mb-3">
-
-                    <label asp-for="Amount"></label>
-
-                    <input asp-for="Amount"
-                           class="form-control" />
-
-                </div>
-
-                <button class="btn btn-primary">
-
-                    Update
-
-                </button>
-
-                <a asp-action="Index"
-                   class="btn btn-secondary">
-
-                    Cancel
-
-                </a>
-
-            </form>
-
+        <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-carelink flex-grow-1">Update</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
         </div>
-
-    </div>
-
+    </form>
 </div>

@@ -28,5 +28,8 @@ namespace CareLink360.Domain.Entities
         public string PhoneNumber { get; set; } = string.Empty;
 
         public bool IsNinVerified { get; set; }
+
+        public ICollection<JobRequest> JobRequests { get; set; }
+    = new List<JobRequest>();
     }
 }

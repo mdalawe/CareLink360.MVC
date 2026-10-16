@@ -5,7 +5,7 @@ namespace CareLink360.Application.Interfaces
 {
     public interface IAuthService
     {
-        Task<ApplicationUser> RegisterAsync(RegisterRequestDto request);
+        Task<ApplicationUser?> RegisterAsync(RegisterRequestDto request);
 
         Task<ApplicationUser?> LoginAsync(LoginRequest request);
     }

@@ -2,12 +2,13 @@
 
 @{
     ViewData["Title"] = "Clients";
+    Layout = "_AdminLayout";
 }
 
 <style>
     /* =========================================
-           CARELINK360 CLIENT MANAGEMENT
-           ========================================= */
+               CARELINK360 CLIENT MANAGEMENT
+               ========================================= */
 
     .client-page {
         padding: 25px 0 90px;
@@ -61,7 +62,7 @@
         border: 1px solid #e7eef5;
         border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 10px 30px rgba(31, sixty, 90, 0.08);
+        box-shadow: 0 10px 30px rgba(31, 60, 90, 0.08);
     }
 
     .client-card-header {
@@ -225,68 +226,32 @@
         margin-bottom: 8px;
     }
 
-    /* Bottom-right back button */
-    .back-dashboard-btn {
-        position: fixed;
-        right: 28px;
-        bottom: 28px;
-        z-index: 1000;
-        display: inline-flex;
-        align-items: center;
-        gap: 9px;
-        padding: 13px 18px;
-        border-radius: 30px;
-        background: #17324d;
-        color: white;
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 700;
-        box-shadow: 0 8px 25px rgba(23, 50, 77, 0.25);
-        transition: all 0.25s ease;
-    }
-
-        .back-dashboard-btn:hover {
-            background: #1264d8;
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 28px rgba(18, 100, 216, 0.3);
+    @@media (max-width: 768px) {
+        .client-page {
+            padding: 18px 0 90px;
         }
 
-    @@media (max-width: 768px) {
-        .client-page
+        .client-heading h2 {
+            font-size: 25px;
+        }
 
-    {
-        padding: 18px 0 90px;
-    }
+        .client-header {
+            align-items: flex-start;
+        }
 
-    .client-heading h2 {
-        font-size: 25px;
-    }
+        .add-client-btn {
+            width: 100%;
+            justify-content: center;
+        }
 
-    .client-header {
-        align-items: flex-start;
-    }
+        .client-card-header {
+            padding: 18px;
+        }
 
-    .add-client-btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .client-card-header {
-        padding: 18px;
-    }
-
-    .client-table thead th,
-    .client-table tbody td {
-        padding: 13px;
-    }
-
-    .back-dashboard-btn {
-        right: 16px;
-        bottom: 18px;
-        padding: 12px 15px;
-    }
-
+        .client-table thead th,
+        .client-table tbody td {
+            padding: 13px;
+        }
     }
 </style>
 
@@ -453,9 +418,3 @@
     </div>
 
 </div>
-
-<a href="/AdminDashboard"
-   class="back-dashboard-btn">
-    <i class="bi bi-arrow-left"></i>
-    Back to Dashboard
-</a>

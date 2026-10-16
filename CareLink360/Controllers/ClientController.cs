@@ -2,6 +2,7 @@
 using CareLink360.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CareLink360.Web.Controllers
 {
@@ -9,17 +10,16 @@ namespace CareLink360.Web.Controllers
     public class ClientController : Controller
     {
         private readonly IClientService _clientService;
+        private readonly ICaregiverService _caregiverService;
 
-        public ClientController(IClientService clientService)
+        public ClientController(
+            IClientService clientService,
+            ICaregiverService caregiverService)
         {
             _clientService = clientService;
+            _caregiverService = caregiverService;
         }
 
-
-        // ==========================================
-        // GET: /Client
-        // SHOW ALL CLIENTS
-        // ==========================================
 
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -30,10 +30,6 @@ namespace CareLink360.Web.Controllers
         }
 
 
-        // ==========================================
-        // GET: /Client/Create
-        // SHOW CREATE CLIENT FORM
-        // ==========================================
 
         [HttpGet]
         public IActionResult Create()
@@ -44,10 +40,6 @@ namespace CareLink360.Web.Controllers
         }
 
 
-        // ==========================================
-        // POST: /Client/Create
-        // CREATE NEW CLIENT
-        // ==========================================
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -87,15 +79,11 @@ namespace CareLink360.Web.Controllers
         }
 
 
-        // ==========================================
-        // GET: /Client/Edit/{id}
-        // SHOW EDIT CLIENT FORM
-        // ==========================================
-
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var client = await _clientService.GetByIdAsync(id);
+            var client =
+                await _clientService.GetByIdAsync(id);
 
             if (client == null)
             {
@@ -115,10 +103,11 @@ namespace CareLink360.Web.Controllers
         }
 
 
- 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, CreateClientDto dto)
+        public async Task<IActionResult> Edit(
+            Guid id,
+            CreateClientDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -154,10 +143,7 @@ namespace CareLink360.Web.Controllers
         }
 
 
-        // ==========================================
-        // GET: /Client/Details/{id}
-        // SHOW ONE CLIENT
-        // ==========================================
+
 
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
@@ -174,10 +160,6 @@ namespace CareLink360.Web.Controllers
         }
 
 
-        // ==========================================
-        // GET: /Client/Delete/{id}
-        // SHOW DELETE CONFIRMATION
-        // ==========================================
 
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
@@ -194,10 +176,17 @@ namespace CareLink360.Web.Controllers
         }
 
 
-        // ==========================================
-        // POST: /Client/Delete/{id}
-        // DELETE CLIENT
-        // ==========================================
+
+        [HttpGet]
+        public async Task<IActionResult> Caregivers()
+        {
+            var caregivers =
+                await _caregiverService
+                    .GetApprovedAvailableAsync();
+
+            return View(caregivers);
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

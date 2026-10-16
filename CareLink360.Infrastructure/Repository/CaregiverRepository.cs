@@ -23,9 +23,19 @@ public class CaregiverRepository(ApplicationDbContext context) : ICaregiverRepos
         return await context.Caregivers.ToListAsync();
     }
 
+    public async Task<List<Caregiver>> GetApprovedAvailableAsync()
+    {
+        return await context.Caregivers
+            .Where(c =>
+                c.IsAvaliable &&
+                c.IsApprovedByAdmin)
+            .ToListAsync();
+    }
+
     public async Task<Caregiver?> GetByIdAsync(Guid id)
     {
-        return await context.Caregivers.FirstOrDefaultAsync(x => x.Id == id);
+        return await context.Caregivers
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<Caregiver?> UpdateAsync(Caregiver caregiver)

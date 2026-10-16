@@ -9,11 +9,20 @@ public class PaymentService(IPaymentRepository repository) : IPaymentService
         var payment = new Payment
         {
             ContractId = dto.ContractId,
+            ClientId = dto.ClientId,
+            PaymentMethod = dto.PaymentMethod,
             Amount = dto.Amount
         };
 
         return await repository.CreateAsync(payment);
     }
+
+
+    public async Task<Payment?> GetByIdAsync(Guid id)
+    {
+        return await repository.GetByIdAsync(id);
+    }
+
 
     public async Task UpdateStatusAsync(UpdatePaymentStatusDto dto)
     {
@@ -26,8 +35,14 @@ public class PaymentService(IPaymentRepository repository) : IPaymentService
         await repository.UpdateAsync(payment);
     }
 
+
     public async Task<List<Payment>> GetAllAsync()
     {
         return await repository.GetAllAsync();
+    }
+
+    public async Task<List<Payment>> GetByClientIdAsync(Guid clientId)
+    {
+        return await repository.GetByClientIdAsync(clientId);
     }
 }

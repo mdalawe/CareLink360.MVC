@@ -1,102 +1,61 @@
-﻿@model IEnumerable<CareLink360.Domain.Entities.Payment>
-
+﻿@model List<CareLink360.Domain.Entities.Payment>
 @{
     ViewData["Title"] = "Payments";
+    Layout = "_AdminLayout";
 }
 
-<div class="container mt-4">
+<div class="dashboard-card mb-3">
+    <h5>Payments</h5>
+    <p class="subtitle mb-0">All payments recorded across contracts</p>
+</div>
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-
-        <h2>Payment Management</h2>
-
-        <a asp-action="Create"
-           class="btn btn-primary">
-            Record Payment
-        </a>
-
-    </div>
-
-    <table class="table table-bordered table-hover shadow">
-
-        <thead class="table-dark">
-
-            <tr>
-
-                <th>Client ID</th>
-
-                <th>Contract ID</th>
-
-                <th>Amount</th>
-
-                <th>Status</th>
-
-                <th>Date</th>
-
-                <th width="220">Actions</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody>
-
-            @foreach (var item in Model)
-            {
+<div class="dashboard-table">
+    @if (Model == null || !Model.Any())
+    {
+        <div class="empty-state">
+            <i class="fa-solid fa-inbox"></i>
+            No payments recorded yet.
+        </div>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
                 <tr>
-
-                    <td>@item.ClientId</td>
-
-                    <td>@item.ContractId</td>
-
-                    <td>@item.Amount.ToString("C")</td>
-
-                    <td>
-
-                        @if (item.Status == "Paid")
-                        {
-                            <span class="badge bg-success">
-                                Paid
-                            </span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-warning">
-                                @item.Status
-                            </span>
-                        }
-
-                    </td>
-
-                    <td>@item.PaymentDate.ToShortDateString()</td>
-
-                    <td>
-
-                        <a asp-action="Details"
-                           asp-route-id="@item.Id"
-                           class="btn btn-info btn-sm">
-                            Details
-                        </a>
-
-                        <a asp-action="Edit"
-                           asp-route-id="@item.Id"
-                           class="btn btn-warning btn-sm">
-                            Edit
-                        </a>
-
-                        <a asp-action="Delete"
-                           asp-route-id="@item.Id"
-                           class="btn btn-danger btn-sm">
-                            Delete
-                        </a>
-
-                    </td>
-
+                    <th>Client</th>
+                    <th>Method</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th class="text-end">Action</th>
                 </tr>
-            }
-
-        </tbody>
-
-    </table>
-
+            </thead>
+            <tbody>
+                @foreach (var payment in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="person-cell">
+                                <div class="person-avatar">@payment.Client.FirstName.Substring(0, 1)@payment.Client.LastName.Substring(0, 1)</div>
+                                <div>
+                                    <div class="person-name">@payment.Client.FirstName @payment.Client.LastName</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>@payment.PaymentMethod</td>
+                        <td>₦@payment.Amount.ToString("N2")</td>
+                        <td>
+                            <span class="status-badge status-@payment.Status">@payment.Status</span>
+                        </td>
+                        <td>@payment.PaymentDate.ToString("MMM dd, yyyy")</td>
+                        <td class="text-end">
+                            <a asp-action="Details" asp-route-id="@payment.Id" class="btn btn-sm btn-carelink">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 </div>

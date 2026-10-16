@@ -1,0 +1,72 @@
+﻿@model IEnumerable<CareLink360.Domain.Entities.Payment>
+
+@{
+    ViewData["Title"] = "My Payments";
+}
+
+<div class="container-fluid px-4 py-4">
+
+    <div class="mb-4">
+        <h2>My Payments</h2>
+        <p class="text-muted">
+            View your payment history.
+        </p>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            You do not have any payments yet.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+
+                <thead>
+                    <tr>
+                        <th>Payment ID</th>
+                        <th>Contract ID</th>
+                        <th>Amount</th>
+                        <th>Payment Method</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var payment in Model)
+                    {
+                        <tr>
+                            <td>
+                                @payment.Id
+                            </td>
+
+                            <td>
+                                @payment.ContractId
+                            </td>
+
+                            <td>
+                                $@payment.Amount
+                            </td>
+
+                            <td>
+                                @payment.PaymentMethod
+                            </td>
+
+                            <td>
+                                @payment.Status
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    }
+
+</div>

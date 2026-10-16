@@ -16,8 +16,6 @@ namespace CareLink360.Web.Models
 
         public bool IsAvailable { get; set; }
 
-        public bool IsNinVerified { get; set; }
-
         public bool IsMedicallyCleared { get; set; }
 
         public decimal AverageRating { get; set; }

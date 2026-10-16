@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CareLink360.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260915154656_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20261006152703_RemoveNinAndMedical")]
+    partial class RemoveNinAndMedical
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,15 +145,6 @@ namespace CareLink360.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsAvaliable")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsBackgroundChecked")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsMedicallyCleared")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsNinVerified")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
@@ -309,6 +300,12 @@ namespace CareLink360.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CaregiverId");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("JobTypeId");
+
                     b.ToTable("JobRequests");
                 });
 
@@ -336,66 +333,6 @@ namespace CareLink360.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("JobTypes");
-                });
-
-            modelBuilder.Entity("CareLink360.Domain.Entities.MedicalRecord", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("BloodGroup")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CaregiverId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ClearanceStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastCheckupDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("VaccinationStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MedicalRecords");
-                });
-
-            modelBuilder.Entity("CareLink360.Domain.Entities.NinVerification", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsVerified")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Nin")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("SubmittedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("VerifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("NinVerifications");
                 });
 
             modelBuilder.Entity("CareLink360.Domain.Entities.Payment", b =>
@@ -426,6 +363,8 @@ namespace CareLink360.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
 
                     b.HasIndex("ContractId");
 
@@ -614,19 +553,19 @@ namespace CareLink360.Persistence.Migrations
                     b.HasOne("CareLink360.Domain.Entities.Caregiver", "Caregiver")
                         .WithMany()
                         .HasForeignKey("CaregiverId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CareLink360.Domain.Entities.Client", "Client")
                         .WithMany()
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CareLink360.Domain.Entities.JobRequest", "JobRequest")
                         .WithMany()
                         .HasForeignKey("JobRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Caregiver");
@@ -636,13 +575,50 @@ namespace CareLink360.Persistence.Migrations
                     b.Navigation("JobRequest");
                 });
 
+            modelBuilder.Entity("CareLink360.Domain.Entities.JobRequest", b =>
+                {
+                    b.HasOne("CareLink360.Domain.Entities.Caregiver", "Caregiver")
+                        .WithMany("JobRequests")
+                        .HasForeignKey("CaregiverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CareLink360.Domain.Entities.Client", "Client")
+                        .WithMany("JobRequests")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CareLink360.Domain.Entities.JobType", "JobType")
+                        .WithMany()
+                        .HasForeignKey("JobTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Caregiver");
+
+                    b.Navigation("Client");
+
+                    b.Navigation("JobType");
+                });
+
             modelBuilder.Entity("CareLink360.Domain.Entities.Payment", b =>
                 {
-                    b.HasOne("CareLink360.Domain.Entities.Contract", null)
+                    b.HasOne("CareLink360.Domain.Entities.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CareLink360.Domain.Entities.Contract", "Contract")
                         .WithMany("Payments")
                         .HasForeignKey("ContractId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Contract");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -694,6 +670,16 @@ namespace CareLink360.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CareLink360.Domain.Entities.Caregiver", b =>
+                {
+                    b.Navigation("JobRequests");
+                });
+
+            modelBuilder.Entity("CareLink360.Domain.Entities.Client", b =>
+                {
+                    b.Navigation("JobRequests");
                 });
 
             modelBuilder.Entity("CareLink360.Domain.Entities.Contract", b =>

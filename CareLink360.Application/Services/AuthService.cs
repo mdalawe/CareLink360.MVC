@@ -28,6 +28,7 @@ namespace CareLink360.Application.Services
 
             var user = new ApplicationUser
             {
+                Id = Guid.NewGuid(),
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 Email = request.Email,
@@ -44,6 +45,43 @@ namespace CareLink360.Application.Services
             _context.Users.Add(user);
 
             await _context.SaveChangesAsync();
+
+            if (request.Role == "Caregiver")
+            {
+                var caregiver = new Caregiver
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = user.Id,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    PhoneNumber = request.PhoneNumber,
+                    CreatedAt = DateTime.UtcNow,
+                    IsAvaliable = true,
+                    AverageRating = 0
+                };
+
+                _context.Caregivers.Add(caregiver);
+
+                await _context.SaveChangesAsync();
+            }
+
+            if (request.Role == "Client" || request.Role == "Patient")
+            {
+                var client = new Client
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = user.Id,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    FullName = $"{request.FirstName} {request.LastName}",
+                    PhoneNumber = request.PhoneNumber,
+                    IsNinVerified = false
+                };
+
+                _context.Clients.Add(client);
+
+                await _context.SaveChangesAsync();
+            }
 
             return user;
         }

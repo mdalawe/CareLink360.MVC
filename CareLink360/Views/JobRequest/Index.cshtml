@@ -1,75 +1,292 @@
-﻿@model List<CareLink360.Domain.Entities.JobRequest>
+﻿@model CareLink360.Application.DTOs.CreateJobRequestDto
+
 @{
-    ViewData["Title"] = "Job Requests";
-    Layout = "_AdminLayout";
+    ViewData["Title"] = "Request Caregiver";
 }
 
-<div class="dashboard-card mb-3">
-    <div class="d-flex justify-content-between align-items-start">
-        <div>
-            <h5>Job Requests</h5>
-            <p class="subtitle mb-0">Requests sent between clients and caregivers</p>
+<div class="container-fluid py-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-xl-7 col-lg-8 col-md-10">
+
+            <div class="request-card">
+
+                <!-- HEADER -->
+                <div class="request-header">
+
+                    <div class="request-icon">
+                        <i class="bi bi-person-heart"></i>
+                    </div>
+
+                    <div>
+                        <h2>Request a Caregiver</h2>
+
+                        <p>
+                            Provide the details of the care you need.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- BODY -->
+                <div class="request-body">
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+
+                            <strong>
+                                Please correct the following:
+                            </strong>
+
+                            <ul class="mb-0 mt-2">
+
+                                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                {
+                                    <li>
+                                        @error.ErrorMessage
+                                    </li>
+                                }
+
+                            </ul>
+
+                        </div>
+                    }
+
+
+                    <form asp-action="Create"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+
+                        <!-- CAREGIVER -->
+                        <input type="hidden"
+                               asp-for="CaregiverId" />
+
+
+                        <!-- JOB TYPE -->
+                        <div class="mb-4">
+
+                            <label asp-for="JobTypeId"
+                                   class="form-label">
+                                Type of Care
+                            </label>
+
+                            <select asp-for="JobTypeId"
+                                    class="form-select">
+
+                                <option value="">
+                                    -- Select Type of Care --
+                                </option>
+
+                                @if (ViewBag.JobTypes != null)
+                                {
+                                    foreach (var jobType in ViewBag.JobTypes)
+                                    {
+                                        <option value="@jobType.Id">
+                                            @jobType.Name
+                                        </option>
+                                    }
+                                }
+
+                            </select>
+
+                            <span asp-validation-for="JobTypeId"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <!-- LOCATION -->
+                        <div class="mb-4">
+
+                            <label asp-for="Location"
+                                   class="form-label">
+                                Care Location
+                            </label>
+
+                            <input asp-for="Location"
+                                   class="form-control"
+                                   placeholder="Enter where care will be provided" />
+
+                            <span asp-validation-for="Location"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <!-- DESCRIPTION -->
+                        <div class="mb-4">
+
+                            <label asp-for="Description"
+                                   class="form-label">
+                                Care Requirements
+                            </label>
+
+                            <textarea asp-for="Description"
+                                      class="form-control"
+                                      rows="5"
+                                      placeholder="Describe the care you need, schedule, special requirements, etc."></textarea>
+
+                            <span asp-validation-for="Description"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <!-- BUTTONS -->
+                        <div class="d-flex gap-3 mt-4">
+
+                            <a asp-controller="Client"
+                               asp-action="Caregivers"
+                               class="btn btn-outline-secondary flex-grow-1">
+
+                                <i class="bi bi-arrow-left me-1"></i>
+                                Back
+
+                            </a>
+
+
+                            <button type="submit"
+                                    class="btn request-btn flex-grow-1">
+
+                                <i class="bi bi-send-fill me-1"></i>
+                                Send Request
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
         </div>
-        <a asp-action="Create" class="btn btn-carelink">
-            <i class="fa-solid fa-plus me-1"></i> New Request
-        </a>
+
     </div>
+
 </div>
 
-<div class="dashboard-table">
-    @if (Model == null || !Model.Any())
-    {
-        <div class="empty-state">
-            <i class="fa-solid fa-inbox"></i>
-            No job requests yet.
-        </div>
+
+<style>
+
+    .request-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #e5edf3;
+        box-shadow: 0 12px 35px rgba(31, 60, 90, 0.10);
     }
-    else
-    {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Client</th>
-                    <th>Caregiver</th>
-                    <th>Location</th>
-                    <th>Status</th>
-                    <th>Requested</th>
-                    <th class="text-end">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var request in Model)
-                {
-                    <tr>
-                        <td><span class="id-chip">@request.ClientId.ToString().Substring(0, 8)</span></td>
-                        <td><span class="id-chip">@request.CaregiverId.ToString().Substring(0, 8)</span></td>
-                        <td>@request.Location</td>
-                        <td>
-                            <span class="status-badge status-@request.Status">@request.Status</span>
-                        </td>
-                        <td>@request.RequestedAt.ToString("MMM dd, yyyy")</td>
-                        <td class="text-end">
-                            @if (request.Status == "Pending")
-                            {
-                                <form asp-action="Accept" asp-route-id="@request.Id" method="post" class="d-inline">
-                                    <button type="submit" class="btn btn-sm btn-success">
-                                        <i class="fa-solid fa-check"></i> Accept
-                                    </button>
-                                </form>
-                                <form asp-action="Reject" asp-route-id="@request.Id" method="post" class="d-inline">
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">
-                                        <i class="fa-solid fa-xmark"></i> Reject
-                                    </button>
-                                </form>
-                            }
-                            else
-                            {
-                                <span class="person-sub">No actions</span>
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+
+    .request-header {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 30px;
+        background: linear-gradient(135deg, #eef9f8, #f7fbfd);
+        border-bottom: 1px solid #e5edf3;
     }
-</div>
+
+    .request-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 15px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #dff5ef;
+        color: #128c75;
+
+        font-size: 27px;
+        flex-shrink: 0;
+    }
+
+    .request-header h2 {
+        margin: 0 0 5px;
+        color: #17324d;
+        font-weight: 700;
+    }
+
+    .request-header p {
+        margin: 0;
+        color: #718096;
+    }
+
+    .request-body {
+        padding: 30px;
+    }
+
+    .form-label {
+        color: #17324d;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .form-control,
+    .form-select {
+        border: 1px solid #dbe5ec;
+        border-radius: 10px;
+        padding: 12px 14px;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #16a085;
+        box-shadow: 0 0 0 0.2rem rgba(22, 160, 133, 0.12);
+    }
+
+    .request-btn {
+        background: linear-gradient(135deg, #16a085, #128c75);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 20px;
+        font-weight: 600;
+    }
+
+    .request-btn:hover {
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 7px 18px rgba(22, 160, 133, 0.22);
+    }
+
+    @@media (max-width: 576px) {
+
+        .request-header {
+            padding: 22px;
+        }
+
+        .request-body {
+            padding: 22px;
+        }
+
+        .request-header h2 {
+            font-size: 22px;
+        }
+
+        .d-flex {
+            flex-direction: column;
+        }
+
+    }
+
+</style>
+
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

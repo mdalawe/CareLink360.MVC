@@ -1,0 +1,79 @@
+﻿@model IEnumerable<CareLink360.Domain.Entities.Contract>
+
+@{
+    ViewData["Title"] = "My Contracts";
+    Layout = "_ClientLayout";
+}
+
+<div class="container-fluid px-4 py-4">
+
+    <h2>My Contracts</h2>
+
+    <p class="text-muted">
+        View your caregiving contracts.
+    </p>
+
+    @if (!Model.Any())
+    {
+            <div class="alert alert-info">
+                You do not have any contracts yet.
+            </div>
+    }
+    else
+    {
+            <div class="table-responsive">
+
+                <table class="table">
+
+                    <thead>
+                        <tr>
+                            <th>Contract ID</th>
+                            <th>Caregiver ID</th>
+                            <th>Job Request ID</th>
+                            <th>Status</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    @foreach (var contract in Model)
+                    {
+                                <tr>
+
+                                    <td>
+                                @contract.Id
+                                    </td>
+
+                                    <td>
+                                @contract.CaregiverId
+                                    </td>
+
+                                    <td>
+                                @contract.JobRequestId
+                                    </td>
+
+                                    <td>
+                                @contract.Status
+                                    </td>
+
+                                    <td>
+                                @contract.StartDate
+                                    </td>
+
+                                    <td>
+                                @contract.EndDate
+                                    </td>
+
+                                </tr>
+                    }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+    }
+
+</div>

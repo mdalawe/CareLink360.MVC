@@ -1,4 +1,5 @@
-﻿@*
+﻿```cshtml
+@*
     CareLink360 Admin Layout
 *@
 
@@ -6,15 +7,10 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0" />
-
-    <title>
-        @ViewData["Title"] - CareLink360
-    </title>
+    <title>@ViewData["Title"] - CareLink360</title>
 
     <link rel="stylesheet"
           href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -23,7 +19,6 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
     <style>
-
         * {
             box-sizing: border-box;
         }
@@ -36,7 +31,6 @@
         }
 
         /* SIDEBAR */
-
         .sidebar {
             position: fixed;
             top: 0;
@@ -60,6 +54,7 @@
         .brand-icon {
             width: 40px;
             height: 40px;
+            flex-shrink: 0;
             border-radius: 10px;
             background: #19b37d;
             display: flex;
@@ -80,7 +75,6 @@
         }
 
         /* MENU */
-
         .menu-title {
             padding: 25px 22px 10px;
             color: #829ab1;
@@ -96,53 +90,89 @@
             margin: 0;
         }
 
-            .menu li {
-                margin-bottom: 5px;
-            }
+        .menu li {
+            margin-bottom: 5px;
+        }
 
-            .menu a {
-                display: flex;
-                align-items: center;
-                gap: 13px;
-                padding: 12px 14px;
-                color: #d9e2ec;
-                text-decoration: none;
-                border-radius: 8px;
-                font-size: 14px;
-            }
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 12px 14px;
+            color: #d9e2ec;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
 
-                .menu a:hover {
-                    background: rgba(255,255,255,0.08);
-                    color: white;
-                }
+        .menu a:hover {
+            background: rgba(255,255,255,0.08);
+            color: white;
+        }
 
-                .menu a.active {
-                    background: #19b37d;
-                    color: white;
-                }
+        .menu a.active {
+            background: #19b37d;
+            color: white;
+        }
 
-            .menu i {
-                width: 20px;
-                text-align: center;
-            }
+        .menu i {
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        /* LOGOUT BUTTON */
+        .logout-form {
+            margin: 0;
+            padding: 0;
+        }
+
+        .logout-button {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 12px 14px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: #d9e2ec;
+            font-family: inherit;
+            font-size: 14px;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .logout-button i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .logout-button:hover {
+            background: rgba(255,255,255,0.08);
+            color: white;
+        }
 
         /* MAIN */
-
         .main {
             margin-left: 250px;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* TOPBAR */
-
         .topbar {
-            height: 75px;
+            min-height: 75px;
             background: white;
             border-bottom: 1px solid #e5e9ef;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 30px;
+            gap: 20px;
+            padding: 12px 30px;
         }
 
         .page-title {
@@ -181,13 +211,12 @@
         }
 
         /* CONTENT */
-
         .content {
+            flex: 1;
             padding: 30px;
         }
 
         /* BACK BUTTON */
-
         .back-button {
             display: inline-flex;
             align-items: center;
@@ -202,13 +231,12 @@
             margin-bottom: 20px;
         }
 
-            .back-button:hover {
-                background: #f0f4f8;
-                color: #102a43;
-            }
+        .back-button:hover {
+            background: #f0f4f8;
+            color: #102a43;
+        }
 
         /* FOOTER */
-
         .footer {
             background: white;
             border-top: 1px solid #e5e9ef;
@@ -217,11 +245,7 @@
             font-size: 13px;
         }
 
-
-        /* =========================================
-                   CONTENT CARD + TABLE
-                ========================================= */
-
+        /* DASHBOARD CARDS */
         .dashboard-card {
             background: #ffffff;
             border-radius: 12px;
@@ -229,18 +253,19 @@
             padding: 25px;
         }
 
-            .dashboard-card h5 {
-                font-size: 17px;
-                font-weight: 600;
-                margin-bottom: 5px;
-            }
+        .dashboard-card h5 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
 
-            .dashboard-card p.subtitle {
-                color: #829ab1;
-                font-size: 13px;
-                margin-bottom: 20px;
-            }
+        .dashboard-card p.subtitle {
+            color: #829ab1;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
 
+        /* TABLES */
         .dashboard-table {
             background: #ffffff;
             border-radius: 12px;
@@ -248,26 +273,25 @@
             overflow: hidden;
         }
 
-            .dashboard-table table {
-                margin: 0;
-            }
+        .dashboard-table table {
+            margin: 0;
+        }
 
-            .dashboard-table th {
-                background: #f8fafb;
-                color: #59636e;
-                font-size: 13px;
-                font-weight: 600;
-                padding: 15px;
-            }
+        .dashboard-table th {
+            background: #f8fafb;
+            color: #59636e;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 15px;
+        }
 
-            .dashboard-table td {
-                padding: 15px;
-                font-size: 13px;
-                vertical-align: middle;
-            }
+        .dashboard-table td {
+            padding: 15px;
+            font-size: 13px;
+            vertical-align: middle;
+        }
 
         /* STATUS BADGES */
-
         .status-badge {
             padding: 5px 10px;
             border-radius: 20px;
@@ -296,7 +320,6 @@
         }
 
         /* PERSON CELL */
-
         .person-cell {
             display: flex;
             align-items: center;
@@ -328,23 +351,22 @@
             color: #8a9299;
         }
 
+        /* EMPTY STATE */
         .empty-state {
             text-align: center;
             padding: 50px 20px;
             color: #8a9299;
         }
 
-            .empty-state i {
-                font-size: 40px;
-                display: block;
-                margin-bottom: 12px;
-                opacity: 0.4;
-            }
+        .empty-state i {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 12px;
+            opacity: 0.4;
+        }
 
-        /* MOBILE */
-
+        /* RESPONSIVE */
         @@media (max-width: 768px) {
-
             .sidebar {
                 width: 210px;
             }
@@ -358,54 +380,91 @@
             }
 
             .topbar {
-                padding: 0 20px;
+                padding: 12px 20px;
             }
         }
 
-    </style>
+        @@media (max-width: 480px) {
+            .sidebar {
+                width: 180px;
+            }
 
+            .main {
+                margin-left: 180px;
+            }
+
+            .brand {
+                padding: 0 12px;
+            }
+
+            .brand-name {
+                font-size: 17px;
+            }
+
+            .brand-subtitle {
+                font-size: 10px;
+            }
+
+            .menu-title {
+                padding-left: 14px;
+            }
+
+            .menu {
+                padding: 0 8px;
+            }
+
+            .menu a,
+            .logout-button {
+                gap: 8px;
+                padding: 11px 9px;
+                font-size: 12px;
+            }
+
+            .content {
+                padding: 14px;
+            }
+
+            .topbar {
+                padding: 12px 14px;
+            }
+
+            .page-title {
+                font-size: 17px;
+            }
+
+            .admin-role {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
     <!-- SIDEBAR -->
-
     <aside class="sidebar">
 
         <div class="brand">
-
             <div class="brand-icon">
                 <i class="fa-solid fa-heart"></i>
             </div>
 
             <div>
-                <div class="brand-name">
-                    CareLink360
-                </div>
-
-                <div class="brand-subtitle">
-                    Healthcare Management
-                </div>
+                <div class="brand-name">CareLink360</div>
+                <div class="brand-subtitle">Healthcare Management</div>
             </div>
-
         </div>
 
-
-        <div class="menu-title">
-            Main Menu
-        </div>
+        <!-- MAIN MENU -->
+        <div class="menu-title">Main Menu</div>
 
         <ul class="menu">
-
             <li>
                 <a asp-controller="AdminDashboard"
                    asp-action="Index"
                    class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "AdminDashboard" ? "active" : "")">
-
                     <i class="fa-solid fa-gauge"></i>
-
-                    Dashboard
-
+                    <span>Dashboard</span>
                 </a>
             </li>
 
@@ -413,11 +472,8 @@
                 <a asp-controller="Caregiver"
                    asp-action="Index"
                    class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Caregiver" ? "active" : "")">
-
                     <i class="fa-solid fa-user-nurse"></i>
-
-                    Caregivers
-
+                    <span>Caregivers</span>
                 </a>
             </li>
 
@@ -425,11 +481,8 @@
                 <a asp-controller="Client"
                    asp-action="Index"
                    class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Client" ? "active" : "")">
-
                     <i class="fa-solid fa-users"></i>
-
-                    Clients
-
+                    <span>Clients</span>
                 </a>
             </li>
 
@@ -437,11 +490,8 @@
                 <a asp-controller="JobRequest"
                    asp-action="Index"
                    class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "JobRequest" ? "active" : "")">
-
                     <i class="fa-solid fa-briefcase"></i>
-
-                    Job Requests
-
+                    <span>Job Requests</span>
                 </a>
             </li>
 
@@ -449,11 +499,8 @@
                 <a asp-controller="Contract"
                    asp-action="Index"
                    class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Contract" ? "active" : "")">
-
                     <i class="fa-solid fa-file-contract"></i>
-
-                    Contracts
-
+                    <span>Contracts</span>
                 </a>
             </li>
 
@@ -461,166 +508,93 @@
                 <a asp-controller="Payment"
                    asp-action="Index"
                    class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Payment" ? "active" : "")">
-
                     <i class="fa-solid fa-credit-card"></i>
-
-                    Payments
-
+                    <span>Payments</span>
                 </a>
             </li>
-
         </ul>
 
-
-        <div class="menu-title">
-            Healthcare
-        </div>
+        <!-- FEEDBACK MENU: MEDICAL AND NIN REMOVED -->
+        <div class="menu-title">Feedback</div>
 
         <ul class="menu">
-
-            <li>
-                <a asp-controller="Medical"
-                   asp-action="Index"
-                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Medical" ? "active" : "")">
-
-                    <i class="fa-solid fa-notes-medical"></i>
-
-                    Medical Records
-
-                </a>
-            </li>
-
-            <li>
-                <a asp-controller="NinVerification"
-                   asp-action="Index"
-                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "NinVerification" ? "active" : "")">
-
-                    <i class="fa-solid fa-id-card"></i>
-
-                    NIN Verification
-
-                </a>
-            </li>
-
             <li>
                 <a asp-controller="Rating"
                    asp-action="Index"
                    class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Rating" ? "active" : "")">
-
                     <i class="fa-solid fa-star"></i>
-
-                    Ratings
-
+                    <span>Ratings &amp; Reviews</span>
                 </a>
             </li>
-
         </ul>
 
-
-        <div class="menu-title">
-            System
-        </div>
+        <!-- SYSTEM MENU -->
+        <div class="menu-title">System</div>
 
         <ul class="menu">
-
             <li>
-                <a asp-controller="Home"
-                   asp-action="Index">
-
+                <a asp-controller="Home" asp-action="Index">
                     <i class="fa-solid fa-globe"></i>
-
-                    Website
-
+                    <span>Website</span>
                 </a>
             </li>
 
             <li>
-                <a asp-controller="Auth"
-                   asp-action="Logout">
+                <form asp-controller="Auth"
+                      asp-action="Logout"
+                      method="post"
+                      class="logout-form">
 
-                    <i class="fa-solid fa-right-from-bracket"></i>
+                    @Html.AntiForgeryToken()
 
-                    Logout
-
-                </a>
+                    <button type="submit" class="logout-button">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </button>
+                </form>
             </li>
-
         </ul>
 
     </aside>
 
-
-    <!-- MAIN -->
-
+    <!-- MAIN CONTENT -->
     <div class="main">
 
-
-        <!-- TOP BAR -->
-
+        <!-- TOPBAR -->
         <header class="topbar">
-
-            <h1 class="page-title">
-                @ViewData["Title"]
-            </h1>
+            <h1 class="page-title">@ViewData["Title"]</h1>
 
             <div class="admin-user">
-
-                <div class="avatar">
-                    A
-                </div>
+                <div class="avatar">A</div>
 
                 <div>
-
-                    <div class="admin-name">
-                        Administrator
-                    </div>
-
-                    <span class="admin-role">
-                        System Admin
-                    </span>
-
+                    <div class="admin-name">Administrator</div>
+                    <span class="admin-role">System Admin</span>
                 </div>
-
             </div>
-
         </header>
 
-
         <!-- PAGE CONTENT -->
-
         <main class="content">
-
-            <a href="javascript:history.back()"
-               class="back-button">
-
+            <a href="javascript:history.back()" class="back-button">
                 <i class="fa-solid fa-arrow-left"></i>
-
                 Back
-
             </a>
 
             @RenderBody()
-
         </main>
 
-
         <!-- FOOTER -->
-
         <footer class="footer">
-
-            © 2026 CareLink360. All Rights Reserved.
-
+            &copy; 2026 CareLink360. All Rights Reserved.
         </footer>
 
     </div>
 
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>
-
 </html>

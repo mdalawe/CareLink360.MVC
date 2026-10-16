@@ -12,5 +12,7 @@ namespace CareLink360.Application.Interfaces
         Task UpdateStatusAsync(UpdateContractStatusDto dto);
 
         Task<List<Contract>> GetAllAsync();
+
+        Task<List<Contract>> GetByClientIdAsync(Guid clientId);
     }
 }

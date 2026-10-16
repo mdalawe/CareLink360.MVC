@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CareLink360.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -53,24 +53,6 @@ namespace CareLink360.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "JobRequests",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CaregiverId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    JobTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RequestedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_JobRequests", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -304,6 +286,36 @@ namespace CareLink360.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobRequests",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CaregiverId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JobTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RequestedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobRequests_Caregivers_CaregiverId",
+                        column: x => x.CaregiverId,
+                        principalTable: "Caregivers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_JobRequests_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Contracts",
                 columns: table => new
                 {
@@ -326,19 +338,19 @@ namespace CareLink360.Persistence.Migrations
                         column: x => x.CaregiverId,
                         principalTable: "Caregivers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Contracts_Clients_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Clients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Contracts_JobRequests_JobRequestId",
                         column: x => x.JobRequestId,
                         principalTable: "JobRequests",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -357,11 +369,17 @@ namespace CareLink360.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Payments", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Payments_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Payments_Contracts_ContractId",
                         column: x => x.ContractId,
                         principalTable: "Contracts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -429,6 +447,21 @@ namespace CareLink360.Persistence.Migrations
                 column: "JobRequestId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_JobRequests_CaregiverId",
+                table: "JobRequests",
+                column: "CaregiverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobRequests_ClientId",
+                table: "JobRequests",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_ClientId",
+                table: "Payments",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Payments_ContractId",
                 table: "Payments",
                 column: "ContractId");
@@ -474,13 +507,13 @@ namespace CareLink360.Persistence.Migrations
                 name: "Contracts");
 
             migrationBuilder.DropTable(
+                name: "JobRequests");
+
+            migrationBuilder.DropTable(
                 name: "Caregivers");
 
             migrationBuilder.DropTable(
                 name: "Clients");
-
-            migrationBuilder.DropTable(
-                name: "JobRequests");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -40,6 +40,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyZWdpdmVyRGFzaGJvYXJkXE5vdEZvdW5kLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/user/source/repos/CareLink360/CareLink360/Views/CaregiverProfileDashboard/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyZWdpdmVyUHJvZmlsZURhc2hib2FyZFxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/source/repos/CareLink360/CareLink360/Views/Caregiver/Browse.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyZWdpdmVyXEJyb3dzZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/user/source/repos/CareLink360/CareLink360/Views/Caregiver/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyZWdpdmVyXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -58,6 +66,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/user/source/repos/CareLink360/CareLink360/Views/Caregiver/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyZWdpdmVyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/source/repos/CareLink360/CareLink360/Views/ClientDashboard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50RGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/source/repos/CareLink360/CareLink360/Views/ClientProfileDashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50UHJvZmlsZURhc2hib2FyZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/source/repos/CareLink360/CareLink360/Views/ClientProfile/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50UHJvZmlsZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/source/repos/CareLink360/CareLink360/Views/Client/Caregivers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XENhcmVnaXZlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/user/source/repos/CareLink360/CareLink360/Views/Client/Create.cshtml]
@@ -80,6 +104,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/user/source/repos/CareLink360/CareLink360/Views/Contract/Completed.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJhY3RcQ29tcGxldGVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/user/source/repos/CareLink360/CareLink360/Views/Contract/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJhY3RcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -98,6 +126,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/user/source/repos/CareLink360/CareLink360/Views/Contract/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJhY3RcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/source/repos/CareLink360/CareLink360/Views/Contract/MyContracts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJhY3RcTXlDb250cmFjdHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/user/source/repos/CareLink360/CareLink360/Views/Home/Index.cshtml]
@@ -128,44 +160,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSm9iUmVxdWVzdFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/CareLink360/CareLink360/Views/Medical/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWNhbFxDcmVhdGUuY3NodG1s
+[C:/Users/user/source/repos/CareLink360/CareLink360/Views/JobRequest/MyCreatedRequests.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSm9iUmVxdWVzdFxNeUNyZWF0ZWRSZXF1ZXN0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/CareLink360/CareLink360/Views/Medical/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWNhbFxEZWxldGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/user/source/repos/CareLink360/CareLink360/Views/Medical/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWNhbFxEZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/user/source/repos/CareLink360/CareLink360/Views/Medical/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWNhbFxFZGl0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/user/source/repos/CareLink360/CareLink360/Views/Medical/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWNhbFxJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/user/source/repos/CareLink360/CareLink360/Views/NinVerification/Approve.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmluVmVyaWZpY2F0aW9uXEFwcHJvdmUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/user/source/repos/CareLink360/CareLink360/Views/NinVerification/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmluVmVyaWZpY2F0aW9uXENyZWF0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/user/source/repos/CareLink360/CareLink360/Views/NinVerification/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmluVmVyaWZpY2F0aW9uXERldGFpbHMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/user/source/repos/CareLink360/CareLink360/Views/NinVerification/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmluVmVyaWZpY2F0aW9uXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/user/source/repos/CareLink360/CareLink360/Views/NinVerification/Reject.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmluVmVyaWZpY2F0aW9uXFJlamVjdC5jc2h0bWw=
+[C:/Users/user/source/repos/CareLink360/CareLink360/Views/MyProfile/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTXlQcm9maWxlXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/user/source/repos/CareLink360/CareLink360/Views/Payment/Create.cshtml]
@@ -188,6 +188,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/user/source/repos/CareLink360/CareLink360/Views/Payment/MyPayments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxNeVBheW1lbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/user/source/repos/CareLink360/CareLink360/Views/Rating/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmF0aW5nXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -206,6 +210,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/user/source/repos/CareLink360/CareLink360/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/source/repos/CareLink360/CareLink360/Views/Shared/_AdminLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/source/repos/CareLink360/CareLink360/Views/Shared/_DashboardLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9EYXNoYm9hcmRMYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/user/source/repos/CareLink360/CareLink360/Views/Shared/_ValidationScriptsPartial.cshtml]

@@ -1,0 +1,146 @@
+﻿```cshtml
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="container-fluid px-4 py-4">
+
+    <div class="mb-4">
+        <h1 class="fw-bold">My Profile</h1>
+
+        <p class="text-muted">
+            View and manage your CareLink360 profile information.
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h4 class="fw-bold mb-4">
+                        Personal Information
+                    </h4>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                First Name
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="First Name" />
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Last Name
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Last Name" />
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Phone Number
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Phone Number" />
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                City
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="City" />
+
+                        </div>
+
+                        <div class="col-12">
+
+                            <label class="form-label">
+                                Home Address
+                            </label>
+
+                            <textarea class="form-control"
+                                      rows="3"
+                                      placeholder="Home Address"></textarea>
+
+                        </div>
+
+                    </div>
+
+                    <button type="button"
+                            class="btn btn-primary mt-4">
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h4 class="fw-bold mb-3">
+                        Account
+                    </h4>
+
+                    <p class="text-muted">
+                        Your CareLink360 account information.
+                    </p>
+
+                    <div class="mb-3">
+
+                        <strong>Email</strong>
+
+                        <p class="text-muted mb-0">
+                            @(User.Identity?.Name ?? "Not available")
+                        </p>
+
+                    </div>
+
+                    <div>
+
+                        <strong>Role</strong>
+
+                        <p class="text-muted mb-0">
+                            Client
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+```

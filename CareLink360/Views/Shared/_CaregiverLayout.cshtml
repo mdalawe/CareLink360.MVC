@@ -1,0 +1,498 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - CareLink360</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 250px;
+            background: #102a43;
+            color: white;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .brand {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            padding: 0 22px;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #19b37d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .brand-subtitle {
+            font-size: 11px;
+            color: #9fb3c8;
+        }
+
+        .menu-title {
+            padding: 25px 22px 10px;
+            color: #829ab1;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .menu {
+            list-style: none;
+            padding: 0 12px;
+            margin: 0;
+        }
+
+            .menu li {
+                margin-bottom: 5px;
+            }
+
+            .menu a {
+                display: flex;
+                align-items: center;
+                gap: 13px;
+                padding: 12px 14px;
+                color: #d9e2ec;
+                text-decoration: none;
+                border-radius: 8px;
+                font-size: 14px;
+            }
+
+                .menu a:hover {
+                    background: rgba(255,255,255,.08);
+                    color: white;
+                }
+
+                .menu a.active {
+                    background: #19b37d;
+                    color: white;
+                }
+
+            .menu i {
+                width: 20px;
+                text-align: center;
+            }
+
+        .logout-button {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            width: 100%;
+            padding: 12px 14px;
+            border: none;
+            background: transparent;
+            color: #d9e2ec;
+            text-align: left;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+            .logout-button:hover {
+                background: rgba(255,255,255,.08);
+                color: white;
+            }
+
+            .logout-button i {
+                width: 20px;
+                text-align: center;
+            }
+
+        .main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            min-height: 75px;
+            background: white;
+            border-bottom: 1px solid #e5e9ef;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 12px 30px;
+        }
+
+        .page-title {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #19b37d;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .user-role {
+            display: block;
+            font-size: 11px;
+            color: #829ab1;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: white;
+            border: 1px solid #d9e2ec;
+            border-radius: 7px;
+            text-decoration: none;
+            color: #334e68;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+            .back-button:hover {
+                background: #f0f4f8;
+            }
+
+        .footer {
+            background: white;
+            border-top: 1px solid #e5e9ef;
+            padding: 20px 30px;
+            color: #829ab1;
+            font-size: 13px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            padding: 25px;
+        }
+
+            .dashboard-card h5 {
+                font-size: 17px;
+                font-weight: 600;
+                margin-bottom: 5px;
+            }
+
+            .dashboard-card p.subtitle {
+                color: #829ab1;
+                font-size: 13px;
+                margin-bottom: 20px;
+            }
+
+        .dashboard-table {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            overflow-x: auto;
+        }
+
+            .dashboard-table table {
+                margin: 0;
+            }
+
+            .dashboard-table th {
+                background: #f8fafb;
+                color: #59636e;
+                font-size: 13px;
+                font-weight: 600;
+                padding: 15px;
+            }
+
+            .dashboard-table td {
+                padding: 15px;
+                font-size: 13px;
+                vertical-align: middle;
+            }
+
+        .person-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .person-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #e9f8f6;
+            color: #0b8f87;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .person-name {
+            font-weight: 600;
+            font-size: 13px;
+            color: #263238;
+        }
+
+        .person-sub {
+            font-size: 12px;
+            color: #829ab1;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #829ab1;
+        }
+
+            .empty-state i {
+                font-size: 40px;
+                display: block;
+                margin-bottom: 12px;
+                opacity: .4;
+            }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-Active {
+            background: #e7f7ed;
+            color: #218739;
+        }
+
+        .status-Pending {
+            background: #fff4d6;
+            color: #a87900;
+        }
+
+        .status-Completed {
+            background: #e3ecfc;
+            color: #2255c4;
+        }
+
+        .status-Cancelled {
+            background: #fde8e8;
+            color: #c0392b;
+        }
+
+        @@media (max-width: 768px) {
+            .sidebar {
+                width: 210px;
+            }
+
+            .main {
+                margin-left: 210px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .topbar {
+                padding: 12px 20px;
+            }
+        }
+
+        @@media (max-width: 520px) {
+            .sidebar {
+                width: 175px;
+            }
+
+            .brand {
+                padding: 0 12px;
+            }
+
+            .brand-name {
+                font-size: 16px;
+            }
+
+            .brand-icon {
+                width: 32px;
+                height: 32px;
+                margin-right: 8px;
+            }
+
+            .menu {
+                padding: 0 8px;
+            }
+
+                .menu a, .logout-button {
+                    gap: 8px;
+                    padding: 11px 8px;
+                    font-size: 12px;
+                }
+
+            .main {
+                margin-left: 175px;
+            }
+
+            .content {
+                padding: 12px;
+            }
+
+            .topbar {
+                padding: 12px;
+            }
+
+            .page-title {
+                font-size: 16px;
+            }
+
+            .user-role {
+                display: none;
+            }
+
+            .avatar {
+                width: 32px;
+                height: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    @{
+        var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+        var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+        var displayName = User.Identity?.Name ?? "Caregiver";
+        var initial = displayName.Length > 0 ? displayName.Substring(0, 1).ToUpper() : "C";
+    }
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-heart"></i></div>
+            <div>
+                <div class="brand-name">CareLink360</div>
+                <div class="brand-subtitle">Caregiver Portal</div>
+            </div>
+        </div>
+
+        <div class="menu-title">Main Menu</div>
+        <ul class="menu">
+            <li>
+                <a asp-controller="CaregiverDashboard" asp-action="Index"
+                   class="@(currentController == "CaregiverDashboard" ? "active" : "")">
+                    <i class="fa-solid fa-gauge"></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a asp-controller="JobRequest"
+                   asp-action="MyRequests"
+                   class="@(currentController == "JobRequest" && currentAction == "MyRequests" ? "active" : "")">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                    My Job Requests
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Contract" asp-action="MyContracts"
+                   class="@(currentController == "Contract" ? "active" : "")">
+                    <i class="fa-solid fa-file-contract"></i> My Contracts
+                </a>
+            </li>
+        </ul>
+
+        <div class="menu-title">Account</div>
+        <ul class="menu">
+            <li>
+                <a asp-controller="Home" asp-action="Index">
+                    <i class="fa-solid fa-globe"></i> Website
+                </a>
+            </li>
+            <li>
+                <form asp-controller="Auth" asp-action="Logout" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="logout-button">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </aside>
+
+    <div class="main">
+        <header class="topbar">
+            <h1 class="page-title">@ViewData["Title"]</h1>
+            <div class="user-info">
+                <div class="avatar">@initial</div>
+                <div>
+                    <div class="user-name">@displayName</div>
+                    <span class="user-role">Caregiver Account</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="content">
+            @if (!(currentController == "CaregiverDashboard" && currentAction == "Index"))
+            {
+                <a href="javascript:history.back()" class="back-button">
+                    <i class="fa-solid fa-arrow-left"></i> Back
+                </a>
+            }
+
+            @RenderBody()
+        </main>
+
+        <footer class="footer">
+            &copy; @DateTime.Now.Year CareLink360. All Rights Reserved.
+        </footer>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

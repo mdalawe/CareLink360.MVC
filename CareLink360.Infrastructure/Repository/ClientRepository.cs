@@ -22,6 +22,11 @@ public class ClientRepository : IClientRepository
         return client;
     }
 
+    public async Task<Client?> GetByUserIdAsync(Guid userId)
+    {
+        return await _context.Clients
+            .FirstOrDefaultAsync(x => x.UserId == userId);
+    }
 
     public async Task<List<Client>> GetAllAsync()
     {

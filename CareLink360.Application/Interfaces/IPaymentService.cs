@@ -12,5 +12,7 @@ namespace CareLink360.Application.Interfaces
         Task<Payment> CreateAsync(CreatePaymentDto dto);
         Task UpdateStatusAsync(UpdatePaymentStatusDto dto);
         Task<List<Payment>> GetAllAsync();
+        Task<Payment?> GetByIdAsync(Guid id);
+        Task<List<Payment>> GetByClientIdAsync(Guid clientId);
     }
 }

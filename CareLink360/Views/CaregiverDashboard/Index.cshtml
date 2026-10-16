@@ -1,64 +1,39 @@
-﻿@model CareLink360.Application.DTOs.CaregiverResponseDto
-
-@{
-    ViewData["Title"] = "My Dashboard";
+﻿@{
+    ViewData["Title"] = "Caregiver Dashboard";
+    Layout = "_CaregiverLayout";
 }
 
-<div class="container py-5">
+<div class="container-fluid px-4 py-4">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="mb-4">
+        <h1 class="fw-bold">Caregiver Dashboard</h1>
 
-        <div>
-            <h1 class="fw-bold">
-                Welcome, @Model.FirstName
-            </h1>
-
-            <p class="text-muted">
-                Welcome to your CareLink360 caregiver dashboard.
-            </p>
-        </div>
-
-        <a asp-controller="Home"
-           asp-action="Index"
-           class="btn btn-outline-secondary">
-            ← Back
-        </a>
-
+        <p class="text-muted">
+            Welcome to your CareLink360 caregiver dashboard.
+        </p>
     </div>
 
     <div class="row g-4">
 
-        <div class="col-md-4">
+        <div class="col-md-6 col-xl-3">
 
-            <div class="card shadow-sm border-0 h-100">
+            <div class="card border-0 shadow-sm h-100">
 
                 <div class="card-body">
 
-                    <h5 class="fw-bold">
-                        My Profile
-                    </h5>
+                    <h6 class="text-muted">
+                        Job Requests
+                    </h6>
 
-                    <hr />
+                    <h2 class="fw-bold">
+                        0
+                    </h2>
 
-                    <p>
-                        <strong>Name:</strong>
-                        @Model.FirstName @Model.LastName
-                    </p>
-
-                    <p>
-                        <strong>Phone:</strong>
-                        @Model.PhoneNumber
-                    </p>
-
-                    <p>
-                        <strong>City:</strong>
-                        @Model.City
-                    </p>
-
-                    <p>
-                        <strong>Experience:</strong>
-                        @Model.YearsOfExperience years
-                    </p>
+                    <a asp-controller="JobRequest"
+                       asp-action="Index"
+                       class="btn btn-sm btn-primary">
+                        View Requests
+                    </a>
 
                 </div>
 
@@ -66,52 +41,23 @@
 
         </div>
 
+        <div class="col-md-6 col-xl-3">
 
-        <div class="col-md-4">
-
-            <div class="card shadow-sm border-0 h-100">
+            <div class="card border-0 shadow-sm h-100">
 
                 <div class="card-body">
 
-                    <h5 class="fw-bold">
-                        Verification
-                    </h5>
+                    <h6 class="text-muted">
+                        Active Contracts
+                    </h6>
 
-                    <hr />
+                    <h2 class="fw-bold">
+                        0
+                    </h2>
 
-                    <p>
-                        NIN Verification:
-
-                        @if (Model.IsNinVerified)
-                        {
-                                <span class="badge bg-success">
-                                    Verified
-                                </span>
-                        }
-                        else
-                        {
-                                <span class="badge bg-warning text-dark">
-                                    Pending
-                                </span>
-                        }
-                    </p>
-
-                    <p>
-                        Admin Approval:
-
-                        @if (Model.IsApprovedByAdmin)
-                        {
-                                <span class="badge bg-success">
-                                    Approved
-                                </span>
-                        }
-                        else
-                        {
-                                <span class="badge bg-warning text-dark">
-                                    Pending
-                                </span>
-                        }
-                    </p>
+                    <button class="btn btn-sm btn-outline-primary">
+                        View Contracts
+                    </button>
 
                 </div>
 
@@ -119,41 +65,110 @@
 
         </div>
 
+        <div class="col-md-6 col-xl-3">
 
-        <div class="col-md-4">
-
-            <div class="card shadow-sm border-0 h-100">
+            <div class="card border-0 shadow-sm h-100">
 
                 <div class="card-body">
 
-                    <h5 class="fw-bold">
-                        Availability
-                    </h5>
+                    <h6 class="text-muted">
+                        Completed Jobs
+                    </h6>
 
-                    <hr />
+                    <h2 class="fw-bold">
+                        0
+                    </h2>
 
-                    @if (Model.IsAvaliable)
-                    {
-                            <span class="badge bg-success fs-6">
-                                Available for Work
-                            </span>
-                    }
-                    else
-                    {
-                            <span class="badge bg-secondary fs-6">
-                                Currently Unavailable
-                            </span>
-                    }
+                    <button class="btn btn-sm btn-outline-primary">
+                        View Jobs
+                    </button>
 
-                    <div class="mt-4">
+                </div>
 
-                        <strong>Average Rating</strong>
+            </div>
 
-                        <h2>
-                            @Model.AverageRating.ToString("0.0") / 5
-                        </h2>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Average Rating
+                    </h6>
+
+                    <h2 class="fw-bold">
+                        0.0
+                    </h2>
+
+                    <button class="btn btn-sm btn-outline-primary">
+                        View Ratings
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row mt-4 g-4">
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body">
+
+                    <h4 class="fw-bold mb-3">
+                        Quick Actions
+                    </h4>
+
+                    <div class="d-flex flex-wrap gap-3">
+
+                        <a asp-controller="JobRequest"
+                           asp-action="Index"
+                           class="btn btn-primary">
+                            View Job Requests
+                        </a>
+
+                        <button class="btn btn-outline-primary">
+                            My Contracts
+                        </button>
+
+                        <button class="btn btn-outline-primary">
+                            My Profile
+                        </button>
 
                     </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body">
+
+                    <h4 class="fw-bold mb-3">
+                        Availability
+                    </h4>
+
+                    <p class="text-muted">
+                        Manage your availability for new
+                        caregiving requests.
+                    </p>
+
+                    <button class="btn btn-success">
+                        Available
+                    </button>
 
                 </div>
 

@@ -22,7 +22,7 @@ namespace CareLink360.Domain.Entities
         public ContractStatus Status { get; set; } = ContractStatus.Pending;
 
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
 
         public decimal TotalAmount { get; set; }

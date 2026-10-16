@@ -1,57 +1,282 @@
-﻿@model CareLink360.Application.DTOs.CreateJobRequestDto
+﻿
+@model CareLink360.Application.DTOs.CreateJobRequestDto
+
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using CareLink360.Application.DTOs
+
 @{
     ViewData["Title"] = "Create Job Request";
-    Layout = "_AdminLayout";
+    Layout = "_ClientLayout";
+
+    var caregivers =
+        ViewBag.Caregivers as IEnumerable<CaregiverResponseDto>
+        ?? Enumerable.Empty<CaregiverResponseDto>();
+
+    var selectedCaregiver = caregivers
+        .FirstOrDefault(c => c.Id == Model.CaregiverId);
+
+    var jobTypes =
+        ViewBag.JobTypes as IEnumerable<CareLink360.Domain.Entities.JobType>
+        ?? Enumerable.Empty<CareLink360.Domain.Entities.JobType>();
 }
 
-<div class="dashboard-card" style="max-width: 600px;">
-    <h5><i class="fa-solid fa-briefcase me-2"></i>Create Job Request</h5>
-    <p class="subtitle">Send a request to a caregiver</p>
+<div class="container-fluid py-4">
 
-    @if (!ViewData.ModelState.IsValid)
-    {
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    <li>@error.ErrorMessage</li>
-                }
-            </ul>
+    <div class="dashboard-card job-request-card">
+
+        <div class="mb-4">
+            <h4 class="fw-bold">
+                <i class="fa-solid fa-briefcase me-2"></i>
+                Create Job Request
+            </h4>
+
+            <p class="subtitle">
+                Tell us the type of care you need.
+            </p>
         </div>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["Error"]
+            </div>
+        }
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                <strong>Please correct the following:</strong>
+                <ul class="mb-0 mt-2">
+                    @foreach (var error in ViewData.ModelState.Values
+                        .SelectMany(v => v.Errors))
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                </ul>
+            </div>
+        }
+
+        @if (selectedCaregiver == null)
+        {
+            <div class="alert alert-warning">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                No caregiver has been selected, or the selected caregiver
+                is no longer approved and available.
+                Please return to the caregiver list and select a caregiver.
+            </div>
+
+            <a asp-controller="Caregiver"
+               asp-action="Browse"
+               class="btn btn-outline-secondary">
+                <i class="fa-solid fa-arrow-left me-1"></i>
+                Browse Caregivers
+            </a>
+        }
+        else
+        {
+            <form asp-controller="JobRequest"
+                  asp-action="Create"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <!-- SELECTED CAREGIVER -->
+                <div class="mb-4">
+
+                    <label class="form-label fw-semibold">
+                        Selected Caregiver
+                    </label>
+
+                    <div class="selected-caregiver">
+
+                        <div class="caregiver-icon">
+                            <i class="fa-solid fa-user-nurse"></i>
+                        </div>
+
+                        <div>
+                            <div class="caregiver-name">
+                                @selectedCaregiver.FirstName
+                                @selectedCaregiver.LastName
+                            </div>
+
+                            <small class="text-muted">
+                                Your chosen caregiver
+                            </small>
+                        </div>
+
+                        <i class="fa-solid fa-circle-check ms-auto text-success fs-5"></i>
+
+                    </div>
+
+                    <input type="hidden" asp-for="CaregiverId" />
+
+                    <span asp-validation-for="CaregiverId"
+                          class="text-danger"></span>
+                </div>
+
+                <!-- TYPE OF CARE -->
+                <div class="mb-3">
+
+                    <label asp-for="JobTypeId"
+                           class="form-label fw-semibold">
+                        Which type of caregiving do you need?
+                    </label>
+
+                    <select asp-for="JobTypeId"
+                            class="form-select"
+                            asp-items="@(new SelectList(jobTypes, "Id", "Name"))">
+
+                        <option value="">
+                            -- Select Type of Care --
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="JobTypeId"
+                          class="text-danger"></span>
+
+                    @if (!jobTypes.Any())
+                    {
+                        <div class="text-danger small mt-2">
+                            No active caregiving types were loaded.
+                            Please check your database connection.
+                        </div>
+                    }
+                    else
+                    {
+                        <small class="text-muted">
+                            @jobTypes.Count() caregiving services available.
+                            Choose the one you need.
+                        </small>
+                    }
+
+                </div>
+
+                <!-- CARE LOCATION -->
+                <div class="mb-3">
+
+                    <label asp-for="Location"
+                           class="form-label fw-semibold">
+                        Care Location
+                    </label>
+
+                    <input asp-for="Location"
+                           class="form-control"
+                           placeholder="Enter the location where care is needed" />
+
+                    <span asp-validation-for="Location"
+                          class="text-danger"></span>
+
+                </div>
+
+                <!-- DESCRIPTION -->
+                <div class="mb-3">
+
+                    <label asp-for="Description"
+                           class="form-label fw-semibold">
+                        Description
+                    </label>
+
+                    <textarea asp-for="Description"
+                              class="form-control"
+                              rows="4"
+                              placeholder="Describe the care you need"></textarea>
+
+                    <span asp-validation-for="Description"
+                          class="text-danger"></span>
+
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="d-flex flex-wrap gap-2 mt-4">
+
+                    <button type="submit"
+                            class="btn btn-carelink flex-grow-1">
+
+                        <i class="fa-solid fa-paper-plane me-1"></i>
+                        Send Request
+
+                    </button>
+
+                    <a asp-controller="Caregiver"
+                       asp-action="Browse"
+                       class="btn btn-outline-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+        }
+
+    </div>
+
+</div>
+
+<style>
+    .job-request-card {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 28px;
+        border-radius: 16px;
     }
 
-    <form asp-action="Create" method="post">
+    .selected-caregiver {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 16px;
+        border: 1px solid #dce7e4;
+        background: #f6fbf9;
+        border-radius: 12px;
+    }
 
-        <div class="mb-3">
-            <label asp-for="ClientId" class="form-label"></label>
-            <input asp-for="ClientId" class="form-control" />
-        </div>
+    .caregiver-icon {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: #dff5eb;
+        color: #13845c;
+        font-size: 20px;
+    }
 
-        <div class="mb-3">
-            <label asp-for="CaregiverId" class="form-label"></label>
-            <input asp-for="CaregiverId" class="form-control" />
-        </div>
+    .caregiver-name {
+        font-size: 16px;
+        font-weight: 700;
+        color: #102a43;
+    }
 
-        <div class="mb-3">
-            <label asp-for="JobTypeId" class="form-label"></label>
-            <input asp-for="JobTypeId" class="form-control" />
-        </div>
+    .job-request-card .form-label {
+        color: #243b53;
+    }
 
-        <div class="mb-3">
-            <label asp-for="Location" class="form-label"></label>
-            <input asp-for="Location" class="form-control" />
-        </div>
+    .job-request-card .form-control,
+    .job-request-card .form-select {
+        padding: 12px;
+        border-radius: 9px;
+    }
 
-        <div class="mb-3">
-            <label asp-for="Description" class="form-label"></label>
-            <textarea asp-for="Description" rows="4" class="form-control"></textarea>
-        </div>
+    .job-request-card .form-control:focus,
+    .job-request-card .form-select:focus {
+        border-color: #13845c;
+        box-shadow: 0 0 0 0.2rem rgba(19, 132, 92, 0.12);
+    }
 
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-carelink flex-grow-1">
-                <i class="fa-solid fa-paper-plane me-1"></i> Save
-            </button>
-            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
-        </div>
-    </form>
-</div>
+    @@media (max-width: 576px) {
+        .job-request-card {
+            padding: 18px;
+        }
+    }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

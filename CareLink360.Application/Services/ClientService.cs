@@ -132,7 +132,10 @@ public class ClientService : IClientService
         return true;
     }
 
-
+    public async Task<Client?> GetByUserIdAsync(Guid userId)
+    {
+        return await _repository.GetByUserIdAsync(userId);
+    }
 
     public async Task<bool> DeleteAsync(Guid id)
     {

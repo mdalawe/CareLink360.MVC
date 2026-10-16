@@ -1,0 +1,230 @@
+﻿@model IEnumerable<CareLink360.Application.DTOs.CaregiverResponseDto>
+
+@{
+    ViewData["Title"] = "Available Caregivers";
+}
+
+<div class="container-fluid py-4">
+
+    <!-- PAGE HEADER -->
+    <div class="mb-4">
+        <h1 class="fw-bold text-dark">
+            Find a Caregiver
+        </h1>
+
+        <p class="text-muted">
+            Browse approved and available caregivers and choose the right person for your care needs.
+        </p>
+    </div>
+
+
+    <!-- SUCCESS MESSAGE -->
+    @if (TempData["Success"] != null)
+    {
+            <div class="alert alert-success">
+            @TempData["Success"]
+            </div>
+    }
+
+
+    <!-- ERROR MESSAGE -->
+    @if (TempData["Error"] != null)
+    {
+            <div class="alert alert-danger">
+            @TempData["Error"]
+            </div>
+    }
+
+
+    <!-- CAREGIVER LIST -->
+    @if (Model != null && Model.Any())
+    {
+            <div class="row g-4">
+
+            @foreach (var caregiver in Model)
+            {
+                        <div class="col-xl-4 col-lg-6 col-md-6">
+
+                            <div class="card h-100 border-0 shadow-sm caregiver-card">
+
+                                <div class="card-body p-4">
+
+                                    <!-- CAREGIVER ICON -->
+                                    <div class="text-center mb-3">
+
+                                        <div class="caregiver-avatar">
+                                            <i class="bi bi-person"></i>
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- NAME -->
+                                    <div class="text-center">
+
+                                        <h4 class="fw-bold mb-1">
+                                    @caregiver.FirstName @caregiver.LastName
+                                        </h4>
+
+                                        <p class="text-muted mb-3">
+                                            Caregiver
+                                        </p>
+
+                                    </div>
+
+
+                                    <!-- INFORMATION -->
+                                    <div class="caregiver-info">
+
+                                        <div class="info-item">
+                                            <i class="bi bi-geo-alt"></i>
+
+                                            <span>
+                                        @caregiver.City
+                                            </span>
+                                        </div>
+
+
+                                        <div class="info-item">
+                                            <i class="bi bi-briefcase"></i>
+
+                                            <span>
+                                        @caregiver.YearsOfExperience years experience
+                                            </span>
+                                        </div>
+
+
+                                        <div class="info-item">
+                                            <i class="bi bi-star-fill"></i>
+
+                                            <span>
+                                        @caregiver.AverageRating.ToString("0.0") / 5
+                                            </span>
+                                        </div>
+
+
+                                        <div class="info-item">
+                                            <i class="bi bi-telephone"></i>
+
+                                            <span>
+                                        @caregiver.PhoneNumber
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- STATUS -->
+                                    <div class="text-center my-3">
+
+                                        <span class="badge bg-success">
+                                            <i class="bi bi-check-circle"></i>
+                                            Available
+                                        </span>
+
+                                    </div>
+
+
+                                    <!-- ACTION -->
+                                    <div class="d-grid">
+
+                                        <a asp-controller="Caregiver"
+                                           asp-action="Details"
+                                           asp-route-id="@caregiver.Id"
+                                           class="btn btn-primary">
+
+                                            <i class="bi bi-person-lines-fill"></i>
+                                            View Profile
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+            }
+
+            </div>
+    }
+    else
+    {
+            <!-- NO CAREGIVERS -->
+            <div class="text-center py-5">
+
+                <div class="mb-3">
+                    <i class="bi bi-person-x display-1 text-muted"></i>
+                </div>
+
+                <h3 class="fw-bold">
+                    No caregivers available
+                </h3>
+
+                <p class="text-muted">
+                    There are currently no approved caregivers available.
+                    Please check again later.
+                </p>
+
+            </div>
+    }
+
+</div>
+
+
+<style>
+
+    .caregiver-card {
+        border-radius: 18px;
+        transition: all 0.25s ease;
+    }
+
+    .caregiver-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.10) !important;
+    }
+
+    .caregiver-avatar {
+        width: 80px;
+        height: 80px;
+        margin: auto;
+
+        border-radius: 50%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #e8f4f8;
+
+        color: #198754;
+
+        font-size: 36px;
+    }
+
+    .caregiver-info {
+        background: #f8fafb;
+
+        border-radius: 12px;
+
+        padding: 12px 15px;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        padding: 7px 0;
+
+        color: #555;
+    }
+
+    .info-item i {
+        width: 20px;
+        color: #198754;
+    }
+
+</style>

@@ -1,64 +1,673 @@
-﻿@model CareLink360.Domain.Entities.Client
+﻿@model CareLink360.Application.DTOs.CaregiverResponseDto
 
 @{
-    ViewData["Title"] = "Client Details";
+    ViewData["Title"] = "Caregiver Profile";
 }
 
-<div class="container mt-4">
+<div class="container-fluid py-4">
 
-    <div class="card shadow">
+    <!-- =====================================================
+         BACK BUTTON
+    ====================================================== -->
 
-        <div class="card-header bg-info text-white">
+    <div class="mb-4">
 
-            <h3>Client Details</h3>
+        <a asp-controller="Client"
+           asp-action="Caregivers"
+           class="btn btn-light border">
 
-        </div>
+            <i class="bi bi-arrow-left me-2"></i>
 
-        <div class="card-body">
+            Back to Caregivers
 
-            <table class="table">
+        </a>
 
-                <tr>
+    </div>
 
-                    <th>Full Name</th>
 
-                    <td>@Model.FullName</td>
+    <!-- =====================================================
+         PROFILE CARD
+    ====================================================== -->
 
-                </tr>
+    <div class="row justify-content-center">
 
-                <tr>
+        <div class="col-xl-8 col-lg-10">
 
-                    <th>Phone Number</th>
+            <div class="profile-card">
 
-                    <td>@Model.PhoneNumber</td>
 
-                </tr>
+                <!-- =================================================
+                     PROFILE HEADER
+                ================================================== -->
 
-                <tr>
+                <div class="profile-header">
 
-                    <th>City</th>
+                    <div class="profile-avatar">
 
-                    <td>@Model.City</td>
+                        @(
+                            (!string.IsNullOrWhiteSpace(Model.FirstName)
+                                ? Model.FirstName.Substring(0, 1)
+                                : "") +
+                            (!string.IsNullOrWhiteSpace(Model.LastName)
+                                ? Model.LastName.Substring(0, 1)
+                                : "")
+                        )
 
-                </tr>
+                    </div>
 
-                <tr>
 
-                    <th>Address</th>
+                    <div>
 
-                    <td>@Model.HomeAddress</td>
+                        <h2>
+                            @Model.FirstName @Model.LastName
+                        </h2>
 
-                </tr>
+                        <p>
+                            Professional Caregiver
+                        </p>
 
-            </table>
 
-            <a asp-action="Index"
-               class="btn btn-secondary">
-                Back
-            </a>
+                        <!-- AVAILABILITY -->
+
+                        @if (Model.IsAvaliable)
+                        {
+                            <span class="status-badge available">
+
+                                <i class="bi bi-check-circle-fill"></i>
+
+                                Available
+
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="status-badge unavailable">
+
+                                <i class="bi bi-x-circle-fill"></i>
+
+                                Currently Unavailable
+
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     PROFILE BODY
+                ================================================== -->
+
+                <div class="profile-body">
+
+
+                    <!-- =================================================
+                         CAREGIVER INFORMATION
+                    ================================================== -->
+
+                    <h4 class="section-title">
+
+                        <i class="bi bi-person-vcard me-2"></i>
+
+                        Caregiver Information
+
+                    </h4>
+
+
+                    <div class="row g-4">
+
+
+                        <!-- CITY -->
+
+                        <div class="col-md-6">
+
+                            <div class="info-box">
+
+                                <div class="info-icon">
+
+                                    <i class="bi bi-geo-alt"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <small>
+                                        Location
+                                    </small>
+
+                                    <strong>
+
+                                        @(string.IsNullOrWhiteSpace(Model.City)
+                                            ? "Not provided"
+                                            : Model.City)
+
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PHONE -->
+
+                        <div class="col-md-6">
+
+                            <div class="info-box">
+
+                                <div class="info-icon">
+
+                                    <i class="bi bi-telephone"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <small>
+                                        Phone Number
+                                    </small>
+
+                                    <strong>
+
+                                        @(string.IsNullOrWhiteSpace(Model.PhoneNumber)
+                                            ? "Not provided"
+                                            : Model.PhoneNumber)
+
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- EXPERIENCE -->
+
+                        <div class="col-md-6">
+
+                            <div class="info-box">
+
+                                <div class="info-icon">
+
+                                    <i class="bi bi-briefcase"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <small>
+                                        Experience
+                                    </small>
+
+                                    <strong>
+
+                                        @Model.YearsOfExperience years
+
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- RATING -->
+
+                        <div class="col-md-6">
+
+                            <div class="info-box">
+
+                                <div class="info-icon">
+
+                                    <i class="bi bi-star-fill"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <small>
+                                        Average Rating
+                                    </small>
+
+                                    <strong>
+
+                                        @Model.AverageRating.ToString("0.0") / 5
+
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         APPROVAL SECTION
+                    ================================================== -->
+
+                    <div class="verification-section">
+
+                        <h4 class="section-title">
+
+                            <i class="bi bi-shield-check me-2"></i>
+
+                            Caregiver Status
+
+                        </h4>
+
+
+                        <div class="verification-list">
+
+
+                            <!-- ADMIN APPROVAL -->
+
+                            <div class="verification-item">
+
+                                @if (Model.IsApprovedByAdmin)
+                                {
+                                    <i class="bi bi-check-circle-fill verified"></i>
+
+                                    <span>
+                                        Approved by CareLink360 Admin
+                                    </span>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-hourglass-split pending"></i>
+
+                                    <span>
+                                        Pending Admin Approval
+                                    </span>
+                                }
+
+                            </div>
+
+
+                            <!-- AVAILABILITY -->
+
+                            <div class="verification-item">
+
+                                @if (Model.IsAvaliable)
+                                {
+                                    <i class="bi bi-check-circle-fill verified"></i>
+
+                                    <span>
+                                        Currently Available
+                                    </span>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-x-circle-fill not-verified"></i>
+
+                                    <span>
+                                        Currently Unavailable
+                                    </span>
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         HIRE SECTION
+                    ================================================== -->
+
+                    <div class="hire-section">
+
+                        <h4>
+                            Interested in this caregiver?
+                        </h4>
+
+                        <p>
+                            You can send a hiring request to this caregiver.
+                        </p>
+
+
+                        @if (Model.IsApprovedByAdmin && Model.IsAvaliable)
+                        {
+                            <a asp-controller="JobRequest"
+                               asp-action="Create"
+                               asp-route-caregiverId="@Model.Id"
+                               class="hire-btn">
+
+                                <i class="bi bi-send-fill me-2"></i>
+
+                                Request This Caregiver
+
+                            </a>
+                        }
+                        else
+                        {
+                            <button type="button"
+                                    class="hire-btn disabled-btn"
+                                    disabled>
+
+                                <i class="bi bi-lock-fill me-2"></i>
+
+                                Caregiver Not Available
+
+                            </button>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
 </div>
+
+
+<!-- =========================================================
+     BOOTSTRAP ICONS
+========================================================= -->
+
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+<style>
+
+    /* =========================================================
+       PROFILE CARD
+    ========================================================= */
+
+    .profile-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #e6edf2;
+        box-shadow: 0 12px 35px rgba(31, 60, 90, 0.10);
+    }
+
+
+    /* =========================================================
+       PROFILE HEADER
+    ========================================================= */
+
+    .profile-header {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        padding: 35px;
+        background: linear-gradient(
+            135deg,
+            #eef9f8,
+            #f7fbfd
+        );
+        border-bottom: 1px solid #e5edf3;
+    }
+
+
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: #d9f1ec;
+        color: #128c75;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+
+    .profile-header h2 {
+        margin: 0 0 5px;
+        color: #17324d;
+        font-weight: 700;
+    }
+
+
+    .profile-header p {
+        color: #718096;
+        margin-bottom: 10px;
+    }
+
+
+    /* =========================================================
+       STATUS
+    ========================================================= */
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+
+    .available {
+        background: #dff5e9;
+        color: #16834d;
+    }
+
+
+    .unavailable {
+        background: #ffe6e6;
+        color: #c53030;
+    }
+
+
+    /* =========================================================
+       PROFILE BODY
+    ========================================================= */
+
+    .profile-body {
+        padding: 35px;
+    }
+
+
+    .section-title {
+        color: #17324d;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+
+    /* =========================================================
+       INFORMATION BOX
+    ========================================================= */
+
+    .info-box {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 18px;
+        background: #f8fafb;
+        border-radius: 12px;
+        border: 1px solid #edf2f7;
+    }
+
+
+    .info-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #e4f5f1;
+        color: #128c75;
+        font-size: 20px;
+        flex-shrink: 0;
+    }
+
+
+    .info-box small {
+        display: block;
+        color: #718096;
+        margin-bottom: 4px;
+    }
+
+
+    .info-box strong {
+        color: #17324d;
+    }
+
+
+    /* =========================================================
+       STATUS SECTION
+    ========================================================= */
+
+    .verification-section {
+        margin-top: 35px;
+        padding-top: 30px;
+        border-top: 1px solid #edf2f7;
+    }
+
+
+    .verification-list {
+        display: flex;
+        gap: 25px;
+        flex-wrap: wrap;
+    }
+
+
+    .verification-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #526579;
+        font-weight: 600;
+    }
+
+
+    .verified {
+        color: #16a085;
+    }
+
+
+    .pending {
+        color: #d97706;
+    }
+
+
+    .not-verified {
+        color: #d64545;
+    }
+
+
+    /* =========================================================
+       HIRE SECTION
+    ========================================================= */
+
+    .hire-section {
+        margin-top: 35px;
+        padding: 25px;
+        background: linear-gradient(
+            135deg,
+            #f0faf8,
+            #f7fbfd
+        );
+        border-radius: 15px;
+        text-align: center;
+    }
+
+
+    .hire-section h4 {
+        color: #17324d;
+        font-weight: 700;
+    }
+
+
+    .hire-section p {
+        color: #718096;
+    }
+
+
+    .hire-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(
+            135deg,
+            #16a085,
+            #128c75
+        );
+        color: white;
+        padding: 12px 25px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.25s ease;
+        border: none;
+    }
+
+
+    .hire-btn:hover {
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(22, 160, 133, 0.25);
+    }
+
+
+    .disabled-btn {
+        opacity: .6;
+        cursor: not-allowed;
+    }
+
+
+    .disabled-btn:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    @@media (max-width: 600px) {
+
+        .profile-header {
+            flex-direction: column;
+            text-align: center;
+            padding: 25px;
+        }
+
+
+        .profile-body {
+            padding: 25px 20px;
+        }
+
+
+        .profile-avatar {
+            width: 85px;
+            height: 85px;
+            font-size: 25px;
+        }
+
+
+        .verification-list {
+            flex-direction: column;
+            gap: 12px;
+        }
+
+
+        .hire-btn {
+            width: 100%;
+        }
+
+    }
+
+</style>

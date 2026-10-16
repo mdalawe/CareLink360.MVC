@@ -12,8 +12,6 @@ public class AdminDashboardService(ApplicationDbContext context) : IAdminDashboa
 
         var totalClients = await context.Clients.CountAsync();
 
-        var pendingNin = await context.NinVerifications
-            .CountAsync(x => x.Status == "Pending");
 
         var activeContracts = await context.Contracts
             .CountAsync(x => x.Status == ContractStatus.Successful);
@@ -29,7 +27,6 @@ public class AdminDashboardService(ApplicationDbContext context) : IAdminDashboa
         {
             TotalCaregivers = totalCaregivers,
             TotalClients = totalClients,
-            PendingNinVerifications = pendingNin,
             ActiveContracts = activeContracts,
             CompletedPayments = completedPayments,
             AverageCaregiverRating = avgRating

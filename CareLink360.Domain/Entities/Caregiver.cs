@@ -30,18 +30,15 @@ namespace CareLink360.Domain.Entities
 
         public bool IsAvaliable { get; set; }
 
-        public bool IsNinVerified { get; set; }
-
-        public bool IsBackgroundChecked { get; set; }
-
         public bool IsApprovedByAdmin { get; set; }
-
-        public bool IsMedicallyCleared { get; set; }
 
         public decimal AverageRating { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
         public CaregiverStatus Status { get; set; }
+
+        public ICollection<JobRequest> JobRequests { get; set; }
+    = new List<JobRequest>();
     }
 }

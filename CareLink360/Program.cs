@@ -1,5 +1,4 @@
 using CareLink360.Application.Services;
-using CareLik360.Domain.Interface;
 using CareLink360.Application.Interfaces;
 using CareLink360.Context;
 using CareLink360.Domain.Interface;
@@ -52,9 +51,7 @@ builder.Services.AddScoped<IContractService, ContractService>();
 
 builder.Services.AddScoped<IJobRequestService, JobRequestService>();
 
-builder.Services.AddScoped<IMedicalService, MedicalService>();
-
-builder.Services.AddScoped<INinVerificationService, NinVerificationService>();
+builder.Services.AddScoped<IJobTypeService, JobTypeService>();
 
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
@@ -74,10 +71,6 @@ builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IContractRepository, ContractRepository>();
 
 builder.Services.AddScoped<IJobRequestRepository, JobRequestRepository>();
-
-builder.Services.AddScoped<IMedicalRepository, MedicalRepository>();
-
-builder.Services.AddScoped<INinVerificationRepository, NinVerificationRepository>();
 
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 

@@ -18,11 +18,7 @@ namespace CareLink360.Context
 
         public DbSet<Caregiver> Caregivers { get; set; }
 
-        public DbSet<NinVerification> NinVerifications { get; set; }
-
         public DbSet<JobType> JobTypes { get; set; }
-
-        public DbSet<MedicalRecord> MedicalRecords { get; set; }
 
         public DbSet<JobRequest> JobRequests { get; set; }
 
@@ -48,6 +44,10 @@ namespace CareLink360.Context
                 .Property(x => x.AverageRating)
                 .HasPrecision(18, 2);
 
+            modelBuilder.Entity<Contract>()
+                .Property(x => x.TotalAmount)
+                .HasPrecision(18, 2);
+
             modelBuilder.Entity<Caregiver>()
                 .HasOne(x => x.User)
                 .WithMany()
@@ -60,15 +60,57 @@ namespace CareLink360.Context
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Contract>()
-               .Property(c => c.Status)
-               .HasConversion<string>();
+            modelBuilder.Entity<JobRequest>()
+                .HasOne(x => x.Client)
+                .WithMany(x => x.JobRequests)
+                .HasForeignKey(x => x.ClientId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<JobRequest>()
+                .HasOne(x => x.Caregiver)
+                .WithMany(x => x.JobRequests)
+                .HasForeignKey(x => x.CaregiverId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<JobRequest>()
+                .HasOne(x => x.JobType)
+                .WithMany()
+                .HasForeignKey(x => x.JobTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Contract>()
-                .Property(c => c.TotalAmount)
-                .HasPrecision(18, 2);
+                .HasOne(x => x.Client)
+                .WithMany()
+                .HasForeignKey(x => x.ClientId)
+                .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Contract>()
+                .HasOne(x => x.Caregiver)
+                .WithMany()
+                .HasForeignKey(x => x.CaregiverId)
+                .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Contract>()
+                .HasOne(x => x.JobRequest)
+                .WithMany()
+                .HasForeignKey(x => x.JobRequestId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Payment>()
+                .HasOne(x => x.Client)
+                .WithMany()
+                .HasForeignKey(x => x.ClientId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Payment>()
+                .HasOne(x => x.Contract)
+                .WithMany(x => x.Payments)
+                .HasForeignKey(x => x.ContractId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Contract>()
+                .Property(x => x.Status)
+                .HasConversion<string>();
         }
     }
 }

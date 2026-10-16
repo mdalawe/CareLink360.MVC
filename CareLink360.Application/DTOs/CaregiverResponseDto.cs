@@ -26,8 +26,6 @@ namespace CareLink360.Application.DTOs
 
             public bool IsAvaliable { get; set; }
 
-            public bool IsNinVerified { get; set; }
-
             public bool IsApprovedByAdmin { get; set; }
 
             public double AverageRating { get; set; }

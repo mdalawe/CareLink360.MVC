@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CareLink360.Application.DTOs
 {
     public class UpdateClientDto
     {
-        public Guid UserId { get; set; }
+        [Required(ErrorMessage = "First name is required.")]
+        public string FirstName { get; set; } = string.Empty;
 
-        public string FullName { get; set; }
+        [Required(ErrorMessage = "Last name is required.")]
+        public string LastName { get; set; } = string.Empty;
 
-        public string FirstName { get; set; }
+        [Required(ErrorMessage = "Phone number is required.")]
+        public string PhoneNumber { get; set; } = string.Empty;
 
-        public string LastName { get; set; }
+        public string? City { get; set; }
 
-        public string Address { get; set; }
-
-        public string City { get; set; }
-
-        public string PhoneNumber { get; set; }
-
-        public string Gender { get; set; }
+        public string? Address { get; set; }
     }
 }

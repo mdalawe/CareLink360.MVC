@@ -1,0 +1,435 @@
+﻿
+@model IEnumerable<CareLink360.Application.DTOs.JobRequestResponseDto>
+
+@{
+    ViewData["Title"] = "My Job Requests";
+
+    var requests = Model?.ToList()
+        ?? new List<CareLink360.Application.DTOs.JobRequestResponseDto>();
+}
+
+<div class="container-fluid py-4 caregiver-requests">
+
+    <div class="page-heading mb-4">
+        <div>
+            <h2 class="fw-bold mb-2">
+                <i class="fa-solid fa-clipboard-list me-2"></i>
+                My Job Requests
+            </h2>
+
+            <p class="text-muted mb-0">
+                View and manage care requests sent to you by clients.
+            </p>
+        </div>
+
+        <div class="request-count">
+            <i class="fa-solid fa-inbox me-2"></i>
+            @requests.Count request(s)
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+            <div class="alert alert-success alert-dismissible fade show">
+                <i class="fa-solid fa-circle-check me-2"></i>
+            @TempData["Success"]
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+            <div class="alert alert-danger alert-dismissible fade show">
+                <i class="fa-solid fa-circle-exclamation me-2"></i>
+            @TempData["Error"]
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+    }
+
+    @if (!requests.Any())
+    {
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fa-solid fa-calendar-check"></i>
+                </div>
+
+                <h4>No job requests yet</h4>
+
+                <p class="text-muted">
+                    When a client sends you a care request, it will appear here.
+                </p>
+            </div>
+    }
+    else
+    {
+            <div class="row g-4">
+
+            @foreach (var request in requests.OrderByDescending(r => r.RequestedAt))
+            {
+                var isPending = string.Equals(
+                    request.Status,
+                    "Pending",
+                    StringComparison.OrdinalIgnoreCase);
+
+                var isAccepted = string.Equals(
+                    request.Status,
+                    "Accepted",
+                    StringComparison.OrdinalIgnoreCase);
+
+                var isRejected = string.Equals(
+                    request.Status,
+                    "Rejected",
+                    StringComparison.OrdinalIgnoreCase);
+
+                        <div class="col-12">
+                            <div class="request-card">
+
+                                <div class="request-card-header">
+                                    <div>
+                                        <span class="small text-muted">
+                                            REQUEST ID
+                                        </span>
+
+                                        <div class="request-id">
+                                    @request.Id
+                                        </div>
+                                    </div>
+
+                                    <span class="status-badge @(isPending ? "status-pending" : isAccepted ? "status-accepted" : isRejected ? "status-rejected" : "status-other")">
+                                @request.Status
+                                    </span>
+                                </div>
+
+                                <div class="request-card-body">
+
+                                    <div class="row g-4">
+
+                                        <div class="col-12 col-md-6">
+                                            <div class="detail-label">
+                                                <i class="fa-solid fa-user me-2"></i>
+                                                Client
+                                            </div>
+
+                                            <div class="detail-value">
+                                        @(string.IsNullOrWhiteSpace(request.ClientName)
+                                                ? "Client"
+                                                : request.ClientName)
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-6">
+                                            <div class="detail-label">
+                                                <i class="fa-solid fa-hand-holding-heart me-2"></i>
+                                                Type of Care
+                                            </div>
+
+                                            <div class="detail-value">
+                                        @request.JobTypeName
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-6">
+                                            <div class="detail-label">
+                                                <i class="fa-solid fa-location-dot me-2"></i>
+                                                Care Location
+                                            </div>
+
+                                            <div class="detail-value">
+                                        @(string.IsNullOrWhiteSpace(request.Location)
+                                                ? "Not provided"
+                                                : request.Location)
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-6">
+                                            <div class="detail-label">
+                                                <i class="fa-solid fa-clock me-2"></i>
+                                                Request Date
+                                            </div>
+
+                                            <div class="detail-value">
+                                        @request.RequestedAt.ToString("dd MMM yyyy, hh:mm tt")
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="detail-label">
+                                                <i class="fa-solid fa-align-left me-2"></i>
+                                                Description
+                                            </div>
+
+                                            <div class="request-description">
+                                        @(string.IsNullOrWhiteSpace(request.Description)
+                                                ? "No additional description provided."
+                                                : request.Description)
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="request-card-footer">
+
+                            @if (isPending)
+                            {
+                                            <span class="text-muted small">
+                                                Please review this request and respond.
+                                            </span>
+
+                                            <div class="request-actions">
+
+                                                <form asp-controller="JobRequest"
+                                                      asp-action="Accept"
+                                                      method="post">
+
+                                        @Html.AntiForgeryToken()
+
+                                                    <input type="hidden"
+                                                           name="id"
+                                                           value="@request.Id" />
+
+                                                    <button type="submit"
+                                                            class="btn btn-accept"
+                                                            onclick="return confirm('Are you sure you want to accept this care request?');">
+
+                                                        <i class="fa-solid fa-check me-1"></i>
+                                                        Accept Request
+
+                                                    </button>
+                                                </form>
+
+                                                <form asp-controller="JobRequest"
+                                                      asp-action="Reject"
+                                                      method="post">
+
+                                        @Html.AntiForgeryToken()
+
+                                                    <input type="hidden"
+                                                           name="id"
+                                                           value="@request.Id" />
+
+                                                    <button type="submit"
+                                                            class="btn btn-reject"
+                                                            onclick="return confirm('Are you sure you want to reject this care request?');">
+
+                                                        <i class="fa-solid fa-xmark me-1"></i>
+                                                        Reject Request
+
+                                                    </button>
+                                                </form>
+
+                                            </div>
+                            }
+                            else if (isAccepted)
+                            {
+                                            <div class="text-success fw-semibold">
+                                                <i class="fa-solid fa-circle-check me-2"></i>
+                                                You accepted this request.
+                                            </div>
+                            }
+                            else if (isRejected)
+                            {
+                                            <div class="text-danger fw-semibold">
+                                                <i class="fa-solid fa-circle-xmark me-2"></i>
+                                                You rejected this request.
+                                            </div>
+                            }
+                            else
+                            {
+                                            <div class="text-muted">
+                                                Current status: @request.Status
+                                            </div>
+                            }
+
+                                </div>
+
+                            </div>
+                        </div>
+            }
+
+            </div>
+    }
+
+</div>
+
+<style>
+    .caregiver-requests {
+        color: #243b53;
+    }
+
+    .page-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .request-count {
+        background: #e8f5ef;
+        color: #167650;
+        padding: 10px 16px;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+
+    .request-card {
+        background: #fff;
+        border: 1px solid #e1e8ed;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(20, 50, 70, 0.05);
+    }
+
+    .request-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 20px 24px;
+        background: #f8fbfc;
+        border-bottom: 1px solid #e8eef1;
+    }
+
+    .request-id {
+        margin-top: 4px;
+        font-size: 12px;
+        color: #526777;
+        overflow-wrap: anywhere;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 7px 13px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .status-pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .status-accepted {
+        background: #d1e7dd;
+        color: #0f5132;
+    }
+
+    .status-rejected {
+        background: #f8d7da;
+        color: #842029;
+    }
+
+    .status-other {
+        background: #e9ecef;
+        color: #495057;
+    }
+
+    .request-card-body {
+        padding: 24px;
+    }
+
+    .detail-label {
+        margin-bottom: 7px;
+        color: #667987;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .detail-value {
+        color: #183247;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+    }
+
+    .request-description {
+        padding: 14px;
+        border-radius: 9px;
+        background: #f7f9fa;
+        color: #435766;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+    }
+
+    .request-card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        padding: 18px 24px;
+        border-top: 1px solid #e8eef1;
+    }
+
+    .request-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .btn-accept {
+        background: #16845b;
+        color: #fff;
+    }
+
+    .btn-accept:hover {
+        background: #106b49;
+        color: #fff;
+    }
+
+    .btn-reject {
+        background: #fff;
+        color: #b42332;
+        border: 1px solid #d95360;
+    }
+
+    .btn-reject:hover {
+        background: #b42332;
+        color: #fff;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 65px 20px;
+        background: #fff;
+        border: 1px dashed #cbd8df;
+        border-radius: 16px;
+    }
+
+    .empty-icon {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #e8f5ef;
+        color: #16845b;
+        border-radius: 50%;
+        font-size: 28px;
+    }
+
+    @@media (max-width: 576px) {
+        .request-card-header,
+        .request-card-body,
+        .request-card-footer {
+            padding: 16px;
+        }
+
+        .request-actions,
+        .request-actions form,
+        .request-actions button {
+            width: 100%;
+        }
+    }
+</style>

@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Access Denied";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Access Denied - CareLink360</title>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f4f8fb;
+            font-family: Arial, sans-serif;
+        }
+
+        .access-card {
+            max-width: 500px;
+            width: 92%;
+            padding: 40px 30px;
+            text-align: center;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, .08);
+        }
+
+        .access-icon {
+            font-size: 48px;
+            color: #dc3545;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: #17324d;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #64748b;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="access-card">
+        <div class="access-icon">&#9888;</div>
+
+        <h1>Access Denied</h1>
+
+        <p>
+            Your account does not have permission to access this page.
+            Please return to your dashboard.
+        </p>
+
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="btn btn-primary">
+            Back to Website
+        </a>
+    </div>
+</body>
+</html>

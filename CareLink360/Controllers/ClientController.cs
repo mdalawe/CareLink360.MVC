@@ -78,19 +78,17 @@ namespace CareLink360.Web.Controllers
             }
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var client =
-                await _clientService.GetByIdAsync(id);
+            var client = await _clientService.GetByIdAsync(id);
 
             if (client == null)
             {
                 return NotFound();
             }
 
-            var dto = new CreateClientDto
+            var dto = new UpdateClientDto
             {
                 FirstName = client.FirstName,
                 LastName = client.LastName,
@@ -102,12 +100,9 @@ namespace CareLink360.Web.Controllers
             return View(dto);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(
-            Guid id,
-            CreateClientDto dto)
+        public async Task<IActionResult> Edit(Guid id, UpdateClientDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -116,27 +111,18 @@ namespace CareLink360.Web.Controllers
 
             try
             {
+                // We will need a matching UpdateAsync overload in the service.
                 await _clientService.UpdateAsync(id, dto);
 
-                TempData["Success"] =
-                    "Client updated successfully!";
+                TempData["Success"] = "Client updated successfully!";
 
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                var errorMessage = ex.Message;
-
-                if (ex.InnerException != null)
-                {
-                    errorMessage +=
-                        " | " + ex.InnerException.Message;
-                }
-
                 ModelState.AddModelError(
                     string.Empty,
-                    errorMessage
-                );
+                    ex.InnerException?.Message ?? ex.Message);
 
                 return View(dto);
             }

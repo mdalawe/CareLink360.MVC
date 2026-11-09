@@ -59,13 +59,24 @@ namespace CareLink360.Application.Services
         {
             return await _repository.GetAllAsync();
         }
-
         public async Task AcceptAsync(Guid id)
         {
             var request = await _repository.GetByIdAsync(id);
 
             if (request == null)
                 throw new Exception("Job request not found.");
+
+            if (request.Status == "Accepted")
+                throw new Exception("This request has already been accepted.");
+
+            if (request.Status == "Rejected")
+                throw new Exception("A rejected request cannot be accepted.");
+
+            var existingContract = await _context.Contracts
+                .AnyAsync(c => c.JobRequestId == request.Id);
+
+            if (existingContract)
+                throw new Exception("A contract already exists for this request.");
 
             var caregiver = await _context.Caregivers
                 .FirstOrDefaultAsync(c => c.Id == request.CaregiverId);
@@ -77,12 +88,9 @@ namespace CareLink360.Application.Services
                 throw new Exception("This caregiver has not been approved.");
 
             if (!caregiver.IsAvaliable)
-                throw new Exception(
-                    "This caregiver is no longer available.");
+                throw new Exception("This caregiver is no longer available.");
 
             request.Status = "Accepted";
-
-            await _repository.UpdateAsync(request);
 
             await _contractService.CreateAsync(new CreateContractDto
             {
@@ -93,9 +101,9 @@ namespace CareLink360.Application.Services
 
             caregiver.IsAvaliable = false;
 
+            await _repository.UpdateAsync(request);
             await _context.SaveChangesAsync();
         }
-
         public async Task RejectAsync(Guid id)
         {
             var request = await _repository.GetByIdAsync(id);

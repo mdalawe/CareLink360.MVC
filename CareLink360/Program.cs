@@ -2,10 +2,11 @@ using CareLink360.Application.Services;
 using CareLink360.Application.Interfaces;
 using CareLink360.Context;
 using CareLink360.Domain.Interface;
-using CareLink360.Infrastructure.Repository;
 using CareLink360.Web.DbInitializer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using CareLink360.Infrastructure.Repository;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -5,75 +5,176 @@
     Layout = "_ClientLayout";
 }
 
-<div class="container-fluid px-4 py-4">
+<div class="container-fluid p-0">
 
-    <h2>My Contracts</h2>
-
-    <p class="text-muted">
-        View your caregiving contracts.
-    </p>
-
-    @if (!Model.Any())
+    @if (TempData["Success"] != null)
     {
-            <div class="alert alert-info">
-                You do not have any contracts yet.
+        <div class="alert alert-success alert-dismissible fade show mb-3"
+             role="alert">
+            @TempData["Success"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show mb-3"
+             role="alert">
+            @TempData["Error"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="mb-4">
+        <h2 class="fw-bold mb-1">My Contracts</h2>
+
+        <p class="text-muted mb-0">
+            View and track your caregiving agreements.
+        </p>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-body text-center py-5">
+                <i class="fa-solid fa-file-contract text-secondary mb-3"
+                   style="font-size: 38px;"></i>
+
+                <h5 class="fw-semibold">No contracts yet</h5>
+
+                <p class="text-muted mb-0">
+                    Once a caregiver accepts your request,
+                    your contract will appear here.
+                </p>
             </div>
+        </div>
     }
     else
     {
-            <div class="table-responsive">
+        <div class="row g-3">
+            @foreach (var contract in Model)
+            {
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm rounded-3">
+                        <div class="card-body p-4">
 
-                <table class="table">
+                            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
+                                <div>
+                                    <h5 class="fw-bold mb-1">
+                                        Caregiving Contract
+                                    </h5>
 
-                    <thead>
-                        <tr>
-                            <th>Contract ID</th>
-                            <th>Caregiver ID</th>
-                            <th>Job Request ID</th>
-                            <th>Status</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                        </tr>
-                    </thead>
+                                    <small class="text-muted">
+                                        Contract reference:
+                                        @contract.Id.ToString("N")
+                                        .Substring(0, 8)
+                                        .ToUpperInvariant()
+                                    </small>
+                                </div>
 
-                    <tbody>
+                                @if (contract.Status ==
+                               CareLink360.Domain.Enums.ContractStatus.Ongoing)
+                                {
+                                    <span class="badge bg-success px-3 py-2">
+                                        Ongoing
+                                    </span>
+                                }
+                                else if (contract.Status ==
+                                CareLink360.Domain.Enums.ContractStatus.Successful)
+                                {
+                                    <span class="badge bg-primary px-3 py-2">
+                                        Successful
+                                    </span>
+                                }
+                                else if (contract.Status ==
+                                CareLink360.Domain.Enums.ContractStatus.Cancelled)
+                                {
+                                    <span class="badge bg-danger px-3 py-2">
+                                        Cancelled
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary px-3 py-2">
+                                        @contract.Status
+                                    </span>
+                                }
+                            </div>
 
-                    @foreach (var contract in Model)
-                    {
-                                <tr>
+                            <hr />
 
-                                    <td>
-                                @contract.Id
-                                    </td>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <small class="text-muted d-block mb-1">
+                                        Client
+                                    </small>
 
-                                    <td>
-                                @contract.CaregiverId
-                                    </td>
+                                    <strong>
+                                        @(contract.Client?.FullName ?? "Client")
+                                    </strong>
+                                </div>
 
-                                    <td>
-                                @contract.JobRequestId
-                                    </td>
+                                <div class="col-md-6">
+                                    <small class="text-muted d-block mb-1">
+                                        Caregiver
+                                    </small>
 
-                                    <td>
-                                @contract.Status
-                                    </td>
+                                    <strong>
+                                        @(contract.Caregiver == null
+                                            ? "Caregiver"
+                                            : $"{contract.Caregiver.FirstName} {contract.Caregiver.LastName}")
+                                    </strong>
+                                </div>
 
-                                    <td>
-                                @contract.StartDate
-                                    </td>
+                                <div class="col-md-6">
+                                    <small class="text-muted d-block mb-1">
+                                        Start date
+                                    </small>
 
-                                    <td>
-                                @contract.EndDate
-                                    </td>
+                                    <strong>
+                                        @(contract.StartDate == DateTime.MinValue
+                                            ? "Not set"
+                                            : contract.StartDate.ToLocalTime()
+                                            .ToString("dd MMM yyyy"))
+                                    </strong>
+                                </div>
 
-                                </tr>
-                    }
+                                <div class="col-md-6">
+                                    <small class="text-muted d-block mb-1">
+                                        End date
+                                    </small>
 
-                    </tbody>
+                                    <strong>
+                                        @(contract.EndDate.HasValue
+                                            ? contract.EndDate.Value.ToLocalTime()
+                                            .ToString("dd MMM yyyy")
+                                            : "Not ended")
+                                    </strong>
+                                </div>
+                            </div>
 
-                </table>
+                            <div class="mt-4">
+                                <a asp-controller="Contract"
+                                   asp-action="Details"
+                                   asp-route-id="@contract.Id"
+                                   class="btn btn-outline-primary">
+                                    <i class="fa-solid fa-eye me-1"></i>
+                                    View Contract
+                                </a>
+                            </div>
 
-            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     }
-
 </div>

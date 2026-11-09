@@ -53,5 +53,11 @@ namespace CareLink360.Web.Controllers
 
             return RedirectToAction(nameof(Login));
         }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }

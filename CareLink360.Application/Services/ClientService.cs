@@ -1,144 +1,133 @@
 ﻿using CareLink360.Application.DTOs;
+using CareLink360.Application.Interfaces;
 using CareLink360.Context;
 using CareLink360.Domain.Entities;
 using CareLink360.Domain.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-public class ClientService : IClientService
+namespace CareLink360.Application.Services
 {
-    private readonly IClientRepository _repository;
-    private readonly ApplicationDbContext _context;
-    private readonly PasswordHasher<ApplicationUser> _passwordHasher;
-
-    public ClientService(
-        IClientRepository repository,
-        ApplicationDbContext context)
+    public class ClientService : IClientService
     {
-        _repository = repository;
-        _context = context;
-        _passwordHasher =
-            new PasswordHasher<ApplicationUser>();
-    }
+        private readonly IClientRepository _repository;
+        private readonly ApplicationDbContext _context;
+        private readonly PasswordHasher<ApplicationUser> _passwordHasher;
 
-
-    public async Task<Client> CreateAsync(CreateClientDto dto)
-    {
-        var emailExists = await _context.Users
-            .AnyAsync(x => x.Email == dto.Email);
-
-        if (emailExists)
+        public ClientService(
+            IClientRepository repository,
+            ApplicationDbContext context)
         {
-            throw new Exception(
-                "A user with this email already exists."
-            );
+            _repository = repository;
+            _context = context;
+            _passwordHasher = new PasswordHasher<ApplicationUser>();
         }
 
-        using var transaction =
-            await _context.Database.BeginTransactionAsync();
-
-        try
+        public async Task<Client> CreateAsync(CreateClientDto dto)
         {
-            var user = new ApplicationUser
+            var emailExists = await _context.Users
+                .AnyAsync(x => x.Email == dto.Email);
+
+            if (emailExists)
             {
-                Id = Guid.NewGuid(),
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                Email = dto.Email,
-                UserName = dto.Email,
-                PhoneNumber = dto.PhoneNumber,
-                Role = "Client",
-                IsActive = true,
-                CreatedAt = DateTime.UtcNow
-            };
+                throw new InvalidOperationException(
+                    "A user with this email already exists.");
+            }
 
-            user.PasswordHash =
-                _passwordHasher.HashPassword(
+            await using var transaction =
+                await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var user = new ApplicationUser
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = dto.FirstName,
+                    LastName = dto.LastName,
+                    Email = dto.Email,
+                    UserName = dto.Email,
+                    PhoneNumber = dto.PhoneNumber,
+                    Role = "Client",
+                    IsActive = true,
+                    CreatedAt = DateTime.UtcNow
+                };
+
+                user.PasswordHash = _passwordHasher.HashPassword(
                     user,
-                    dto.Password
-                );
+                    dto.Password);
 
-            _context.Users.Add(user);
+                _context.Users.Add(user);
+
+                await _context.SaveChangesAsync();
+
+                var client = new Client
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = user.Id,
+                    FirstName = dto.FirstName,
+                    LastName = dto.LastName,
+                    FullName = $"{dto.FirstName} {dto.LastName}",
+                    Gender = dto.Gender,
+                    HomeAddress = dto.Address,
+                    PhoneNumber = dto.PhoneNumber,
+                    City = dto.City
+                };
+
+                var result = await _repository.CreateAsync(client);
+
+                await transaction.CommitAsync();
+
+                return result;
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+
+        public async Task<List<Client>> GetAllAsync()
+        {
+            return await _repository.GetAllAsync();
+        }
+
+        public async Task<Client?> GetByIdAsync(Guid id)
+        {
+            return await _repository.GetByIdAsync(id);
+        }
+
+        public async Task<bool> UpdateAsync(
+            Guid id,
+            UpdateClientDto dto)
+        {
+            var client = await _context.Clients
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (client == null)
+            {
+                return false;
+            }
+
+            client.FirstName = dto.FirstName;
+            client.LastName = dto.LastName;
+            client.FullName = $"{dto.FirstName} {dto.LastName}";
+            client.PhoneNumber = dto.PhoneNumber;
+            client.City = dto.City;
+            client.HomeAddress = dto.Address;
 
             await _context.SaveChangesAsync();
 
-            var client = new Client
-            {
-                Id = Guid.NewGuid(),
-                UserId = user.Id,
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                FullName =
-                    $"{dto.FirstName} {dto.LastName}",
-                Gender = dto.Gender,
-                HomeAddress = dto.Address,
-                PhoneNumber = dto.PhoneNumber,
-                City = dto.City,
-                IsNinVerified = false
-            };
-
-            var result =
-                await _repository.CreateAsync(client);
-
-            await transaction.CommitAsync();
-
-            return result;
+            return true;
         }
-        catch
+
+        public async Task<Client?> GetByUserIdAsync(Guid userId)
         {
-            await transaction.RollbackAsync();
-            throw;
+            return await _repository.GetByUserIdAsync(userId);
         }
-    }
 
-
-    public async Task<List<Client>> GetAllAsync()
-    {
-        return await _repository.GetAllAsync();
-    }
-
-
-
-    public async Task<Client?> GetByIdAsync(Guid id)
-    {
-        return await _repository.GetByIdAsync(id);
-    }
-
-
-
-
-    public async Task<bool> UpdateAsync(
-        Guid id,
-        CreateClientDto dto)
-    {
-        var client = await _context.Clients
-            .FirstOrDefaultAsync(c => c.Id == id);
-
-        if (client == null)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            return false;
+            return await _repository.DeleteAsync(id);
         }
-
-        client.FirstName = dto.FirstName;
-        client.LastName = dto.LastName;
-        client.FullName =
-            $"{dto.FirstName} {dto.LastName}";
-        client.PhoneNumber = dto.PhoneNumber;
-        client.City = dto.City;
-        client.HomeAddress = dto.Address;
-
-        await _context.SaveChangesAsync();
-
-        return true;
-    }
-
-    public async Task<Client?> GetByUserIdAsync(Guid userId)
-    {
-        return await _repository.GetByUserIdAsync(userId);
-    }
-
-    public async Task<bool> DeleteAsync(Guid id)
-    {
-        return await _repository.DeleteAsync(id);
     }
 }

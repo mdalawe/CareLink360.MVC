@@ -14,155 +14,79 @@
 
     <style>
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             font-family: Arial, Helvetica, sans-serif;
             background: #f4f8fb;
+            color: #263238;
             min-height: 100vh;
-            color: #172b4d;
         }
 
-        /* =========================
-                   TOP HEADER
-                   ========================= */
-
-        .top-header {
-            height: 75px;
-            background: white;
-            border-bottom: 1px solid #e5eaf0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 6%;
-        }
-
-        .logo {
-            font-size: 27px;
-            font-weight: 700;
-            color: #1264d8;
-            text-decoration: none;
-        }
-
-            .logo span {
-                color: #16a085;
-            }
-
-        .back-home {
-            text-decoration: none;
-            color: #50627a;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-            .back-home:hover {
-                color: #1264d8;
-            }
-
-        /* =========================
-                   MAIN REGISTER AREA
-                   ========================= */
-
-        .login-wrapper {
-            min-height: calc(100vh - 135px);
+        .register-wrapper {
+            min-height: calc(100vh - 60px);
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 45px 20px;
+            padding: 35px 20px;
         }
 
-        .login-container {
+        .register-container {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
             width: 100%;
-            max-width: 1050px;
-            min-height: 560px;
-            background: white;
+            max-width: 1000px;
+            background: #ffffff;
             border-radius: 18px;
             overflow: hidden;
-            box-shadow: 0 15px 45px rgba(26, 55, 85, 0.10);
-            display: grid;
-            grid-template-columns: 1fr 1.1fr;
+            box-shadow: 0 12px 40px rgba(20, 60, 80, 0.12);
         }
 
-        /* =========================
-                   LEFT SIDE
-                   ========================= */
-
-        .login-info {
-            background: linear-gradient(145deg, #1264d8, #0b4fae);
-            color: white;
-            padding: 55px;
+        .welcome-panel {
+            background: linear-gradient(135deg, #087f8c, #075985);
+            color: #ffffff;
+            padding: 45px 35px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
-        .medical-icon {
-            width: 65px;
-            height: 65px;
-            border-radius: 16px;
-            background: rgba(255,255,255,0.16);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 31px;
-            margin-bottom: 30px;
+        .welcome-tag {
+            display: inline-block;
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.16);
+            padding: 9px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
         }
 
-        .login-info h1 {
-            font-size: 36px;
-            line-height: 1.2;
-            margin-bottom: 18px;
+        .welcome-panel h1 {
+            font-size: 34px;
+            line-height: 1.3;
+            margin-bottom: 20px;
         }
 
-        .login-info p {
-            font-size: 16px;
-            line-height: 1.7;
-            color: rgba(255,255,255,0.88);
-            max-width: 420px;
+        .welcome-panel p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #e0f2fe;
         }
 
-        .features {
-            margin-top: 35px;
+        .register-form-panel {
+            padding: 40px;
         }
 
-        .feature {
-            display: flex;
-            align-items: center;
-            margin-bottom: 17px;
-            font-size: 14px;
-        }
-
-        .feature-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 12px;
-        }
-
-        /* =========================
-                   RIGHT FORM
-                   ========================= */
-
-        .login-form {
-            padding: 45px 50px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .form-title {
-            font-size: 29px;
-            font-weight: 700;
-            color: #172b4d;
-            margin-bottom: 8px;
-        }
+            .register-form-panel h2 {
+                font-size: 29px;
+                color: #075985;
+                margin-bottom: 10px;
+            }
 
         .form-subtitle {
             color: #718096;
@@ -170,326 +94,290 @@
             margin-bottom: 25px;
         }
 
-        .form-row {
+        .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 0 16px;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 17px;
         }
+
+            .form-group.full-width {
+                grid-column: 1 / -1;
+            }
 
             .form-group label {
                 display: block;
-                font-size: 14px;
                 font-weight: 600;
-                color: #334155;
-                margin-bottom: 6px;
+                font-size: 14px;
+                margin-bottom: 8px;
+                color: #374151;
             }
 
-        .input-box {
+        .form-control {
             width: 100%;
-            height: 46px;
-            border: 1px solid #d5dde7;
+            padding: 12px 13px;
+            border: 1px solid #d5dee7;
             border-radius: 8px;
-            padding: 0 14px;
             font-size: 14px;
-            color: #172b4d;
             outline: none;
-            background: #fff;
-            transition: 0.2s;
+            background: #ffffff;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
-            .input-box:focus {
-                border-color: #1264d8;
-                box-shadow: 0 0 0 3px rgba(18,100,216,0.10);
+            .form-control:focus {
+                border-color: #0891b2;
+                box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.12);
             }
 
-            .input-box::placeholder {
-                color: #a0aec0;
-            }
-
-        select.input-box {
-            cursor: pointer;
+        .validation-message {
+            display: block;
+            color: #dc2626;
+            font-size: 12px;
+            margin-top: 5px;
         }
 
-        /* =========================
-                   BUTTON
-                   ========================= */
+        .validation-summary {
+            color: #dc2626;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
 
-        .login-button {
+        .register-button {
             width: 100%;
-            height: 50px;
+            padding: 14px;
             border: none;
             border-radius: 8px;
-            background: #1264d8;
-            color: white;
-            font-size: 15px;
-            font-weight: 600;
+            background: #087f8c;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
-            transition: 0.2s;
-            margin-top: 10px;
+            margin-top: 5px;
+            transition: background 0.2s, transform 0.2s;
         }
 
-            .login-button:hover {
-                background: #0d55b8;
+            .register-button:hover {
+                background: #066773;
                 transform: translateY(-1px);
             }
 
-        /* =========================
-                   VALIDATION
-                   ========================= */
-
-        .validation {
-            color: #dc3545;
-            font-size: 12px;
-            margin-top: 4px;
-            display: block;
-        }
-
-        .summary {
-            background: #fff5f5;
-            border: 1px solid #fed7d7;
-            color: #c53030;
-            border-radius: 7px;
-            padding: 10px 13px;
-            margin-bottom: 20px;
-            font-size: 13px;
-        }
-
-        /* =========================
-                   LOGIN LINK
-                   ========================= */
-
-        .register-text {
+        .login-link {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 22px;
             font-size: 14px;
-            color: #718096;
+            color: #64748b;
         }
 
-            .register-text a {
-                color: #1264d8;
+            .login-link a {
+                color: #087f8c;
                 text-decoration: none;
-                font-weight: 600;
+                font-weight: bold;
             }
 
-                .register-text a:hover {
+                .login-link a:hover {
                     text-decoration: underline;
                 }
 
-        /* =========================
-                   FOOTER
-                   ========================= */
-
-        .footer {
-            height: 60px;
-            background: white;
-            border-top: 1px solid #e5eaf0;
+        .page-footer {
+            min-height: 60px;
             display: flex;
-            align-items: center;
             justify-content: center;
-            color: #8793a5;
-            font-size: 12px;
+            align-items: center;
+            padding: 15px;
+            text-align: center;
+            color: #718096;
+            font-size: 13px;
         }
 
-        /* =========================
-                   MOBILE
-                   ========================= */
-
-        @@media (max-width: 850px) {
-            .top-header {
-                padding: 0 25px;
-            }
-
-            .login-container {
+        @@media (max-width: 800px) {
+            .register-container {
                 grid-template-columns: 1fr;
-                max-width: 520px;
+                max-width: 600px;
             }
 
-            .login-info {
-                display: none;
+            .welcome-panel {
+                padding: 30px;
             }
 
-            .login-form {
-                padding: 35px 25px;
+                .welcome-panel h1 {
+                    font-size: 28px;
+                }
+
+            .register-form-panel {
+                padding: 30px;
+            }
+        }
+
+        @@media (max-width: 480px) {
+            .register-wrapper {
+                padding: 20px 12px;
             }
 
-            .form-row {
+            .form-grid {
                 grid-template-columns: 1fr;
-                gap: 0;
             }
 
-            .login-wrapper {
-                padding: 25px 15px;
+            .form-group.full-width {
+                grid-column: auto;
+            }
+
+            .welcome-panel,
+            .register-form-panel {
+                padding: 25px 20px;
             }
         }
     </style>
 </head>
 
 <body>
+    <main class="register-wrapper">
+        <div class="register-container">
 
-    <!-- =========================
-         HEADER
-         ========================= -->
+            <section class="welcome-panel">
+                <span class="welcome-tag">COMPASSIONATE CARE. EVERY TIME.</span>
 
-    <header class="top-header">
-        <a asp-controller="Home" asp-action="Index" class="logo">
-            CareLink<span>360</span>
-        </a>
-
-        <a asp-controller="Home" asp-action="Index" class="back-home">
-            ← Back to website
-        </a>
-    </header>
-
-    <!-- =========================
-         REGISTER AREA
-         ========================= -->
-
-    <main class="login-wrapper">
-
-        <div class="login-container">
-
-            <!-- LEFT INFORMATION -->
-
-            <section class="login-info">
-                <div class="medical-icon">
-                    ♥
-                </div>
-
-                <h1>
-                    Join CareLink360
-                </h1>
+                <h1>Join CareLink360</h1>
 
                 <p>
-                    Create an account today to access trusted healthcare services, connect with registered caregivers, or offer professional care.
+                    Create your account to connect with caregivers and
+                    families. We make finding and managing compassionate
+                    care easier.
                 </p>
-
-                <div class="features">
-                    <div class="feature">
-                        <div class="feature-icon">✓</div>
-                        <span>Easy and fast registration</span>
-                    </div>
-
-                    <div class="feature">
-                        <div class="feature-icon">✓</div>
-                        <span>Personalized healthcare dashboard</span>
-                    </div>
-
-                    <div class="feature">
-                        <div class="feature-icon">✓</div>
-                        <span>Verified caregivers & patients</span>
-                    </div>
-                </div>
             </section>
 
-            <!-- REGISTER FORM -->
-
-            <section class="login-form">
-
-                <h2 class="form-title">
-                    Create Account
-                </h2>
+            <section class="register-form-panel">
+                <h2>Create Account</h2>
 
                 <p class="form-subtitle">
-                    Fill in your details below to get started.
+                    Fill in your details to get started.
                 </p>
 
-                @if (TempData["Error"] != null)
-                {
-                    <div class="summary">
-                        @TempData["Error"]
-                    </div>
-                }
-
                 <form asp-controller="Auth" asp-action="Register" method="post">
-
                     @Html.AntiForgeryToken()
 
-                    <div asp-validation-summary="ModelOnly" class="summary"></div>
+                    <div asp-validation-summary="ModelOnly"
+                         class="validation-summary"></div>
 
-                    <!-- FIRST NAME & LAST NAME -->
-                    <div class="form-row">
+                    <div class="form-grid">
+
                         <div class="form-group">
                             <label asp-for="FirstName">First Name</label>
-                            <input asp-for="FirstName" class="input-box" placeholder="John" />
-                            <span asp-validation-for="FirstName" class="validation"></span>
+
+                            <input asp-for="FirstName"
+                                   class="form-control"
+                                   placeholder="First name"
+                                   autocomplete="given-name" />
+
+                            <span asp-validation-for="FirstName"
+                                  class="validation-message"></span>
                         </div>
 
                         <div class="form-group">
                             <label asp-for="LastName">Last Name</label>
-                            <input asp-for="LastName" class="input-box" placeholder="Doe" />
-                            <span asp-validation-for="LastName" class="validation"></span>
+
+                            <input asp-for="LastName"
+                                   class="form-control"
+                                   placeholder="Last name"
+                                   autocomplete="family-name" />
+
+                            <span asp-validation-for="LastName"
+                                  class="validation-message"></span>
                         </div>
-                    </div>
 
-                    <!-- EMAIL -->
-                    <div class="form-group">
-                        <label asp-for="Email">Email Address</label>
-                        <input asp-for="Email" class="input-box" placeholder="name@example.com" autocomplete="email" />
-                        <span asp-validation-for="Email" class="validation"></span>
-                    </div>
+                        <div class="form-group">
+                            <label asp-for="Email">Email Address</label>
 
-                    <!-- PHONE NUMBER -->
-                    <div class="form-group">
-                        <label asp-for="PhoneNumber">Phone Number</label>
-                        <input asp-for="PhoneNumber" class="input-box" placeholder="+1 (555) 000-0000" />
-                        <span asp-validation-for="PhoneNumber" class="validation"></span>
-                    </div>
+                            <input asp-for="Email"
+                                   class="form-control"
+                                   type="email"
+                                   placeholder="Email address"
+                                   autocomplete="email" />
 
-                    <!-- PASSWORD & CONFIRM PASSWORD -->
-                    <div class="form-row">
+                            <span asp-validation-for="Email"
+                                  class="validation-message"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="PhoneNumber">Phone Number</label>
+
+                            <input asp-for="PhoneNumber"
+                                   class="form-control"
+                                   type="tel"
+                                   placeholder="Phone number"
+                                   autocomplete="tel" />
+
+                            <span asp-validation-for="PhoneNumber"
+                                  class="validation-message"></span>
+                        </div>
+
                         <div class="form-group">
                             <label asp-for="Password">Password</label>
-                            <input asp-for="Password" type="password" class="input-box" placeholder="••••••••" autocomplete="new-password" />
-                            <span asp-validation-for="Password" class="validation"></span>
+
+                            <input asp-for="Password"
+                                   class="form-control"
+                                   type="password"
+                                   placeholder="Create password"
+                                   autocomplete="new-password" />
+
+                            <span asp-validation-for="Password"
+                                  class="validation-message"></span>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="ConfirmPassword">Confirm Password</label>
-                            <input asp-for="ConfirmPassword" type="password" class="input-box" placeholder="••••••••" autocomplete="new-password" />
-                            <span asp-validation-for="ConfirmPassword" class="validation"></span>
+                            <label asp-for="ConfirmPassword">
+                                Confirm Password
+                            </label>
+
+                            <input asp-for="ConfirmPassword"
+                                   class="form-control"
+                                   type="password"
+                                   placeholder="Confirm password"
+                                   autocomplete="new-password" />
+
+                            <span asp-validation-for="ConfirmPassword"
+                                  class="validation-message"></span>
                         </div>
+
+                        <div class="form-group full-width">
+                            <label asp-for="Role">Register As</label>
+
+                            <select asp-for="Role" class="form-control">
+                                <option value="">Select your role</option>
+                                <option value="Client">Client / Parent</option>
+                                <option value="Caregiver">Caregiver</option>
+                            </select>
+
+                            <span asp-validation-for="Role"
+                                  class="validation-message"></span>
+                        </div>
+
                     </div>
 
-                    <!-- ROLE -->
-                    <div class="form-group">
-                        <label asp-for="Role">I am a...</label>
-                        <select asp-for="Role" class="input-box">
-                            <option value="">-- Select Role --</option>
-                            <option value="Patient">Patient</option>
-                            <option value="Caregiver">Caregiver</option>
-                            <option value="Admin">Admin</option>
-                        </select>
-                        <span asp-validation-for="Role" class="validation"></span>
-                    </div>
-
-                    <!-- SUBMIT BUTTON -->
-                    <button type="submit" class="login-button">
-                        Register
+                    <button type="submit" class="register-button">
+                        Create Account
                     </button>
 
+                    <div class="login-link">
+                        Already have an account?
+                        <a asp-controller="Auth" asp-action="Login">
+                            Sign in
+                        </a>
+                    </div>
                 </form>
-
-                <!-- LOGIN LINK -->
-                <div class="register-text">
-                    Already have an account?
-                    <a asp-controller="Auth" asp-action="Login">
-                        Sign In
-                    </a>
-                </div>
-
             </section>
 
         </div>
-
     </main>
 
-    <footer class="footer">
-        © 2026 CareLink360. All Rights Reserved.
+    <footer class="page-footer">
+        &copy; @DateTime.Now.Year CareLink360. All rights reserved.
     </footer>
 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 </body>
 </html>

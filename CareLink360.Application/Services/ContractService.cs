@@ -39,7 +39,9 @@ public class ContractService : IContractService
         {
             ClientId = dto.ClientId,
             CaregiverId = dto.CaregiverId,
-            JobRequestId = dto.JobRequestId
+            JobRequestId = dto.JobRequestId,
+            Status = ContractStatus.Ongoing,
+            StartDate = DateTime.UtcNow
         };
 
         var createdContract = await _repository.CreateAsync(contract);

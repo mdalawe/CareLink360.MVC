@@ -274,7 +274,6 @@ namespace CareLink360.Web.Controllers
             return View("MyCreatedRequests", myRequests);
         }
 
-        // CAREGIVER: VIEW REQUESTS SENT TO THEM
         [Authorize(Roles = "Caregiver")]
         [HttpGet]
         public async Task<IActionResult> MyRequests()
@@ -299,10 +298,32 @@ namespace CareLink360.Web.Controllers
 
             var myRequests = allRequests
                 .Where(x => x.CaregiverId == caregiver.Id)
+                .Select(x => new JobRequestResponseDto
+                {
+                    Id = x.Id,
+                    ClientId = x.ClientId,
+                    CaregiverId = x.CaregiverId,
+                    JobTypeId = x.JobTypeId,
+                    Status = x.Status.ToString(),
+                    Location = x.Location ?? string.Empty,
+                    Description = x.Description ?? string.Empty,
+                    RequestedAt = x.RequestedAt,
+
+                    // These names depend on the navigation properties
+                    // available in your JobRequest entity.
+                    ClientName = x.Client != null
+                        ? x.Client.FullName
+                        : "Client",
+
+                    JobTypeName = x.JobType != null
+                        ? x.JobType.Name
+                        : "Care"
+                })
                 .ToList();
 
             return View(myRequests);
         }
+
 
         // LOAD THE DATA NEEDED BY THE CREATE VIEW
         private async Task LoadCreateDropdowns()
